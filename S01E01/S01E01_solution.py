@@ -9,17 +9,14 @@ from pathlib import Path
 import requests
 from openai import OpenAI
 
-TAG_DESCRIPTIONS = {
-    "IT": "Praca związana z technologiami informatycznymi, programowaniem, administracją systemów, sieciami, analizą danych, wsparciem technicznym.",
-    "transport": "Praca związana z przewozem osób lub rzeczy, logistyką, planowaniem transportu, spedycją.",
-    "edukacja": "Praca polegająca na nauczaniu, szkoleniu, prowadzeniu zajęć, przygotowywaniu materiałów edukacyjnych.",
-    "medycyna": "Praca związana z ochroną zdrowia, leczeniem, diagnostyką, pielęgnacją pacjentów, rehabilitacją.",
-    "praca z ludźmi": "Praca oparta na bezpośrednim kontakcie z ludźmi, obsługą klienta, doradztwem, pomocą, opieką.",
-    "praca z pojazdami": "Praca polegająca na prowadzeniu, serwisowaniu, naprawie lub projektowaniu pojazdów wszelkiego typu.",
-    "praca fizyczna": "Praca wymagająca głównie wysiłku fizycznego, pracy manualnej, często w terenie lub w warunkach produkcyjnych.",
-}
-
-TAGS = list(TAG_DESCRIPTIONS.keys())
+from llm_config import (
+    TAGS,
+    get_schema_single_job,
+    get_schema_batch_jobs,
+    get_system_content,
+    get_user_content_single,
+    get_user_content_batch,
+)
 
 
 # 1. Pobierz dane z hubu - plik people.csv. Strona  - DONE
@@ -63,75 +60,23 @@ def filter_data(
     return df_filtered
 
 
-# 3. Otaguj zawody modelem językowym - wyślij opisy stanowisk (job) do LLM
-# i poproś o przypisanie tagów z listy dostępnej w zadaniu.
-# Użyj mechanizmu Structured Output, aby wymusić odpowiedź modelu w określonym
-# formacie JSON.
-
-# Lista tagów
-# IT
-# transport
-# edukacja
-# medycyna
-# praca z ludźmi
-# praca z pojazdami
-# praca fizyczna
-
-
+# 3. Otaguj zawody (prompty i schematy w llm_prompts.md / llm_config.py)
 def tag_job_with_llm(
     job_description: str, tags: list[str], model_id: str, client: OpenAI
 ) -> list[str]:
-    """
-    Wysyła opis stanowiska do LLM przez OpenRouter i zwraca listę tagów z TAGS.
-    """
-    schema = {
-        "type": "object",
-        "properties": {
-            "tags": {
-                "type": "array",
-                "description": (
-                    "Lista wybranych tagów opisujących ten zawód. "
-                    "Wybierz tylko spośród podanych tagów."
-                ),
-                "items": {
-                    "type": "string",
-                    "enum": tags,
-                },
-            }
-        },
-        "required": ["tags"],
-        "additionalProperties": False,
-    }
-
-    tag_descriptions_text = "\n".join(
-        f"- {tag}: {TAG_DESCRIPTIONS.get(tag, '')}" for tag in tags
-    )
-
+    """Wysyła opis stanowiska do LLM przez OpenRouter i zwraca listę tagów z TAGS."""
     response = client.chat.completions.create(
         model=model_id,
         messages=[
-            {
-                "role": "system",
-                "content": (
-                    "Jesteś asystentem, który klasyfikuje zawody na podstawie obszernych opisów stanowisk. "
-                    "Masz do dyspozycji następujące tagi wraz z opisami:\n"
-                    f"{tag_descriptions_text}\n\n"
-                    "Dla podanego opisu zawodu wybierz 1-3 tagi, które NAJLEPIEJ opisują ten zawód. "
-                    "Jeśli żaden nie pasuje, zwróć pustą listę. "
-                    "Nie wymyślaj własnych tagów."
-                ),
-            },
-            {
-                "role": "user",
-                "content": f"Opis stanowiska (pole 'job'):\n{job_description}",
-            },
+            {"role": "system", "content": get_system_content(tags, batch=False)},
+            {"role": "user", "content": get_user_content_single(job_description)},
         ],
         response_format={
             "type": "json_schema",
             "json_schema": {
                 "name": "job_tags",
                 "strict": True,
-                "schema": schema,
+                "schema": get_schema_single_job(tags),
             },
         },
     )
@@ -176,74 +121,20 @@ def tag_jobs_batch_with_llm(
     client: OpenAI,
     start_index: int = 0,
 ) -> dict[int, list[str]]:
-    """
-    Taguje wiele opisów stanowisk w jednym wywołaniu modelu.
-    Zwraca słownik: globalny_index -> lista tagów.
-    """
-    schema = {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": {
-                "index": {
-                    "type": "integer",
-                    "description": "Indeks opisu stanowiska z listy otrzymanej od użytkownika (0-based).",
-                },
-                "tags": {
-                    "type": "array",
-                    "description": (
-                        "Lista wybranych tagów opisujących dany zawód. "
-                        "Wybierz tylko spośród podanych tagów."
-                    ),
-                    "items": {
-                        "type": "string",
-                        "enum": tags,
-                    },
-                },
-            },
-            "required": ["index", "tags"],
-            "additionalProperties": False,
-        },
-    }
-
-    tag_descriptions_text = "\n".join(
-        f"- {tag}: {TAG_DESCRIPTIONS.get(tag, '')}" for tag in tags
-    )
-
-    jobs_text_lines = [f"{i}: {job}" for i, job in enumerate(jobs)]
-    jobs_text = "\n".join(jobs_text_lines)
-
+    """Taguje wiele opisów stanowisk w jednym wywołaniu. Zwraca dict: index -> lista tagów."""
+    jobs_text = "\n".join(f"{i}: {job}" for i, job in enumerate(jobs))
     response = client.chat.completions.create(
         model=model_id,
         messages=[
-            {
-                "role": "system",
-                "content": (
-                    "Jesteś asystentem, który klasyfikuje zawody na podstawie obszernych opisów stanowisk. "
-                    "Masz do dyspozycji następujące tagi wraz z opisami:\n"
-                    f"{tag_descriptions_text}\n\n"
-                    "Dla KAŻDEGO opisu zawodu wybierz 1-3 tagi, które NAJLEPIEJ opisują ten zawód. "
-                    "Jeśli żaden nie pasuje, zwróć pustą listę dla danego elementu. "
-                    "Nie wymyślaj własnych tagów."
-                ),
-            },
-            {
-                "role": "user",
-                "content": (
-                    "Oto lista opisów stanowisk pracy. Każdy element ma numer indeksu.\n"
-                    "Zwróć tablicę obiektów w tej samej kolejności indeksów, "
-                    "gdzie każdy obiekt ma pola 'index' (ten sam numer co poniżej) "
-                    "oraz 'tags' (lista wybranych tagów dla danego zawodu).\n\n"
-                    f"{jobs_text}"
-                ),
-            },
+            {"role": "system", "content": get_system_content(tags, batch=True)},
+            {"role": "user", "content": get_user_content_batch(jobs_text)},
         ],
         response_format={
             "type": "json_schema",
             "json_schema": {
                 "name": "job_tags_batch",
                 "strict": True,
-                "schema": schema,
+                "schema": get_schema_batch_jobs(tags),
             },
         },
     )
@@ -295,7 +186,7 @@ def tag_jobs_in_dataframe(
     all_tags: list[list[str]] = [[] for _ in range(len(jobs))]
 
     for start in range(0, len(jobs), batch_size):
-        batch_jobs = jobs[start : start + batch_size]
+        batch_jobs = jobs[start: start + batch_size]
         batch_result = tag_jobs_batch_with_llm(
             batch_jobs,
             tags=tags,

@@ -5,33 +5,7 @@ import pandas as pd
 import tiktoken
 from dotenv import load_dotenv
 
-from S01E01_solution import TAG_DESCRIPTIONS, TAGS
-
-
-def build_system_content(tags: list[str]) -> str:
-    tag_descriptions_text = "\n".join(
-        f"- {tag}: {TAG_DESCRIPTIONS.get(tag, '')}" for tag in tags
-    )
-    return (
-        "Jesteś asystentem, który klasyfikuje zawody na podstawie obszernych opisów stanowisk. "
-        "Masz do dyspozycji następujące tagi wraz z opisami:\n"
-        f"{tag_descriptions_text}\n\n"
-        "Dla KAŻDEGO opisu zawodu wybierz 1-3 tagi, które NAJLEPIEJ opisują ten zawód. "
-        "Jeśli żaden nie pasuje, zwróć pustą listę dla danego elementu. "
-        "Nie wymyślaj własnych tagów."
-    )
-
-
-def build_user_content_batch(jobs: list[str]) -> str:
-    jobs_text_lines = [f"{i}: {job}" for i, job in enumerate(jobs)]
-    jobs_text = "\n".join(jobs_text_lines)
-    return (
-        "Oto lista opisów stanowisk pracy. Każdy element ma numer indeksu.\n"
-        "Zwróć tablicę obiektów w tej samej kolejności indeksów, "
-        "gdzie każdy obiekt ma pola 'index' (ten sam numer co poniżej) "
-        "oraz 'tags' (lista wybranych tagów dla danego zawodu).\n\n"
-        f"{jobs_text}"
-    )
+from llm_config import TAGS, get_system_content, get_user_content_batch
 
 
 def count_tokens_for_model(model: str, text: str) -> int:
@@ -59,8 +33,9 @@ def main() -> None:
     batch_size = 10
     jobs = df["job"].astype(str).tolist()[:batch_size]
 
-    system_content = build_system_content(TAGS)
-    user_content = build_user_content_batch(jobs)
+    system_content = get_system_content(TAGS, batch=True)
+    jobs_text = "\n".join(f"{i}: {job}" for i, job in enumerate(jobs))
+    user_content = get_user_content_batch(jobs_text)
 
     system_tokens = count_tokens_for_model(model_for_tiktoken, system_content)
     user_tokens = count_tokens_for_model(model_for_tiktoken, user_content)

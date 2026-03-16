@@ -168,6 +168,7 @@ def tag_jobs_batch_with_llm(
         valid_tags = [t for t in item_tags if t in tags]
         result[start_index + idx] = valid_tags
 
+    # print(f"From tag_jobs_batch_with_llm: {result}")  # For testing
     return result
 
 
@@ -289,6 +290,7 @@ def main():
 
     # 3. Otaguj zawody modelem językowym
     df_filtered = pd.read_csv(out_path, sep=";")
+    # df_filtered = df_filtered.iloc[[1,5]]  # For testing
     tagged_path = Path(__file__).parent / "people_tagged.csv"
     tags = TAGS
 
@@ -309,7 +311,9 @@ def main():
         lambda ts: isinstance(ts, list) and "transport" in ts
     )
     df_transport = df_tagged.loc[mask_transport].copy()
-
+    print(f"From df_transport: \n{df_transport}")  # For testing
+    transport_path = Path(__file__).parent / "people_transport.csv"
+    df_transport.to_csv(transport_path, sep=";")
     print(f"Liczba osób z tagiem 'transport': {len(df_transport)}")
 
     # 5. Wyślij odpowiedź do huba

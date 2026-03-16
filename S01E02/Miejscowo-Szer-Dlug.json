@@ -1,0 +1,39 @@
+{
+  "cities": [
+    {
+      "name": "Zabrze",
+      "latitude": 50.3141,
+      "longitude": 18.7858
+    },
+    {
+      "name": "Piotrków Trybunalski",
+      "latitude": 51.4129,
+      "longitude": 19.7032
+    },
+    {
+      "name": "Grudziądz",
+      "latitude": 53.4841,
+      "longitude": 18.7537
+    },
+    {
+      "name": "Tczew",
+      "latitude": 54.0924,
+      "longitude": 18.7779
+    },
+    {
+      "name": "Radom",
+      "latitude": 51.4020,
+      "longitude": 21.1471
+    },
+    {
+      "name": "Chelmno",
+      "latitude": 53.3492,
+      "longitude": 18.4261
+    },
+    {
+      "name": "Żarnowiec",
+      "latitude": 50.4844,
+      "longitude": 19.8631
+    }
+  ]
+}

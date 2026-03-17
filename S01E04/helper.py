@@ -56,28 +56,19 @@ def extract_links_from_text(text: str) -> list[str]:
     return re.findall(pattern, text)
 
 
-# Not used
-def get_urls() -> list[str]:
+def get_clean_urls(raw_links: list[str]) -> list[str]:
     """
-    Get urls from the hub. Not used anymore.
+    Get clean urls from the hub.
     """
-    url = "https:///dane/doc/index.md"
-    url_base = "https:///dane/doc/"
-    url_list = []
-
-    index_data = get_content(url)
-    index_data = index_data["data"]
-    if index_data["type"] == "text":
-        for line in index_data.split("\n"):
-            if line.startswith("[include file="):
-                url_list.append(get_url_from_line(line))
-
-    return [url_base + url if not url.startswith(("http://", "https://")) else url for url in url_list]
-
-
-# Not used
-def get_url_from_line(line: str) -> str:
-    """
-    Get url from line.
-    """
-    return line.strip().split("=")[1].strip().replace('"', '').replace(']', '').strip()
+    cleaned_urls = []
+    for raw_link in raw_links:
+        clean_link = raw_link.strip().replace('"', '').replace("'", "").strip()
+        if clean_link.startswith(("http://", "https://")):
+            cleaned_urls.append(clean_link)
+        elif clean_link.startswith("#") or not clean_link:
+            continue
+        elif clean_link.endswith((".md", ".png", ".jpg", ".jpeg")):
+            cleaned_urls.append(
+                f"https:///dane/doc/{clean_link}"
+            )
+    return list[str](set[str](cleaned_urls))

@@ -1,5 +1,6 @@
 import requests
 import os
+import re
 from dotenv import load_dotenv
 import base64
 
@@ -38,15 +39,27 @@ def get_content(url):
     response = requests.get(url)
     if url.lower().endswith(('.png', '.jpg', '.jpeg')):
         # Zwróć dane w formie gotowej dla Vision (np. base64)
-        return {"type": "image", "data": base64.b64encode(response.content).decode('utf-8')}
+        return {
+            "type": "image",
+            "data": base64.b64encode(response.content).decode('utf-8'),
+        }
     else:
         # Zwróć tekst
         return {"type": "text", "data": response.text}
 
 
+def extract_links_from_text(text: str) -> list[str]:
+    """
+    Extract links from text.
+    """
+    pattern = r'(?:\[include file=|\]\()([^\]\)]+)(?:\)|\])'
+    return re.findall(pattern, text)
+
+
+# Not used
 def get_urls() -> list[str]:
     """
-    Get urls from the hub.
+    Get urls from the hub. Not used anymore.
     """
     url = "https:///dane/doc/index.md"
     url_base = "https:///dane/doc/"
@@ -62,6 +75,7 @@ def get_urls() -> list[str]:
     return [url_base + url if not url.startswith(("http://", "https://")) else url for url in url_list]
 
 
+# Not used
 def get_url_from_line(line: str) -> str:
     """
     Get url from line.

@@ -9,6 +9,17 @@ Return your response ONLY in the following JSON format:
 }
 """
 
+EXTRACT_SYSTEM_PROMPT = """
+You are an AI assistant tasked with extracting data from transport documentation.
+Return ALWAYS and ONLY a valid JSON object with the following structure:
+{
+    "new_urls": ["url1", "url2"],
+    "extracted_knowledge": {"key": "value"}
+}
+If no links or info found, return empty lists/objects.
+"""
+
+# Empty tools, not used yet
 TOOLS = [
     {
         "type": "function",

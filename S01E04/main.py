@@ -1,9 +1,11 @@
-from helper import get_urls, get_content
+from helper import get_content
+from llm import ask_llm
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
 from config import SYSTEM_PROMPT, TOOLS
-import json
+from pprint import pprint
+
 load_dotenv()
 
 queue = ["https:///dane/doc/index.md"]
@@ -16,7 +18,8 @@ knowledge_base = {
     "budżet": 0,  # PP
     "zawartość": "kasety z paliwem do reaktora",
     "uwagi_specjalne": "brak"
-} # Tu będziesz zbierać dane do budowy deklaracji
+}
+
 client = OpenAI(
     base_url=os.getenv("BASE_URL"),
     api_key=os.getenv("OPENROUTER_API_KEY"),
@@ -24,53 +27,28 @@ client = OpenAI(
 
 while queue:
     current_url = queue.pop(0)
+    print(f"Current URL: {current_url}")
     if current_url in visited:
         continue
     # 1. Pobierz zawartość
     visited.add(current_url)
     content = get_content(current_url)
-    # 2. Jeśli tekst -> przekaż do LLM, żeby wyciągnął linki i wiedzę
-    if content["type"] == "text":
-        response = client.chat.completions.create(
-            model=os.getenv("MODEL_ID"),
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": content["data"]}
-            ],
-            tools=TOOLS,
-        )
-    # 3. Jeśli obraz -> przekaż do LLM (Vision), żeby opisał zawartość
-    if content["type"] == "image":
-        response = client.chat.completions.create(
-            model=os.getenv("MODEL_ID"),
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": [
-                    {
-                        "type": "text",
-                        "text": "Analyze this image and extract information and links."},
-                    {
-                        "type": "image_url",
-                        "image_url": {"url": f"data:image/png;base64,{content['data']}"}
-                    }
-                ]}
-            ],
-            tools=TOOLS,
-        )
+    # 2. Przekaż do LLM, żeby wyciągnął linki i wiedzę
+    response = ask_llm(client, content["data"], content["type"])
 
     # Dodaj nowe znalezione linki do queue
-    new_urls = json.loads(response.choices[0].message.content)["new_urls"]
-    queue.extend(new_urls)
+    for url in response.get("new_urls", []):
+        full_url = (url if url.startswith(("http://", "https://"))
+                    else f"https:///dane/doc/{url}")
+        if full_url not in visited:
+            queue.append(full_url)
+
     # Zapisz zdobytą wiedzę w knowledge_base
     knowledge_base.update(
-        json.loads(response.choices[0].message.content)["extracted_knowledge"]
+        response.get("extracted_knowledge", {})
     )
-    print(f"Knowledge base: {knowledge_base}")
 
-print(f"Knowledge base: {knowledge_base}")
-print(f"Queue: {queue}")
-print(f"Visited: {visited}")
-print(f"Current URL: {current_url}")
-print(f"Content: {content}")
-print(f"Response: {response}")
-print(f"New URLs: {new_urls}")
+pprint(f"Knowledge base: {knowledge_base}")
+pprint(f"Visited: {visited}")
+
+

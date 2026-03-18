@@ -1,0 +1,1 @@
+Wykonane bez LLMa

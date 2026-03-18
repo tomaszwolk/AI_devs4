@@ -2,6 +2,9 @@ from dotenv import load_dotenv
 import os
 import requests
 import base64
+import json
+from datetime import datetime
+
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
 VERIFY_URL = "https:///verify"
@@ -72,3 +75,26 @@ def analyze_board(image_base64: str) -> str:
     # W praktyce, w system prompt, musisz powiedzieć LLM-owi:
     # "Jeśli nie znasz stanu planszy, wywołaj get_image, a potem analyze_board".
     return "ANALIZA_POTRZEBNA"
+
+
+def save_messages_to_file(messages):
+    # Generujemy timestamp w formacie: RRRR-MM-DD_HH-MM-SS
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"logs/history_{timestamp}.json"
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+    # Przygotowujemy listę słowników
+    serializable_messages = []
+
+    for msg in messages:
+        # Konwersja obiektu modelu na słownik, jeśli to konieczne
+        if hasattr(msg, 'model_dump'):  # Obsługa obiektów OpenAI/Pydantic
+            serializable_messages.append(msg.model_dump())
+        elif isinstance(msg, dict):
+            serializable_messages.append(msg)
+        else:
+            serializable_messages.append(str(msg))
+
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(serializable_messages, f, ensure_ascii=False, indent=4)
+    print(f"\nHistoria zapisana do {filename}")

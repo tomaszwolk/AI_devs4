@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 import os
-from helper import get_image, rotate_field, reset_board
+from helper import get_image, rotate_field, reset_board, save_messages_to_file
 from openai import OpenAI
-from config import SYSTEM_PROMPT, TOOLS
+from config import SYSTEM_PROMPT, TOOLS, USER_PROMPT
 import json
 
 load_dotenv()
@@ -28,9 +28,18 @@ def main():
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": "Oto aktualny stan planszy (pierwszy obraz) oraz docelowy stan rozwiązania (drugi obraz). Porównaj je, opisz różnice dla każdego pola, a następnie wykonaj niezbędne obroty."},
-                {"type": "image_url", "image_url": {"url": image_data_current}},
-                {"type": "image_url", "image_url": {"url": image_data_solved}}
+                {
+                    "type": "text",
+                    "text": USER_PROMPT.format(ELECTRICITY_URL=ELECTRICITY_URL)
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {"url": image_data_current}
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {"url": image_data_solved}
+                }
             ]
         }
     ]
@@ -71,7 +80,7 @@ def main():
                         "content": tool_content,
                     }
                 )
-    print(f"Messages: {messages}")
+    save_messages_to_file(messages)
 
 
 if __name__ == "__main__":

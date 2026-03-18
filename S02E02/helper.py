@@ -61,3 +61,14 @@ def reset_board() -> str:
     url = VERIFY_URL + "?reset=1"
     response = requests.get(url)
     return response.status_code, response.json()
+
+
+def analyze_board(image_base64: str) -> str:
+    """
+    Analizuje obraz i zwraca tekstowy opis stanu pól 1x1 do 3x3.
+    """
+    # Ta funkcja w kodzie jest "stubem" (zaślepką),
+    # ponieważ to LLM ma ją wykonać.
+    # W praktyce, w system prompt, musisz powiedzieć LLM-owi:
+    # "Jeśli nie znasz stanu planszy, wywołaj get_image, a potem analyze_board".
+    return "ANALIZA_POTRZEBNA"

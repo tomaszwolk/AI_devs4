@@ -18,13 +18,8 @@ def main():
         api_key=os.getenv("OPENROUTER_API_KEY"),
     )
 
-    user_prompt = f"""
-    Rozwiąż puzle elektryczne na planszy 3x3.
-    Url do planszy: {ELECTRICITY_URL}
-    Url do rozwiązania: {SOLVED_ELECTRICITY_URL}
-    Pobierz obraz planszy z hubu i użyj narzędzi TOOLS do rozwiązania puzla elektrycznego.
-    Jeśli otrzymasz flagę FLG:... - zakończ działanie i zwróć flagę.
-    """
+    image_data_current = get_image(ELECTRICITY_URL)
+    image_data_solved = get_image(SOLVED_ELECTRICITY_URL)
 
     messages = [{
         "role": "system",
@@ -32,7 +27,11 @@ def main():
         },
         {
             "role": "user",
-            "content": user_prompt
+            "content": [
+                {"type": "text", "text": "Oto aktualny stan planszy (pierwszy obraz) oraz docelowy stan rozwiązania (drugi obraz). Porównaj je, opisz różnice dla każdego pola, a następnie wykonaj niezbędne obroty."},
+                {"type": "image_url", "image_url": {"url": image_data_current}},
+                {"type": "image_url", "image_url": {"url": image_data_solved}}
+            ]
         }
     ]
 
@@ -76,5 +75,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    reset_board()
+    main()
+    # reset_board()

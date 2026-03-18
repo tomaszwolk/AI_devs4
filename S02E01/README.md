@@ -1,16 +1,6 @@
-Logi z pracy LLM:
+MODEL_ID = openai/gpt-5.2
 
-code,description
-i0173,"Heavy-duty hydraulic piston from an industrial press, still functional"
-i6742,"extended-range anti-tank mine"
-i3879,"Strip of LED indicator lights wired to a crude battery pack"
-i5683,"Bag of stainless steel bolts, nuts, and washers in metric sizes"
-i1579,"Sword with chipped blade and loose guard"
-i4796,"Reactor fuel cassette stored in regulation shielding canister, fully certified"
-i7391,"Reactor fuel cassette containing enriched uranium pellets for portable nuclear power units"
-i5126,"Assault rifle lower receiver with trigger group installed"
-i8450,"Collapsible baton made of hardened steel"
-i8830,"Broken shortwave radio chassis that could be repaired with spare valves"
+Logi z pracy LLM:
 
 Iteration: 0
 

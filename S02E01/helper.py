@@ -1,8 +1,6 @@
 import requests
 from dotenv import load_dotenv
 import os
-import pandas as pd
-from io import StringIO
 
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")

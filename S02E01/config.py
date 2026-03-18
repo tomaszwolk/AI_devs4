@@ -30,32 +30,24 @@ TOOLS = [
                 "properties": {
                     "prompt": {"type": "string"},
                 },
-                "required": ["prompt"]
-            }
-        }
+                "required": ["prompt"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "reset_prompt",
             "description": "Resetuje licznik promptów.",
-            "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": []
-            }
-        }
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "get_data",
             "description": "Pobiera dane z hubu i zwraca ID i opis 10 przedmiotów.",
-            "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": []
-            }
-        }
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
 ]

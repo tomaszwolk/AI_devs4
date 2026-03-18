@@ -8,13 +8,11 @@ import json
 
 def main():
     load_dotenv()
-    HUB_API_KEY = os.getenv("HUB_API_KEY")
 
     # Stwórz folder data/ jeśli nie istnieje
     if not os.path.exists("data"):
         os.makedirs("data")
     # Pobierz dane z hubu
-    # url = f"https:///data/{HUB_API_KEY}/categorize.csv"
     data = get_data()
     print(data)
 
@@ -23,13 +21,16 @@ def main():
         api_key=os.getenv("OPENROUTER_API_KEY"),
     )
 
+    user_prompt = """
+        Pobierz dane z hubu i wyślij prompt do hubu w celu klasyfikacji.
+        """
     messages = [{
         "role": "system",
         "content": SYSTEM_PROMPT
         },
         {
             "role": "user",
-            "content": "Pobierz dane z hubu i wyślij prompt do hubu w celu klasyfikacji."
+            "content": user_prompt
         }
     ]
 

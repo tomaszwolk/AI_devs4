@@ -15,15 +15,14 @@ def get_help_data() -> dict:
         os.makedirs(HELP_PATH.parent, exist_ok=True)
 
     if not HELP_PATH.exists():
-        action = "help"
-        page = 1
-        mail_payload = create_mail_payload(action, page)
-        _, response = send_payload(mail_payload, MAIL_URL)
-        with open("data/help.json", "w") as f:
-            json.dump(response, f, indent=4)
-        return json.dumps(response)
+        mail_payload = {"apikey": API_KEY, "action": "help", "page": 1}
+        response = requests.post(MAIL_URL, json=mail_payload)
+        data = response.json()
+        with open(HELP_PATH, "w") as f:
+            json.dump(data, f, indent=4)
+        return json.dumps(data)
     else:
-        with open("data/help.json", "r") as f:
+        with open(HELP_PATH, "r") as f:
             help_data = json.load(f)
     return help_data
 
@@ -86,38 +85,37 @@ def get_available_actions() -> list[str]:
     return list(help_data["actions"].keys())
 
 
-def send_payload(payload: dict, url: str) -> tuple[int, dict]:
-    """
-    Send a payload to the hub.
-    """
-    response = requests.post(url, json=payload)
-    return response.status_code, response.json()
-
-
 def call_zmail_api(**parameters: dict) -> str:
     """
     Call the zmail api.
     """
+    # Validate action
     available_actions: list[str] = get_available_actions()
-
+    action = parameters["action"]
     if action not in available_actions:
         raise ValueError(
             f"Invalid action: {action}\nAvailable actions: {available_actions}"
         )
+
+    # Create payload and send request
     payload = {"apikey": API_KEY}
     payload.update(parameters)
-    _, response = send_payload(payload, MAIL_URL)
+    response = requests.post(MAIL_URL, json=payload)
     time.sleep(1.5)
-    return json.dumps(response)
+    return json.dumps(response.json())
 
 
 def verify_answer(date: str, password: str, confirmation_code: str) -> str:
     """
     Verify the answer.
     """
-    payload = create_payload(date, password, confirmation_code)
-    _, response = send_payload(payload, VERIFY_URL)
-    return json.dumps(response)
+    payload = create_payload(
+        password=password,
+        date=date,
+        confirmation_code=confirmation_code,
+    )
+    response = requests.post(VERIFY_URL, json=payload)
+    return json.dumps(response.json())
 
 
 TOOLS_DICT = {

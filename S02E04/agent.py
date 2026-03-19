@@ -2,10 +2,14 @@ from openai import OpenAI
 from tools import TOOLS_DICT
 from config import (
     MAIN_MODEL, MAIN_SYSTEM_PROMPT, TOOLS_SCHEMA,
-    OPENROUTER_API_KEY, BASE_URL
+    OPENROUTER_API_KEY, BASE_URL, BONUS_SYSTEM_PROMPT
 )
 import json
 from dotenv import load_dotenv
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -27,7 +31,10 @@ class MainAgent:
         print("Rozpoczynam pracę Agenta...")
         self.messages.append({"role": "user", "content": user_prompt})
 
-        while True:
+        iteration = 0
+        while iteration < 30:
+            iteration += 1
+            logger.info(f"Iteration: {iteration}")
             # 1. Wywołaj model OpenAI (MAIN_MODEL)
             # z obecną listą self.messages i TOOLS_SCHEMA
             response = CLIENT.chat.completions.create(
@@ -41,42 +48,52 @@ class MainAgent:
             msg = response.choices[0].message
             self.messages.append(msg)
 
+            if not msg.tool_calls:
+                logger.info(f"Response: {msg.content}")
+                # Żeby uniknąć nieskończoną pętlę
+                self.messages.append({
+                    "role": "user",
+                    "content": "Kontynuuj wyszukiwanie używając dostępnych \
+                    narzędzi, aż zdobędziesz flagę."
+                })
+                continue
+
             # 3. Jeśli asystent chce wywołać narzędzie (Tool Call):
             #   - Zidentyfikuj, którą funkcję z pliku tools.py wywołać
             #   - Wykonaj ją w Pythonie, przekazując argumenty z LLM
             #   - Dodaj wynik działania funkcji jako nową wiadomość
             #   - Kontynuuj pętlę (continue)
-            if msg.tool_calls:
-                for tool_call in msg.tool_calls:
-                    tool_name = tool_call.function.name
-                    args = json.loads(tool_call.function.arguments)
+            for tool_call in msg.tool_calls:
+                tool_name = tool_call.function.name
+                args = json.loads(tool_call.function.arguments)
 
-                    print(f"Tool call: {tool_name} with args: {args}\n")
-                    try:
-                        res = TOOLS_DICT[tool_name](**args)
-                        # if args else TOOLS_DICT[tool_name]()
-                    except Exception as e:
-                        print(f"Error calling tool {tool_name}: {e}")
-                        res = f"Error calling tool {tool_name}: {e}"
+                logger.info(f"Tool call: {tool_name} with args: {args}\n")
+                try:
+                    res = TOOLS_DICT[tool_name](**args)
+                    # if args else TOOLS_DICT[tool_name]()
+                except Exception as e:
+                    logger.error(f"Error calling tool {tool_name}: {e}")
+                    res = f"Error calling tool {tool_name}: {str(e)}"
 
-                    print(f"Tool response: {res}\n")
-                    self.messages.append(
-                        {
-                            "role": "tool",
-                            "tool_call_id": tool_call.id,
-                            "content": str(res),
-                        }
-                    )
+                logger.info(f"Tool response: {res}\n")
+                self.messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": tool_call.id,
+                        "content": str(res),
+                    }
+                )
 
             # 4. Jeśli w odpowiedzi narzędzia `submit_logs` pojawiła się flaga:
             #   - Wypisz flagę
             #   - break (wyjście z pętli)
             if "FLG:" in str(res):
-                print(f">>> Zdobyto flagę <<< {res}")
+                logger.info(f">>> Zdobyto flagę <<< {res}")
+                logger.info(f"Messages: {self.messages}")
                 return
 
-            # 5. (Opcjonalny krok bezpieczeństwa)
-            #   Zabezpiecz się przed nieskończoną pętlą
-            if len(self.messages) > 30:
-                print("Przekroczono limit iteracji")
-                break
+        # 5. (Opcjonalny krok bezpieczeństwa)
+        #   Zabezpiecz się przed nieskończoną pętlą
+        logger.error("Przekroczono limit iteracji")
+        logger.error(f"Messages: {self.messages}")
+        return

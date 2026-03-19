@@ -31,6 +31,11 @@ ZASADY DZIAŁANIA:
 7. Gdy uważasz, że masz dane, wywołaj 'verify_answer' z danymi date, password i confirmation_code. Jeśli system zwróci błąd, przeanalizuj go i szukaj dalej. Jeśli system zwróci flagę - zakończ zadanie.
 """
 
+BONUS_SYSTEM_PROMPT = """
+Przeszukaj całą zawartość skrzynki (używaj getInbox i czytaj wszystkie maile po kolei).
+Szukasz maila, który jest zapisany szyfrem. Zwróć szczególną uwagę na maile o dziwnych tytułach.
+Jeśli znajdziesz zaszyfrowany tekst, użyj szyfru harcerskiego GA-DE-RY-PO-LU-KI, aby odczytać zawartość i znaleźć bonusową flagę w formacie FLG{...}.
+"""
 TOOLS_SCHEMA = [
     {
         "type": "function",

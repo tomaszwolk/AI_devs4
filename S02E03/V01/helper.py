@@ -9,8 +9,26 @@ import re
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
 VERIFY_URL = "https:///verify"
+LOGS_URL = f"https:///data/{HUB_API_KEY}/failure.log"
 TASK = "failure"
 MODEL_ID = os.getenv("MODEL_ID")
+
+
+def get_logs() -> str:
+    """
+    Get logs from the hub.
+    """
+    response = requests.get(LOGS_URL)
+    return response.text
+
+
+def save_data(data: str, path: Path) -> None:
+    """
+    Save data to a file.
+    """
+    with open(path, "w") as f:
+        f.write(data)
+
 
 def create_payload(
     logs: str,

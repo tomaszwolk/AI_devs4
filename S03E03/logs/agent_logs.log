@@ -1,0 +1,92 @@
+2026-03-25 13:10:53,965 - [INFO] Sending command: start
+2026-03-25 13:11:34,525 - [INFO] Sending command: start
+2026-03-25 13:25:04,741 - [INFO] Sending command: start
+2026-03-25 13:25:27,655 - [ERROR] Error: None
+2026-03-25 13:26:30,163 - [INFO] Sending command: start
+2026-03-25 13:26:33,839 - [INFO] Rozpoczynam pracę Agenta...
+2026-03-25 13:26:33,840 - [INFO] Iteration: 1
+2026-03-25 13:26:36,883 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:26:40,079 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:26:40,079 - [INFO] Sending command: right
+2026-03-25 13:26:55,762 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+
+2026-03-25 13:26:55,763 - [INFO] Iteration: 2
+2026-03-25 13:26:57,478 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:26:59,466 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:26:59,466 - [INFO] Sending command: right
+2026-03-25 13:27:05,187 - [INFO] Tool response: {'code': 100, 'message': 'Player moved right.', 'board': [['.', '.', '.', '.', '.', '.', '.'], ['.', '.', '.', '.', 'B', '.', '.'], ['.', 'B', 'B', 'B', 'B', '.', '.'], ['.', 'B', 'B', 'B', '.', 'B', '.'], ['.', 'P', '.', '.', '.', 'B', 'G']], 'player': {'col': 2, 'row': 5}, 'goal': {'col': 7, 'row': 5}, 'blocks': [{'col': 2, 'top_row': 3, 'bottom_row': 4, 'direction': 'up'}, {'col': 3, 'top_row': 3, 'bottom_row': 4, 'direction': 'down'}, {'col': 4, 'top_row': 3, 'bottom_row': 4, 'direction': 'up'}, {'col': 5, 'top_row': 2, 'bottom_row': 3, 'direction': 'down'}, {'col': 6, 'top_row': 4, 'bottom_row': 5, 'direction': 'up'}], 'reached_goal': False}
+
+2026-03-25 13:27:05,188 - [INFO] Iteration: 3
+2026-03-25 13:27:06,574 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:27:08,514 - [INFO] Tool call: send_command with args: {'command': 'wait'}
+
+2026-03-25 13:27:08,514 - [INFO] Sending command: wait
+2026-03-25 13:27:24,879 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+
+2026-03-25 13:27:24,879 - [INFO] Iteration: 4
+2026-03-25 13:27:26,351 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:27:26,626 - [INFO] Tool call: send_command with args: {'command': 'wait'}
+
+2026-03-25 13:27:26,626 - [INFO] Sending command: wait
+2026-03-25 13:27:42,953 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+
+2026-03-25 13:27:42,953 - [INFO] Iteration: 5
+2026-03-25 13:27:44,297 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:27:45,903 - [INFO] Tool call: send_command with args: {'command': 'wait'}
+
+2026-03-25 13:27:45,903 - [INFO] Sending command: wait
+2026-03-25 13:27:51,159 - [INFO] Tool response: {'code': 100, 'message': 'Player waited.', 'board': [['.', '.', '.', '.', '.', '.', '.'], ['.', 'B', '.', 'B', '.', '.', '.'], ['.', 'B', '.', 'B', 'B', 'B', '.'], ['.', '.', 'B', '.', 'B', 'B', '.'], ['.', 'P', 'B', '.', '.', '.', 'G']], 'player': {'col': 2, 'row': 5}, 'goal': {'col': 7, 'row': 5}, 'blocks': [{'col': 2, 'top_row': 2, 'bottom_row': 3, 'direction': 'up'}, {'col': 3, 'top_row': 4, 'bottom_row': 5, 'direction': 'up'}, {'col': 4, 'top_row': 2, 'bottom_row': 3, 'direction': 'up'}, {'col': 5, 'top_row': 3, 'bottom_row': 4, 'direction': 'down'}, {'col': 6, 'top_row': 3, 'bottom_row': 4, 'direction': 'up'}], 'reached_goal': False}
+
+2026-03-25 13:27:51,159 - [INFO] Iteration: 6
+2026-03-25 13:27:52,742 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:27:54,100 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:27:54,101 - [INFO] Sending command: right
+2026-03-25 13:27:57,644 - [INFO] Tool response: {'code': 100, 'message': 'Player moved right.', 'board': [['.', 'B', '.', 'B', '.', '.', '.'], ['.', 'B', '.', 'B', '.', 'B', '.'], ['.', '.', 'B', '.', '.', 'B', '.'], ['.', '.', 'B', '.', 'B', '.', '.'], ['.', '.', 'P', '.', 'B', '.', 'G']], 'player': {'col': 3, 'row': 5}, 'goal': {'col': 7, 'row': 5}, 'blocks': [{'col': 2, 'top_row': 1, 'bottom_row': 2, 'direction': 'down'}, {'col': 3, 'top_row': 3, 'bottom_row': 4, 'direction': 'up'}, {'col': 4, 'top_row': 1, 'bottom_row': 2, 'direction': 'down'}, {'col': 5, 'top_row': 4, 'bottom_row': 5, 'direction': 'up'}, {'col': 6, 'top_row': 2, 'bottom_row': 3, 'direction': 'up'}], 'reached_goal': False}
+
+2026-03-25 13:27:57,644 - [INFO] Iteration: 7
+2026-03-25 13:27:58,991 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:28:00,255 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:28:00,255 - [INFO] Sending command: right
+2026-03-25 13:28:09,907 - [INFO] Tool response: {'code': 100, 'message': 'Player moved right.', 'board': [['.', '.', '.', '.', '.', 'B', '.'], ['.', 'B', 'B', 'B', '.', 'B', '.'], ['.', 'B', 'B', 'B', 'B', '.', '.'], ['.', '.', '.', '.', 'B', '.', '.'], ['.', '.', '.', 'P', '.', '.', 'G']], 'player': {'col': 4, 'row': 5}, 'goal': {'col': 7, 'row': 5}, 'blocks': [{'col': 2, 'top_row': 2, 'bottom_row': 3, 'direction': 'down'}, {'col': 3, 'top_row': 2, 'bottom_row': 3, 'direction': 'up'}, {'col': 4, 'top_row': 2, 'bottom_row': 3, 'direction': 'down'}, {'col': 5, 'top_row': 3, 'bottom_row': 4, 'direction': 'up'}, {'col': 6, 'top_row': 1, 'bottom_row': 2, 'direction': 'down'}], 'reached_goal': False}
+
+2026-03-25 13:28:09,907 - [INFO] Iteration: 8
+2026-03-25 13:28:11,454 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:28:12,299 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:28:12,299 - [INFO] Sending command: right
+2026-03-25 13:28:15,995 - [INFO] Tool response: {'code': 100, 'message': 'Player moved right.', 'board': [['.', '.', 'B', '.', '.', '.', '.'], ['.', '.', 'B', '.', 'B', 'B', '.'], ['.', 'B', '.', 'B', 'B', 'B', '.'], ['.', 'B', '.', 'B', '.', '.', '.'], ['.', '.', '.', '.', 'P', '.', 'G']], 'player': {'col': 5, 'row': 5}, 'goal': {'col': 7, 'row': 5}, 'blocks': [{'col': 2, 'top_row': 3, 'bottom_row': 4, 'direction': 'down'}, {'col': 3, 'top_row': 1, 'bottom_row': 2, 'direction': 'down'}, {'col': 4, 'top_row': 3, 'bottom_row': 4, 'direction': 'down'}, {'col': 5, 'top_row': 2, 'bottom_row': 3, 'direction': 'up'}, {'col': 6, 'top_row': 2, 'bottom_row': 3, 'direction': 'down'}], 'reached_goal': False}
+
+2026-03-25 13:28:15,996 - [INFO] Iteration: 9
+2026-03-25 13:28:17,432 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:28:18,422 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:28:18,424 - [INFO] Sending command: right
+2026-03-25 13:28:34,132 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+
+2026-03-25 13:28:34,134 - [INFO] Iteration: 10
+2026-03-25 13:28:35,619 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:28:35,794 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:28:35,794 - [INFO] Sending command: right
+2026-03-25 13:28:51,508 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+
+2026-03-25 13:28:51,510 - [INFO] Iteration: 11
+2026-03-25 13:28:53,016 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:28:53,223 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:28:53,224 - [INFO] Sending command: right
+2026-03-25 13:28:56,889 - [INFO] Tool response: {'code': 100, 'message': 'Player moved right.', 'board': [['.', '.', '.', '.', 'B', '.', '.'], ['.', '.', 'B', '.', 'B', '.', '.'], ['.', '.', 'B', '.', '.', 'B', '.'], ['.', 'B', '.', 'B', '.', 'B', '.'], ['.', 'B', '.', 'B', '.', 'P', 'G']], 'player': {'col': 6, 'row': 5}, 'goal': {'col': 7, 'row': 5}, 'blocks': [{'col': 2, 'top_row': 4, 'bottom_row': 5, 'direction': 'up'}, {'col': 3, 'top_row': 2, 'bottom_row': 3, 'direction': 'down'}, {'col': 4, 'top_row': 4, 'bottom_row': 5, 'direction': 'up'}, {'col': 5, 'top_row': 1, 'bottom_row': 2, 'direction': 'down'}, {'col': 6, 'top_row': 3, 'bottom_row': 4, 'direction': 'down'}], 'reached_goal': False}
+
+2026-03-25 13:28:56,890 - [INFO] Iteration: 12
+2026-03-25 13:28:58,214 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 13:28:59,662 - [INFO] Tool call: send_command with args: {'command': 'right'}
+
+2026-03-25 13:28:59,663 - [INFO] Sending command: right
+2026-03-25 13:29:00,809 - [INFO] Tool response: {'code': 0, 'message': '{FLG:INSTALLED}'}
+
+2026-03-25 13:29:00,809 - [INFO] >>> Zdobyto flagę <<< {'code': 0, 'message': '{FLG:INSTALLED}'}
+2026-03-25 13:29:00,812 - [INFO] Historia konwersacji zapisana do success_history.json

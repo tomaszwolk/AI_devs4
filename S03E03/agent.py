@@ -53,6 +53,11 @@ def _assistant_message_to_dict(msg) -> dict:
     return d
 
 
+DEFAULT_CONTINUATION_HINT = textwrap.dedent("""
+    Kontynuuj działanie używając dostępnych narzędzi,
+    aż zdobędziesz flagę {FLG:...}.""").strip()
+
+
 class MainAgent:
     def __init__(self, model: str, system_prompt: str):
         self.messages = [{"role": "system", "content": system_prompt}]
@@ -65,8 +70,17 @@ class MainAgent:
             json.dump(self.messages, f, indent=4, ensure_ascii=False)
         logger.info(f"Historia konwersacji zapisana do {filename}")
 
-    def run(self, user_prompt: str, additional_messages: list[dict] = None):
+    def run(
+        self,
+        user_prompt: str,
+        additional_messages: list[dict] | None = None,
+        interactive: bool = True,
+        continuation_hint: str | None = None,
+    ):
         """Uruchamia główną pętlę agenta."""
+        hint = (
+            continuation_hint if continuation_hint is not None else DEFAULT_CONTINUATION_HINT
+        )
         logger.info("Rozpoczynam pracę Agenta...")
         self.messages.append({"role": "user", "content": user_prompt})
         if additional_messages:
@@ -91,16 +105,25 @@ class MainAgent:
             self.messages.append(_assistant_message_to_dict(msg))
 
             if not msg.tool_calls:
-                logger.info(f"Odpowiedź asystenta: {msg.content}")
-                # Żeby uniknąć nieskończoną pętlę
-                self.messages.append(
-                    {
-                        "role": "user",
-                        "content": textwrap.dedent("""
-                        Kontynuuj działanie używając dostępnych narzędzi,
-                        aż zdobędziesz flagę {FLG:...}.""").strip(),
-                    }
-                )
+                content = msg.content or ""
+                logger.info(f"Odpowiedź asystenta: {content}")
+
+                if interactive:
+                    print("\n--- Asystent ---\n", content, "\n", sep="")
+                    try:
+                        user_reply = input(
+                            "Odpowiedź (Enter = kontynuuj autonomicznie): "
+                        )
+                    except EOFError:
+                        logger.info("EOF na stdin — kontynuacja autonomiczna.")
+                        user_reply = ""
+                    reply_stripped = user_reply.strip()
+                    if reply_stripped:
+                        self.messages.append({"role": "user", "content": reply_stripped})
+                    else:
+                        self.messages.append({"role": "user", "content": hint})
+                else:
+                    self.messages.append({"role": "user", "content": hint})
                 continue
 
             # 3. Wykonywanie narzędzi

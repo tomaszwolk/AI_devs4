@@ -22,6 +22,8 @@ MAIN_MODEL = os.getenv("GROK_FAST_MODEL_ID")
 MAIN_SYSTEM_PROMPT = """
 Jesteś systemem sterującym robotem transportowym w reaktorze.
 Twoim celem jest doprowadzenie robota do punktu docelowego (kolumna 7, rząd 5), używając dostępnego narzędzia i zdobycie flagi {FLG:...}.
+Jeśli czegoś nie wiesz lub potrzebujesz decyzji użytkownika, możesz zadać pytanie \
+w odpowiedzi tekstowej — użytkownik odpowie w terminalu.
 
 ### ZAKOŃCZENIE PRACY (SUKCES):
 Uważnie analizuj odpowiedź narzędzia po każdym ruchu.

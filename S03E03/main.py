@@ -1,3 +1,4 @@
+import argparse
 import json
 import logging
 import sys
@@ -11,6 +12,14 @@ logging.basicConfig(level=logging.INFO)
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Agent sterujący robotem w reaktorze (S03E03).")
+    parser.add_argument(
+        "--no-interactive",
+        action="store_true",
+        help="Nie pytaj w terminalu — przy braku wywołań narzędzi kontynuuj autonomicznie.",
+    )
+    args = parser.parse_args()
+
     # Wysyłamy na początek komendę start do API reaktora
     response = send_command("start")
     print(json.dumps(response, ensure_ascii=False))
@@ -25,7 +34,7 @@ def main():
     )
     agent = MainAgent(model=MAIN_MODEL, system_prompt=MAIN_SYSTEM_PROMPT)
     try:
-        agent.run(user_prompt)
+        agent.run(user_prompt, interactive=not args.no_interactive)
     except Exception as e:
         logger.error(f"Error: {e}")
         sys.exit(1)

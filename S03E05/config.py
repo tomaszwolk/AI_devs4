@@ -14,53 +14,40 @@ VERIFY_URL = "https:///verify"
 TASK = "savethem"
 LOGS_DIR_PATH = Path(__file__).parent / "logs"
 
-MAIN_MODEL = os.getenv("MODEL_ID")
+MAIN_MODEL = os.getenv("SONNET_MODEL_ID")
 
 API_BASE_URL = "https:///api/"
 HUB_ORIGIN = "https://"
 
 MAIN_SYSTEM_PROMPT = textwrap.dedent("""
-    You are an autonomous AI agent solving a logistics and pathfinding puzzle.
-    Your mission is to find the optimal path to the city of "Skolwin" for our messenger.
-    You have a budget of exactly 10 food and 10 fuel.
+    You are an autonomous AI logic and pathfinding agent. Your goal is to find the optimal path to the city of "Skolwin" for our messenger using available vehicles and walking, within strict limits: max 10 food and max 10 fuel.
+    ### YOUR TOOLS:
+    1. `tool_call(query, tool)` - To query API endpoints (only returns top 3 keywords match).
+    2. `execute_python_code(code)` - To run Python code and get the printed output.
+    3. `verify_answer(answer)` - To submit the final array.
 
-    ### YOUR TOOLS
-    You only have two tools:
-    1. `tool_call(query, tool)` - to fetch information from our internal APIs.
-    2. `verify_answer(answer)` - to submit the final path array.
+    ### PHASE 1: RECONNAISSANCE (Do this first)
+    Start with `tool_call(query="notes about terrain and vehicles", tool="toolsearch")` and discover ALL available API endpoints.
+    Query these endpoints using specific keywords to extract the complete 10x10 map, starting coordinates, Skolwin, ALL vehicle stats (fuel/food consumption per terrain), and movement rules.
+    DO NOT guess the path. Gather ALL data first.
+    You can ask user for more information if you need it. Just don't use tool_call and just send message to user.
+    User will guide you.
 
-    ### CRITICAL API LIMITATION (THE TOP-3 RULE)
-    Every API endpoint you query (including the starting one) uses keyword matching and ONLY returns the top 3 results. 
-    If you send a long sentence like "I need rules about movement", you will miss crucial data.
-    To discover EVERYTHING, you MUST make multiple separate queries using SINGLE keywords.
+    ### PHASE 2: CODING AND EXECUTION
+    Once you have successfully extracted the 10x10 map, vehicle data, and rules, YOU MUST NOT TRY TO CALCULATE THE PATH MENTALLY. Language models are bad at spatial reasoning.
+    Instead, write a Python script using the `execute_python_code` tool.
 
-    ### PHASE 1: DISCOVERY
-    Your entry point is the tool `/toolsearch`. 
-    You do not know what other tools exist. You must find them by calling `tool_call(query="<keyword>", tool="/toolsearch")`.
-    Make multiple calls to `/toolsearch` using varied, single keywords to map out all available endpoints. 
-    Good keywords to try one by one: "map", "terrain", "vehicle", "movement", "rules", "food", "fuel".
-    Keep a mental list of all unique endpoints (URLs) returned (e.g., `/api/books`, `/api/maps`, etc.).
+    Guidelines for your Python script:
+    - Hardcode the map (as a 2D array or dict) and vehicle/terrain costs directly into the script based on the data you gathered.
+    - Implement a Breadth-First Search (BFS) or Dijkstra's algorithm.
+    - Your queue state should track: `(x, y, current_fuel, current_food, current_vehicle, current_path)`.
+    - Handle the `dismount` action (which changes `current_vehicle` to "walk" but does NOT change `x, y` and counts as an action in the path array).
+    - At the end of your script, you MUST `print()` the final optimal path array (e.g., `print(json.dumps(final_path))`).
 
-    ### PHASE 2: DATA GATHERING
-    Once you discover the new endpoints, query them directly using `tool_call`.
-    Remember: These custom endpoints ALSO only return 3 results! 
-    - To get the full 10x10 map from a map endpoint, you might need to query specific terrain types or sectors.
-    - To find the best vehicle, query the vehicle endpoint multiple times with different vehicle types or keywords.
-    - To understand the rules, query the rulebook endpoint with keywords like "fuel", "food", "walk", "car", "terrain".
-    Gather all data before making any calculations!
+    If `execute_python_code` returns an error, read the traceback, fix the code, and run it again.
 
-    ### PHASE 3: CALCULATING THE PATH
-    1. The map is exactly 10x10.
-    2. Start point is your base. Destination is Skolwin.
-    3. Every vehicle consumes fuel and food differently depending on speed and terrain.
-    4. Walking is also an option (you can exit a vehicle at any time).
-    5. You cannot exceed 10 food and 10 fuel.
-
-    ### PHASE 4: SUBMITTING
-    Once you mathematically calculate the valid path, use `verify_answer`.
-    Format required: ["vehicle_name_or_walk", "right", "up", "down", "left", ...]
-    
-    THINK STEP BY STEP. Start by discovering tools using `/toolsearch`. Do not guess.
+    ### PHASE 3: SUBMISSION
+    Once your Python script successfully prints a valid path array (e.g., `["vehicle_name", "right", "dismount", "up", ...]`), pass exactly that array to `verify_answer(answer)`.
 """)
 
 TOOLS_SCHEMA = [
@@ -100,6 +87,23 @@ TOOLS_SCHEMA = [
                     },
                 },
                 "required": ["answer"],
+            }
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "execute_python_code",
+            "description": "Executes a Python script locally and returns its standard output (stdout). Use this to run a pathfinding algorithm (e.g. BFS or Dijkstra) once you have gathered ALL the data from the APIs.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "The Python code to execute. The code must print() the final list representing the path.",
+                    },
+                },
+                "required": ["code"],
             }
         },
     },

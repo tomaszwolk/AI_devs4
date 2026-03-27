@@ -1,7 +1,9 @@
+import sys
 import json
 import logging
 import os
 import textwrap
+import time
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -90,6 +92,7 @@ class MainAgent:
         while iteration < 30:
             iteration += 1
             logger.info(f"Iteration: {iteration}")
+            time.sleep(3)  # used to avoid rate limit
 
             # 1. Wywołaj model OpenAI
             response = CLIENT.chat.completions.create(
@@ -130,6 +133,30 @@ class MainAgent:
             for tool_call in msg.tool_calls:
                 tool_name = tool_call.function.name
                 args = json.loads(tool_call.function.arguments)
+
+                # --- LOGIKA POTWIERDZENIA WYKONANIA KODU PYTHON ---
+                if tool_name == "execute_python_code":
+                    print("\n" + "="*50)
+                    print("⚠️  AGENT CHCE URUCHOMIĆ KOD PYTHON:")
+                    print("-" * 50)
+                    print(args.get("code", "Brak kodu?"))
+                    print("-" * 50)
+
+                    user_confirm = input("Czy chcesz wykonać ten kod? (y/n/edycja): ").strip().lower()
+
+                    if user_confirm == 'n':
+                        res = "Error: Execution cancelled by user."
+                        logger.warning("Użytkownik odrzucił wykonanie kodu.")
+                    elif user_confirm == 'edycja':
+                        print("Tryb edycji: Wklej poprawiony kod i naciśnij Ctrl+D (Linux/Mac) lub Ctrl+Z (Win) + Enter:")
+                        new_code = sys.stdin.read()
+                        args["code"] = new_code
+                        logger.info("Użytkownik ręcznie wyedytował kod.")
+                        res = TOOLS_DICT[tool_name](**args)
+                    else:
+                        logger.info("Użytkownik zatwierdził wykonanie kodu.")
+                        res = TOOLS_DICT[tool_name](**args)
+                # --------------------------------------------------------
 
                 logger.info(f"Tool call: {tool_name} with args: {args}\n")
                 try:

@@ -5,8 +5,7 @@ import json
 
 
 def main():
-    # Uruchom uv run bonus.py
-    # Wyśle narzędzia do centrali. Potem zobacz na /debug
+    # Uruchom uv run bonus.py api "string"
     query = sys.argv[2]
     tool = sys.argv[1]
 

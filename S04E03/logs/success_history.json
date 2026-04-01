@@ -1,0 +1,294 @@
+[
+    {
+        "role": "system",
+        "content": "Jesteś elitarnym dowódcą misji ratunkowej w zrujnowanym mieście Domatowo.\nTwoim celem jest odnalezienie rannego partyzanta i ewakuowanie go helikopterem.\n\nZ przechwyconego komunikatu wiemy: \"Ukryłem się w jednym z najwyższych bloków.\"\nZ analizy mapy wynika, że są to kafelki typu \"block3\" (symbol B3).\n\nZASADY I MECHANIKA:\n1. Komunikujesz się z serwerem używając narzędzia `call_verify_api`. Przekazujesz tam obiekt JSON (payload), który trafi pod klucz \"answer\".\n2. Mapa to siatka 11x11. Kolumny to A-K, wiersze to 1-11. Lewy górny róg to A1, prawy dolny to K11.\n3. Masz maksymalnie 300 Punktów Akcji (AP). Oszczędzaj je!\n   - Utworzenie transportera: 5 AP + 5 AP za każdego zwiadowcę (max 4 na pojazd).\n   - Utworzenie zwiadowcy (scout): 5 AP.\n   - Ruch transportera: 1 AP za pole (wyłącznie po drogach \"road\").\n   - Ruch zwiadowcy: 7 AP za pole (bardzo drogo, używaj ich tylko na krótkich dystansach!).\n   - Inspekcja (inspect): 1 AP.\n4. Gra AUTOMATYCZNIE oblicza ścieżkę przy akcji \"move\". Podajesz tylko cel `where`.\n5. Transportery respawnują się na polach A6, B6, C6, D6 (w tej kolejności).\n\nLOKALIZACJE CELÓW (Bloki B3):\nKluczowe skupiska bloków B3 na mapie to:\n- KLASTER 1 (Północ): F1, G1, F2, G2. Najbliższa ulica dla transportera to D2 lub D1.\n- KLASTER 2 (Południowy Zachód): A10, B10, C10, A11, B11, C11. Najbliższa ulica to B9, C9 lub D9.\n- KLASTER 3 (Południowy Wschód): H10, I10, H11, I11. Najbliższa ulica to H9 lub I9.\n\nTWOJA PROCEDURA DZIAŁANIA (Krok po kroku):\nKROK 1. Wyślij {\"action\": \"reset\"}, aby upewnić się, że plansza i AP są zresetowane.\nKROK 2. Stwórz transporter z maksymalną załogą: {\"action\": \"create\", \"type\": \"transporter\", \"passengers\": 4}. Zapisz jego hash!\nKROK 3. Przemieść transporter w pobliże KLASTRA 1 (np. D2): {\"action\": \"move\", \"object\": \"HASH_TRANSPORTERA\", \"where\": \"D2\"}.\nKROK 4. Wysadź zwiadowców: {\"action\": \"dismount\", \"object\": \"HASH_TRANSPORTERA\", \"passengers\": 4}.\nKROK 5. Pobierz listę obiektów: {\"action\": \"getObjects\"}. Zidentyfikuj hashe zwiadowców i ich nowe pozycje wokół transportera.\nKROK 6. Wydaj każdemu zwiadowcy polecenie ruchu na jedno z pól KLASTRA 1 (F1, G1, F2, G2).\nKROK 7. Po dojściu zwiadowcy, wykonaj inspekcję: {\"action\": \"inspect\", \"object\": \"HASH_ZWIADOWCY\"}.\nKROK 8. Po inspekcjach pobierz logi: {\"action\": \"getLogs\"}. Przeanalizuj czy w logach zwiadowca informuje o znalezieniu człowieka!\nKROK 9. Jeśli log potwierdza znalezienie człowieka na danym polu (np. G1), wezwij ewakuację! {\"action\": \"callHelicopter\", \"destination\": \"G1\"}. To da Ci flagę.\nKROK 10. Jeśli człowieka nie było w KLASTRZE 1, stwórz KOLEJNY transporter (zrespi się na B6), pojedź do KLASTRA 2 (np. na pole C9), wysadź zwiadowców, zbadaj bloki w KLASTRZE 2. Powtarzaj aż znajdziesz cel.\n\nDziałaj metodycznie. Sprawdzaj odpowiedzi API. Wykonuj akcje po kolei i na bieżąco analizuj `getObjects` i `getLogs`."
+    },
+    {
+        "role": "user",
+        "content": "Rozpocznij wykonanie zadania.\n- informacje o dostępnych akcjach i parametrach są opisane w [{'action': 'help', 'description': 'Returns API usage and action reference.', 'params': []}, {'action': 'reset', 'description': 'Resets board state, queue and action points to defaults, then rolls partisan position again.', 'params': []}, {'action': 'create', 'description': 'Creates a new transporter or scout unit on the next free spawn slot (A6 -> D6).', 'params': {'type': 'transporter|scout', 'passengers': '1-4 (required only for transporter)'}}, {'action': 'move', 'description': 'Queues movement of a unit to target field with calculated path (road-only for transporter, shortest orthogonal for scout).', 'params': {'object': 'hash', 'where': 'A1..K11'}}, {'action': 'inspect', 'description': 'Performs scout reconnaissance and appends a log entry based on current scout field.', 'params': {'object': 'hash (scout)'}}, {'action': 'dismount', 'description': 'Removes selected number of scouts from transporter and spawns them on free tiles around vehicle.', 'params': {'object': 'hash (transporter)', 'passengers': '1-4'}}, {'action': 'getObjects', 'description': 'Returns all currently known units with type, position and identifier.', 'params': []}, {'action': 'getMap', 'description': 'Returns clean map layout; optional symbols filter keeps only selected symbols/fields.', 'params': {'symbols': '[optional] array of 2-char symbols or coordinates (e.g. KS, SZ, B3, C4)'}}, {'action': 'searchSymbol', 'description': 'Searches clean map for all fields matching the provided 2-character symbol.', 'params': {'symbol': 'exactly 2 alphanumeric characters'}}, {'action': 'getLogs', 'description': 'Returns collected inspect log entries.', 'params': []}, {'action': 'expenses', 'description': 'Returns action points spending history (action name and action cost).', 'params': []}, {'action': 'actionCost', 'description': 'Returns action points cost rules for all operations.', 'params': []}, {'action': 'callHelicopter', 'description': 'Calls evacuation helicopter to selected destination, but only after any scout confirms a human.', 'params': {'destination': 'A1..K11'}}].\n- mapa jest opisana w {'name': 'Domatowo', 'size': 11, 'tiles': {'road': {'label': 'Ulica', 'symbol': 'UL'}, 'tree': {'label': 'Drzewa', 'symbol': 'DR'}, 'house': {'label': 'Dom', 'symbol': 'DM'}, 'empty': {'label': 'Pusta przestrzen', 'symbol': '  '}, 'block1': {'label': 'Blok 1p', 'symbol': 'B1'}, 'block2': {'label': 'Blok 2p', 'symbol': 'B2'}, 'block3': {'label': 'Blok 3p', 'symbol': 'B3'}, 'church': {'label': 'Kosciol', 'symbol': 'KS'}, 'school': {'label': 'Szkola', 'symbol': 'SZ'}, 'parking': {'label': 'Parking', 'symbol': 'PK'}, 'field': {'label': 'Boisko', 'symbol': 'BS'}}, 'grid': [['tree', 'road', 'road', 'road', 'empty', 'block3', 'block3', 'tree', 'empty', 'parking', 'parking'], ['tree', 'tree', 'empty', 'road', 'road', 'block3', 'block3', 'tree', 'road', 'parking', 'parking'], ['empty', 'empty', 'empty', 'road', 'parking', 'empty', 'empty', 'tree', 'road', 'empty', 'empty'], ['block1', 'block1', 'empty', 'road', 'parking', 'school', 'school', 'school', 'road', 'field', 'field'], ['block1', 'block1', 'empty', 'road', 'parking', 'school', 'school', 'school', 'road', 'field', 'field'], ['road', 'road', 'road', 'road', 'road', 'road', 'road', 'road', 'road', 'road', 'empty'], ['block2', 'block2', 'empty', 'road', 'empty', 'church', 'church', 'church', 'empty', 'tree', 'empty'], ['block2', 'block2', 'empty', 'road', 'empty', 'church', 'church', 'church', 'empty', 'tree', 'empty'], ['empty', 'road', 'road', 'road', 'road', 'road', 'road', 'road', 'road', 'road', 'empty'], ['block3', 'block3', 'block3', 'empty', 'tree', 'empty', 'empty', 'block3', 'block3', 'tree', 'empty'], ['block3', 'block3', 'block3', 'empty', 'tree', 'empty', 'empty', 'block3', 'block3', 'tree', 'empty']]}."
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_WtoBWdFeOk0MtXzqnLv0uSW9",
+                "function": {
+                    "arguments": "{\"answer\":{\"action\":\"reset\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_WtoBWdFeOk0MtXzqnLv0uSW9",
+        "content": "{\"code\": 50, \"message\": \"Board reset completed.\", \"status\": \"ok\", \"queue_id\": \"3b6a2b90951ffce189b9e579bca6ec4e\"}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_QEqNmNtJpTW6E2SbJlDpmWpC",
+                "function": {
+                    "arguments": "{\"answer\":{\"action\":\"create\",\"type\":\"transporter\",\"passengers\":4}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_QEqNmNtJpTW6E2SbJlDpmWpC",
+        "content": "{\"code\": 10, \"message\": \"Object created.\", \"object\": \"2c545d0d1c4eb2dde1b5bab694af9280\", \"type\": \"transporter\", \"spawn\": \"A6\", \"crew\": [{\"id\": \"369c85cdac036c5bb1744258b5374405\", \"role\": \"scout\"}, {\"id\": \"f908a64dbe69b9297c6e39e5027b5af3\", \"role\": \"scout\"}, {\"id\": \"e0943ced51051138c87e2d84c1895d70\", \"role\": \"scout\"}, {\"id\": \"9493339fa0c19fa8a100e7cc4a02a6be\", \"role\": \"scout\"}], \"queue_id\": \"446c8490ed1926b524f019cc8dc70757\", \"action_points_left\": 275}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_sXcDLYJiVh7Z18351wd8iRZD",
+                "function": {
+                    "arguments": "{\"answer\":{\"action\":\"move\",\"object\":\"2c545d0d1c4eb2dde1b5bab694af9280\",\"where\":\"D2\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_sXcDLYJiVh7Z18351wd8iRZD",
+        "content": "{\"code\": 20, \"message\": \"Move queued.\", \"object\": \"2c545d0d1c4eb2dde1b5bab694af9280\", \"from\": \"A6\", \"where\": \"D2\", \"queue_id\": \"b325086d4f688262d111c154acc85ca7\", \"path_steps\": 8, \"action_points_left\": 268}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_r5gShFG8p0itaKryIrWPP6R1",
+                "function": {
+                    "arguments": "{\"answer\":{\"action\":\"dismount\",\"object\":\"2c545d0d1c4eb2dde1b5bab694af9280\",\"passengers\":4}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_r5gShFG8p0itaKryIrWPP6R1",
+        "content": "{\"code\": 40, \"message\": \"Dismount completed.\", \"object\": \"2c545d0d1c4eb2dde1b5bab694af9280\", \"dismounted\": [\"369c85cdac036c5bb1744258b5374405\", \"f908a64dbe69b9297c6e39e5027b5af3\", \"e0943ced51051138c87e2d84c1895d70\", \"9493339fa0c19fa8a100e7cc4a02a6be\"], \"spawned\": [{\"scout\": \"369c85cdac036c5bb1744258b5374405\", \"where\": \"D1\"}, {\"scout\": \"f908a64dbe69b9297c6e39e5027b5af3\", \"where\": \"E2\"}, {\"scout\": \"e0943ced51051138c87e2d84c1895d70\", \"where\": \"D3\"}, {\"scout\": \"9493339fa0c19fa8a100e7cc4a02a6be\", \"where\": \"C2\"}], \"queue_id\": \"8ad61dc281a10fb1bce7b5f1ed1b152b\", \"action_points_left\": 268}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_D8x6LIn3ZDFgQkeIadWwIu5F",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"move\", \"object\": \"369c85cdac036c5bb1744258b5374405\", \"where\": \"F1\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            },
+            {
+                "id": "call_1C5IfWJX3N7QUBicQ2H47LmB",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"move\", \"object\": \"f908a64dbe69b9297c6e39e5027b5af3\", \"where\": \"G1\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 1
+            },
+            {
+                "id": "call_lQ30IRlDM4Z69qDtBT6RubXp",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"move\", \"object\": \"e0943ced51051138c87e2d84c1895d70\", \"where\": \"F2\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 2
+            },
+            {
+                "id": "call_77Tv1VjLNo5xSWRN33UZSeRz",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"move\", \"object\": \"9493339fa0c19fa8a100e7cc4a02a6be\", \"where\": \"G2\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 3
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_D8x6LIn3ZDFgQkeIadWwIu5F",
+        "content": "{\"code\": 20, \"message\": \"Move queued.\", \"object\": \"369c85cdac036c5bb1744258b5374405\", \"from\": \"D1\", \"where\": \"F1\", \"queue_id\": \"d9654e7b18d9d417df5d20f61dc25b72\", \"path_steps\": 3, \"action_points_left\": 254}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_1C5IfWJX3N7QUBicQ2H47LmB",
+        "content": "{\"code\": 20, \"message\": \"Move queued.\", \"object\": \"f908a64dbe69b9297c6e39e5027b5af3\", \"from\": \"E2\", \"where\": \"G1\", \"queue_id\": \"c28d2954d86048a2626c1a16ab769d30\", \"path_steps\": 4, \"action_points_left\": 233}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_lQ30IRlDM4Z69qDtBT6RubXp",
+        "content": "{\"code\": 20, \"message\": \"Move queued.\", \"object\": \"e0943ced51051138c87e2d84c1895d70\", \"from\": \"D3\", \"where\": \"F2\", \"queue_id\": \"6f97e601a84cf2e2a61fcff46b40761d\", \"path_steps\": 4, \"action_points_left\": 212}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_77Tv1VjLNo5xSWRN33UZSeRz",
+        "content": "{\"code\": 20, \"message\": \"Move queued.\", \"object\": \"9493339fa0c19fa8a100e7cc4a02a6be\", \"from\": \"C2\", \"where\": \"G2\", \"queue_id\": \"9e6b11ede466536a7993e1c9ce1665bf\", \"path_steps\": 5, \"action_points_left\": 184}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_K7DWs8Nd68ygrfrepCPTjQVf",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"inspect\", \"object\": \"369c85cdac036c5bb1744258b5374405\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            },
+            {
+                "id": "call_Dxw7jTrYdXPwV3NJkhyPCyW4",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"inspect\", \"object\": \"f908a64dbe69b9297c6e39e5027b5af3\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 1
+            },
+            {
+                "id": "call_UJPKnLUoDr6QKprKxr0hOMu3",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"inspect\", \"object\": \"e0943ced51051138c87e2d84c1895d70\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 2
+            },
+            {
+                "id": "call_DsNKa3N4ZC1L5LwsYTyAGiaZ",
+                "function": {
+                    "arguments": "{\"answer\": {\"action\": \"inspect\", \"object\": \"9493339fa0c19fa8a100e7cc4a02a6be\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 3
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_K7DWs8Nd68ygrfrepCPTjQVf",
+        "content": "{\"code\": 30, \"message\": \"Searching... check logs for details.\", \"object\": \"369c85cdac036c5bb1744258b5374405\", \"entries\": 1, \"action_points_left\": 183}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_Dxw7jTrYdXPwV3NJkhyPCyW4",
+        "content": "{\"code\": 30, \"message\": \"Searching... check logs for details.\", \"object\": \"f908a64dbe69b9297c6e39e5027b5af3\", \"entries\": 2, \"action_points_left\": 182}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_UJPKnLUoDr6QKprKxr0hOMu3",
+        "content": "{\"code\": 30, \"message\": \"Searching... check logs for details.\", \"object\": \"e0943ced51051138c87e2d84c1895d70\", \"entries\": 3, \"action_points_left\": 181}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_DsNKa3N4ZC1L5LwsYTyAGiaZ",
+        "content": "{\"code\": 30, \"message\": \"Searching... check logs for details.\", \"object\": \"9493339fa0c19fa8a100e7cc4a02a6be\", \"entries\": 4, \"action_points_left\": 180}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_f5MWLhxplBso9boyXfSwt3Kl",
+                "function": {
+                    "arguments": "{\"answer\":{\"action\":\"getLogs\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_f5MWLhxplBso9boyXfSwt3Kl",
+        "content": "{\"code\": 60, \"message\": \"Inspect logs loaded.\", \"logs\": [{\"scout\": \"369c85cdac036c5bb1744258b5374405\", \"msg\": \"Pok\\u00f3j pusty. \\u015alady po kim\\u015b s\\u0105, ale bardzo stare.\", \"field\": \"F1\"}, {\"scout\": \"f908a64dbe69b9297c6e39e5027b5af3\", \"msg\": \"Jest tutaj osoba. M\\u0119\\u017cczyzna oko\\u0142o 30 lat siedzia\\u0142 na parterze za workami z piaskiem.\", \"field\": \"G1\"}, {\"scout\": \"e0943ced51051138c87e2d84c1895d70\", \"msg\": \"Pusto. W k\\u0105cie le\\u017cy mokry p\\u0142aszcz.\", \"field\": \"F2\"}, {\"scout\": \"9493339fa0c19fa8a100e7cc4a02a6be\", \"msg\": \"Sprawdzono dok\\u0142adnie. Znaleziono szcz\\u0105tki mebli, ale \\u017cadnych ludzi.\", \"field\": \"G2\"}]}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_CRTH7OkIRfHr28jDn36b4WPZ",
+                "function": {
+                    "arguments": "{\"answer\":{\"action\":\"callHelicopter\",\"destination\":\"G1\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_CRTH7OkIRfHr28jDn36b4WPZ",
+        "content": "{\"code\": 0, \"message\": \"{FLG:WEVEGOTHIM}\", \"status\": \"ok\", \"destination\": \"G1\", \"found_at\": \"G1\"}"
+    }
+]

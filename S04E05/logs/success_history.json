@@ -1,0 +1,554 @@
+[
+    {
+        "role": "system",
+        "content": "Jesteś rygorystycznym systemem logistycznym. Twoim zadaniem jest zrealizowanie zamówień dla miast z pliku food4cities.json i zdobycie flagi.\nCała komunikacja z API odbywa się WYŁĄCZNIE poprzez 'call_verify_api' i parametr 'answer_payload'.\n\nZASADY:\n1. ZAKAZ UŻYWANIA PYTHON DO HASHOWANIA. Sygnatury pobieraj TYLKO za pomocą: {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"...\", \"birthday\": \"...\", \"destination\": <ID>}.\n2. Pamiętaj, że baza SQLite obcina wyniki. Jeśli potrzebujesz kolejnych wyników, używaj LIMIT i OFFSET (np. LIMIT 30 OFFSET 30).\n3. ZAWSZE na samym początku wykonaj {\"tool\": \"reset\"}, aby usunąć wszelkie \"resztki\" z poprzednich prób.\n\nPROCEDURA KROK PO KROKU:\n\nKROK 1: Wyślij {\"tool\": \"reset\"}, aby wyczyścić stan bazy do zera. To krytyczne!\n\nKROK 2: Ustalenie ID miast.\n- Wyślij: {\"tool\": \"database\", \"query\": \"SELECT * FROM destinations LIMIT 30\"}\n- Wyślij: {\"tool\": \"database\", \"query\": \"SELECT * FROM destinations LIMIT 30 OFFSET 30\"}\nZapisz w pamięci, jakie destination_id ma np. Domatowo i pozostałe miasta.\n\nKROK 3: Ustalenie właściwego użytkownika.\nUżytkownik musi mieć rolę odpowiedzialną za \"transport\".\n- Wyślij: {\"tool\": \"database\", \"query\": \"SELECT * FROM roles\"}. Zobacz, jakie 'id' ma rola transportowa.\n- Wyślij: {\"tool\": \"database\", \"query\": \"SELECT * FROM users WHERE role = <id_roli_transportowej> LIMIT 10\"}. \nWybierz JEDNEGO użytkownika z tej listy. Zanotuj jego 'user_id' (to Twoje 'creatorID'), 'login' oraz 'birthday'.\n\nKROK 4: Składanie zamówień (Dla KAŻDEGO z 8 miast w food4cities.json z osobna):\nA) Pobierz sygnaturę wysyłając: {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"<wybrany_login>\", \"birthday\": \"<wybrana_data>\", \"destination\": <destination_id_miasta>}\nB) Utwórz zamówienie wysyłając: {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla <nazwa_miasta>\", \"creatorID\": <wybrany_user_id>, \"destination\": <destination_id_miasta>, \"signature\": \"<otrzymany_podpis>\"}\nC) Odczytaj z odpowiedzi ID nowo utworzonego zamówienia.\nD) Dodaj towary (batch mode) wysyłając: {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"<id_zamowienia_z_kroku_B>\", \"items\": {<JSON_zapotrzebowania_z_food4cities>}}\n\nKROK 5: Po wykonaniu punktu 4 dla wszystkich miast (gdy jesteś absolutnie pewien, że nie ma błędnych zamówień z poprzednich prób), wyślij: {\"tool\": \"done\"}."
+    },
+    {
+        "role": "user",
+        "content": "Rozpocznij wykonanie zadania.\n- informacje o dostępnych akcjach i parametrach są opisane w None.\n- informacje o zamówieniach dla miast są opisane w {'opalino': {'chleb': 45, 'woda': 120, 'mlotek': 6}, 'domatowo': {'makaron': 60, 'woda': 150, 'lopata': 8}, 'brudzewo': {'ryz': 55, 'woda': 140, 'wiertarka': 5}, 'darzlubie': {'wolowina': 25, 'woda': 130, 'kilof': 7}, 'celbowo': {'kurczak': 40, 'woda': 125, 'mlotek': 6}, 'mechowo': {'ziemniaki': 100, 'kapusta': 70, 'marchew': 65, 'woda': 165, 'lopata': 9}, 'puck': {'chleb': 50, 'ryz': 45, 'woda': 175, 'wiertarka': 7}, 'karlinkowo': {'makaron': 52, 'wolowina': 22, 'ziemniaki': 95, 'woda': 155, 'kilof': 6}}."
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_MUndoj71jTelmiwDKO8DFvnC",
+                "function": {
+                    "arguments": "{\"answer\":[{\"tool\":\"reset\"}]}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_MUndoj71jTelmiwDKO8DFvnC",
+        "content": "{\"code\": -980, \"message\": \"Unexpected field \\\"0\\\". Allowed fields: tool, action, id, title, name, items, query, login, birthday, creatorID, destination, signature.\"}"
+    },
+    {
+        "content": "Muszę poprawić strukturę żądania. Spróbuję ponownie z właściwą składnią.",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_LR4qJLblfcZRcz7bWs13UZ2g",
+                "function": {
+                    "arguments": "{\"answer\":{\"tool\":\"reset\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_LR4qJLblfcZRcz7bWs13UZ2g",
+        "content": "{\"code\": 145, \"message\": \"Foodwarehouse state reset completed.\", \"tool\": \"reset\", \"orders\": [{\"id\": \"ed2f3696d8bcafe2437cdc88f7515037\", \"title\": \"Do kuchni w Suszu\", \"creatorID\": 2, \"destination\": 106710, \"signature\": \"9fde570fca1cfee02e8deb807ec7ff6e9f2670de\", \"items\": [{\"name\": \"chleb\", \"items\": 12}, {\"name\": \"kurczak\", \"items\": 20}, {\"name\": \"kapusta\", \"items\": 4}]}, {\"id\": \"8668a2fc9daf2cbe0e953303bb38f524\", \"title\": \"Kopalnia pod Rewalem\", \"creatorID\": 5, \"destination\": 181279, \"signature\": \"77acdf36ae70d9fe067a053360a72cd734407bbf\", \"items\": [{\"name\": \"kilof\", \"items\": 36}, {\"name\": \"lopata\", \"items\": 18}, {\"name\": \"makaron\", \"items\": 24}]}, {\"id\": \"6a190bf396b54dfd2d8fd3161cec8ec7\", \"title\": \"Do warsztatu w Biskupcu\", \"creatorID\": 7, \"destination\": 369482, \"signature\": \"b343b1aec153a3a591fdd94e5af2c7fdb0880dc7\", \"items\": [{\"name\": \"marchew\", \"items\": 10}, {\"name\": \"maka\", \"items\": 8}, {\"name\": \"mlotek\", \"items\": 6}]}, {\"id\": \"0b8b7e9fc5679bd339a4c64b15e48ee8\", \"title\": \"Harbor Night Shift in Hel\", \"creatorID\": 8, \"destination\": 790221, \"signature\": \"5cfe2c0fa29d4cc9331282c9f1be65a65cb68a2f\", \"items\": [{\"name\": \"ryz\", \"items\": 14}, {\"name\": \"wiertarka\", \"items\": 11}, {\"name\": \"woda\", \"items\": 7}]}], \"count\": 4}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_0K6MlfX62uEBf3FoqOY434eg",
+                "function": {
+                    "arguments": "{\"answer\":{\"tool\":\"database\",\"query\":\"SELECT * FROM destinations LIMIT 30\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_0K6MlfX62uEBf3FoqOY434eg",
+        "content": "{\"code\": 170, \"message\": \"Database query executed.\", \"tool\": \"database\", \"mode\": \"read-only\", \"query\": \"SELECT * FROM destinations LIMIT 30\", \"table\": \"destinations\", \"totalTableRows\": 40, \"columns\": [\"destination_id\", \"name\"], \"rows\": [{\"destination_id\": 707536, \"name\": \"Karlinkowo\"}, {\"destination_id\": 955390, \"name\": \"Reszel\"}, {\"destination_id\": 741906, \"name\": \"Celbowo\"}, {\"destination_id\": 725741, \"name\": \"Cewice\"}, {\"destination_id\": 390716, \"name\": \"Tykocin\"}, {\"destination_id\": 917631, \"name\": \"Wyszogrod\"}, {\"destination_id\": 695992, \"name\": \"Mechowo\"}, {\"destination_id\": 415722, \"name\": \"Krokowa\"}, {\"destination_id\": 471906, \"name\": \"Mrozy\"}, {\"destination_id\": 884889, \"name\": \"Sompolno\"}, {\"destination_id\": 961067, \"name\": \"Rydzyna\"}, {\"destination_id\": 988770, \"name\": \"Pasym\"}, {\"destination_id\": 271814, \"name\": \"Gniewino\"}, {\"destination_id\": 234434, \"name\": \"Brudzewo\"}, {\"destination_id\": 968008, \"name\": \"Bobolice\"}, {\"destination_id\": 575378, \"name\": \"Tolkmicko\"}, {\"destination_id\": 441899, \"name\": \"Kleczew\"}, {\"destination_id\": 991828, \"name\": \"Opalino\"}, {\"destination_id\": 181279, \"name\": \"Rewal\"}, {\"destination_id\": 744542, \"name\": \"Frombork\"}, {\"destination_id\": 574835, \"name\": \"Resko\"}, {\"destination_id\": 385126, \"name\": \"Ryn\"}, {\"destination_id\": 369482, \"name\": \"Biskupiec\"}, {\"destination_id\": 106710, \"name\": \"Susz\"}, {\"destination_id\": 240752, \"name\": \"Bisztynek\"}, {\"destination_id\": 790221, \"name\": \"Hel\"}, {\"destination_id\": 140606, \"name\": \"Puck\"}, {\"destination_id\": 529177, \"name\": \"Choczewo\"}, {\"destination_id\": 273656, \"name\": \"Jastarnia\"}, {\"destination_id\": 676323, \"name\": \"Darzlubie\"}], \"count\": 30, \"limit\": 30}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_vEgMwOxEzlfiYro291oeVQwz",
+                "function": {
+                    "arguments": "{\"answer\":{\"tool\":\"database\",\"query\":\"SELECT * FROM destinations LIMIT 30 OFFSET 30\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_vEgMwOxEzlfiYro291oeVQwz",
+        "content": "{\"code\": 170, \"message\": \"Database query executed.\", \"tool\": \"database\", \"mode\": \"read-only\", \"query\": \"SELECT * FROM destinations LIMIT 30 OFFSET 30\", \"table\": \"destinations\", \"totalTableRows\": 40, \"columns\": [\"destination_id\", \"name\"], \"rows\": [{\"destination_id\": 413085, \"name\": \"Tarczyn\"}, {\"destination_id\": 761834, \"name\": \"Domatowo\"}, {\"destination_id\": 169318, \"name\": \"Brok\"}, {\"destination_id\": 315955, \"name\": \"Linia\"}, {\"destination_id\": 804616, \"name\": \"Korsze\"}, {\"destination_id\": 333749, \"name\": \"Pyzdry\"}, {\"destination_id\": 342844, \"name\": \"Orneta\"}, {\"destination_id\": 852982, \"name\": \"Krobia\"}, {\"destination_id\": 388942, \"name\": \"Skoki\"}, {\"destination_id\": 401110, \"name\": \"Karlino\"}], \"count\": 10, \"limit\": 30}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_j93T8fSV7WnuseF8Og9OoWTg",
+                "function": {
+                    "arguments": "{\"answer\":{\"tool\":\"database\",\"query\":\"SELECT * FROM roles\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_j93T8fSV7WnuseF8Og9OoWTg",
+        "content": "{\"code\": 170, \"message\": \"Database query executed.\", \"tool\": \"database\", \"mode\": \"read-only\", \"query\": \"SELECT * FROM roles\", \"table\": \"roles\", \"totalTableRows\": 6, \"columns\": [\"role_id\", \"name\"], \"rows\": [{\"role_id\": 1, \"name\": \"Pomoc techniczna\"}, {\"role_id\": 2, \"name\": \"Obs\\u0142uga transport\\u00f3w\"}, {\"role_id\": 3, \"name\": \"Praktykant\"}, {\"role_id\": 4, \"name\": \"Programista\"}, {\"role_id\": 5, \"name\": \"Specjalista AI\"}, {\"role_id\": 6, \"name\": \"Vibe Coder\"}], \"count\": 6, \"limit\": 30}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_wHv7qRz0dFhhtEhFVrbq58Bz",
+                "function": {
+                    "arguments": "{\"answer\":{\"tool\":\"database\",\"query\":\"SELECT * FROM users WHERE role = 2 LIMIT 10\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_wHv7qRz0dFhhtEhFVrbq58Bz",
+        "content": "{\"code\": 170, \"message\": \"Database query executed.\", \"tool\": \"database\", \"mode\": \"read-only\", \"query\": \"SELECT * FROM users WHERE role = 2 LIMIT 10\", \"table\": \"users\", \"totalTableRows\": 78, \"columns\": [\"user_id\", \"login\", \"name_surname\", \"password\", \"birthday\", \"role\", \"is_active\"], \"rows\": [{\"user_id\": 2, \"login\": \"tgajewski\", \"name_surname\": \"Tymon Gajewski\", \"password\": \"8693b092bd2c229941f7128fa78363e4\", \"birthday\": \"1991-04-06\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 5, \"login\": \"mkoodziej\", \"name_surname\": \"Mariusz Ko\\u0142odziej\", \"password\": \"de11d12b3bf3a9e19be2661177a2e14b\", \"birthday\": \"1987-08-14\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 7, \"login\": \"bkurek\", \"name_surname\": \"Bo\\u017cena Kurek\", \"password\": \"a68d1fba0ed1817615e1d64abce53145\", \"birthday\": \"1951-04-12\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 8, \"login\": \"gjabonski\", \"name_surname\": \"Gustaw Jab\\u0142o\\u0144ski\", \"password\": \"f0ca11ecb8b751f846dda0650a25687b\", \"birthday\": \"1981-06-27\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 18, \"login\": \"fgacek\", \"name_surname\": \"Felicja Gacek\", \"password\": \"217dd9dbe01f656f0eefe9bfa3926d91\", \"birthday\": \"1955-04-18\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 20, \"login\": \"tjakubowski\", \"name_surname\": \"Tomasz Jakubowski\", \"password\": \"13b0a4baada52c78c80c4987cc4d3500\", \"birthday\": \"2000-09-19\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 21, \"login\": \"bkoodziej\", \"name_surname\": \"Bernadeta Ko\\u0142odziej\", \"password\": \"23fe2cad0945c58f6c2009dbcab52e40\", \"birthday\": \"1955-06-26\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 27, \"login\": \"nborowski\", \"name_surname\": \"Natan Borowski\", \"password\": \"e6e889797702d6515a699baf0cfcfa81\", \"birthday\": \"1992-12-16\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 35, \"login\": \"fczajkowska\", \"name_surname\": \"Feliksja Czajkowska\", \"password\": \"64cac16206dfce340622021878c404d1\", \"birthday\": \"1951-08-21\", \"role\": 2, \"is_active\": 1}, {\"user_id\": 38, \"login\": \"dbak\", \"name_surname\": \"Dorota B\\u0105k\", \"password\": \"4d695149aec6f57453a1ea1e7f052229\", \"birthday\": \"1988-03-10\", \"role\": 2, \"is_active\": 1}], \"count\": 10, \"limit\": 30}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_9ltCfyYF1JwkjEgwkgFfjaMR",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 991828}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            },
+            {
+                "id": "call_HfLdANQFgwIPUzi5hKyeVhWM",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 761834}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 1
+            },
+            {
+                "id": "call_AcOsUXQ6UlATHYOAuj5iGRx8",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 234434}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 2
+            },
+            {
+                "id": "call_pEcxPsdNxpzgY9xFXZv5kzVm",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 676323}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 3
+            },
+            {
+                "id": "call_AqRt7TExCr0IZwGS5AXBTOhG",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 741906}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 4
+            },
+            {
+                "id": "call_JjpVQaw99sCGefYmR5SKuvTN",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 695992}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 5
+            },
+            {
+                "id": "call_WZg1QgSk1LAhklRyZZogluBK",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 140606}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 6
+            },
+            {
+                "id": "call_rCn0S4CfCeZxcmMoDjrD2oec",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 707536}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 7
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_9ltCfyYF1JwkjEgwkgFfjaMR",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 991828, \"hash\": \"96d66cc4d28484b3c5b9e05e4f79152eb564f6e0\"}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_HfLdANQFgwIPUzi5hKyeVhWM",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 761834, \"hash\": \"29361bec85afce60df2f3472af1a6e298154e82f\"}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_AcOsUXQ6UlATHYOAuj5iGRx8",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 234434, \"hash\": \"5d1db416d5a978fa56e9610c3598d821492acaeb\"}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_pEcxPsdNxpzgY9xFXZv5kzVm",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 676323, \"hash\": \"9c52ae1ab999cfc3b26762dcadcdb2407c5fbde6\"}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_AqRt7TExCr0IZwGS5AXBTOhG",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 741906, \"hash\": \"d539fbc8eeee8093f9def9e8d2c39e764de1b704\"}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_JjpVQaw99sCGefYmR5SKuvTN",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 695992, \"hash\": \"8d75eb210a3d5e80098bd6900d10f9e9791069d2\"}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_WZg1QgSk1LAhklRyZZogluBK",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 140606, \"hash\": \"414ab8e00fdfc2697876ea4a6db098edc38a0c60\"}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_rCn0S4CfCeZxcmMoDjrD2oec",
+        "content": "{\"code\": 130, \"message\": \"Signature generated.\", \"tool\": \"signatureGenerator\", \"action\": \"generate\", \"login\": \"tgajewski\", \"birthday\": \"1991-04-06\", \"destination\": 707536, \"hash\": \"534a7ff14801f6bc8614ba92b43b81f92a9222a3\"}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_oJoXNAIaRqHlXspzi1yrsMJ4",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Opalino\", \"creatorID\": 2, \"destination\": 991828, \"signature\": \"96d66cc4d28484b3c5b9e05e4f79152eb564f6e0\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            },
+            {
+                "id": "call_KF2nUdkCka9zj7SgR656eRkj",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Domatowo\", \"creatorID\": 2, \"destination\": 761834, \"signature\": \"29361bec85afce60df2f3472af1a6e298154e82f\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 1
+            },
+            {
+                "id": "call_V51XJEmiIcog0gnmn9bvx8hL",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Brudzewo\", \"creatorID\": 2, \"destination\": 234434, \"signature\": \"5d1db416d5a978fa56e9610c3598d821492acaeb\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 2
+            },
+            {
+                "id": "call_rs2pvnmn3MFrtT3AssZTpWuO",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Darzlubie\", \"creatorID\": 2, \"destination\": 676323, \"signature\": \"9c52ae1ab999cfc3b26762dcadcdb2407c5fbde6\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 3
+            },
+            {
+                "id": "call_gdJFbFvGAmIdPQvs9oHFyY8v",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Celbowo\", \"creatorID\": 2, \"destination\": 741906, \"signature\": \"d539fbc8eeee8093f9def9e8d2c39e764de1b704\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 4
+            },
+            {
+                "id": "call_tRwCznxIsvwlJZ0fhXxMzvrH",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Mechowo\", \"creatorID\": 2, \"destination\": 695992, \"signature\": \"8d75eb210a3d5e80098bd6900d10f9e9791069d2\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 5
+            },
+            {
+                "id": "call_oenwhJ1P1YniGUH8rkFdH5Cg",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Puck\", \"creatorID\": 2, \"destination\": 140606, \"signature\": \"414ab8e00fdfc2697876ea4a6db098edc38a0c60\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 6
+            },
+            {
+                "id": "call_2ywFtDanwfm1ITsjweGthiQ8",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"create\", \"title\": \"Dostawa dla Karlinkowo\", \"creatorID\": 2, \"destination\": 707536, \"signature\": \"534a7ff14801f6bc8614ba92b43b81f92a9222a3\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 7
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_oJoXNAIaRqHlXspzi1yrsMJ4",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"32990e592eeb2bb6f10b5490c662d036\", \"title\": \"Dostawa dla Opalino\", \"creatorID\": 2, \"destination\": 991828, \"signature\": \"96d66cc4d28484b3c5b9e05e4f79152eb564f6e0\", \"items\": []}}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_KF2nUdkCka9zj7SgR656eRkj",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"b8a7a9af8f131a9a8fe14085d19c0c3d\", \"title\": \"Dostawa dla Domatowo\", \"creatorID\": 2, \"destination\": 761834, \"signature\": \"29361bec85afce60df2f3472af1a6e298154e82f\", \"items\": []}}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_V51XJEmiIcog0gnmn9bvx8hL",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"e323acf9ee6d25c2828381d7c1f13a09\", \"title\": \"Dostawa dla Brudzewo\", \"creatorID\": 2, \"destination\": 234434, \"signature\": \"5d1db416d5a978fa56e9610c3598d821492acaeb\", \"items\": []}}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_rs2pvnmn3MFrtT3AssZTpWuO",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"b05124261dab6a61c07c05eab791d1f7\", \"title\": \"Dostawa dla Darzlubie\", \"creatorID\": 2, \"destination\": 676323, \"signature\": \"9c52ae1ab999cfc3b26762dcadcdb2407c5fbde6\", \"items\": []}}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_gdJFbFvGAmIdPQvs9oHFyY8v",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"ea103578e586ef4d3a88be753e704fe9\", \"title\": \"Dostawa dla Celbowo\", \"creatorID\": 2, \"destination\": 741906, \"signature\": \"d539fbc8eeee8093f9def9e8d2c39e764de1b704\", \"items\": []}}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_tRwCznxIsvwlJZ0fhXxMzvrH",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"06609a2b37ec367e98f138cc39290851\", \"title\": \"Dostawa dla Mechowo\", \"creatorID\": 2, \"destination\": 695992, \"signature\": \"8d75eb210a3d5e80098bd6900d10f9e9791069d2\", \"items\": []}}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_oenwhJ1P1YniGUH8rkFdH5Cg",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"3073022aa84420097401ab94f898b89c\", \"title\": \"Dostawa dla Puck\", \"creatorID\": 2, \"destination\": 140606, \"signature\": \"414ab8e00fdfc2697876ea4a6db098edc38a0c60\", \"items\": []}}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_2ywFtDanwfm1ITsjweGthiQ8",
+        "content": "{\"code\": 110, \"message\": \"Order created.\", \"order\": {\"id\": \"27c42d75823c268f52c0b8a163b04344\", \"title\": \"Dostawa dla Karlinkowo\", \"creatorID\": 2, \"destination\": 707536, \"signature\": \"534a7ff14801f6bc8614ba92b43b81f92a9222a3\", \"items\": []}}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_1Ed7UgZ6kjJ9aOWs24dxxQC8",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"32990e592eeb2bb6f10b5490c662d036\", \"items\": {\"chleb\": 45, \"woda\": 120, \"mlotek\": 6}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            },
+            {
+                "id": "call_Tb6Va9BZnDy4w23RATMlYZZ5",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"b8a7a9af8f131a9a8fe14085d19c0c3d\", \"items\": {\"makaron\": 60, \"woda\": 150, \"lopata\": 8}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 1
+            },
+            {
+                "id": "call_m8wPHLFTOCBUUBc9LLsTj9ib",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"e323acf9ee6d25c2828381d7c1f13a09\", \"items\": {\"ryz\": 55, \"woda\": 140, \"wiertarka\": 5}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 2
+            },
+            {
+                "id": "call_TS2VdbKHxKk1pNPceZaeIxXB",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"b05124261dab6a61c07c05eab791d1f7\", \"items\": {\"wolowina\": 25, \"woda\": 130, \"kilof\": 7}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 3
+            },
+            {
+                "id": "call_R6KpuX1yKcd1m3etDBMZFocv",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"ea103578e586ef4d3a88be753e704fe9\", \"items\": {\"kurczak\": 40, \"woda\": 125, \"mlotek\": 6}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 4
+            },
+            {
+                "id": "call_m43IuECsrbZEXQr1J1R9feOW",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"06609a2b37ec367e98f138cc39290851\", \"items\": {\"ziemniaki\": 100, \"kapusta\": 70, \"marchew\": 65, \"woda\": 165, \"lopata\": 9}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 5
+            },
+            {
+                "id": "call_CaLUN0lnPCcKKZGi9nlb5EeM",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"3073022aa84420097401ab94f898b89c\", \"items\": {\"chleb\": 50, \"ryz\": 45, \"woda\": 175, \"wiertarka\": 7}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 6
+            },
+            {
+                "id": "call_zcEkz7MQq7Ibi8JvGs2EHRo3",
+                "function": {
+                    "arguments": "{\"answer\": {\"tool\": \"orders\", \"action\": \"append\", \"id\": \"27c42d75823c268f52c0b8a163b04344\", \"items\": {\"makaron\": 52, \"wolowina\": 22, \"ziemniaki\": 95, \"woda\": 155, \"kilof\": 6}}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 7
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_1Ed7UgZ6kjJ9aOWs24dxxQC8",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"32990e592eeb2bb6f10b5490c662d036\", \"title\": \"Dostawa dla Opalino\", \"creatorID\": 2, \"destination\": 991828, \"signature\": \"96d66cc4d28484b3c5b9e05e4f79152eb564f6e0\", \"items\": [{\"name\": \"chleb\", \"items\": 45}, {\"name\": \"woda\", \"items\": 120}, {\"name\": \"mlotek\", \"items\": 6}]}, \"appended\": [{\"name\": \"chleb\", \"items\": 45}, {\"name\": \"woda\", \"items\": 120}, {\"name\": \"mlotek\", \"items\": 6}]}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_Tb6Va9BZnDy4w23RATMlYZZ5",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"b8a7a9af8f131a9a8fe14085d19c0c3d\", \"title\": \"Dostawa dla Domatowo\", \"creatorID\": 2, \"destination\": 761834, \"signature\": \"29361bec85afce60df2f3472af1a6e298154e82f\", \"items\": [{\"name\": \"makaron\", \"items\": 60}, {\"name\": \"woda\", \"items\": 150}, {\"name\": \"lopata\", \"items\": 8}]}, \"appended\": [{\"name\": \"makaron\", \"items\": 60}, {\"name\": \"woda\", \"items\": 150}, {\"name\": \"lopata\", \"items\": 8}]}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_m8wPHLFTOCBUUBc9LLsTj9ib",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"e323acf9ee6d25c2828381d7c1f13a09\", \"title\": \"Dostawa dla Brudzewo\", \"creatorID\": 2, \"destination\": 234434, \"signature\": \"5d1db416d5a978fa56e9610c3598d821492acaeb\", \"items\": [{\"name\": \"ryz\", \"items\": 55}, {\"name\": \"woda\", \"items\": 140}, {\"name\": \"wiertarka\", \"items\": 5}]}, \"appended\": [{\"name\": \"ryz\", \"items\": 55}, {\"name\": \"woda\", \"items\": 140}, {\"name\": \"wiertarka\", \"items\": 5}]}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_TS2VdbKHxKk1pNPceZaeIxXB",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"b05124261dab6a61c07c05eab791d1f7\", \"title\": \"Dostawa dla Darzlubie\", \"creatorID\": 2, \"destination\": 676323, \"signature\": \"9c52ae1ab999cfc3b26762dcadcdb2407c5fbde6\", \"items\": [{\"name\": \"wolowina\", \"items\": 25}, {\"name\": \"woda\", \"items\": 130}, {\"name\": \"kilof\", \"items\": 7}]}, \"appended\": [{\"name\": \"wolowina\", \"items\": 25}, {\"name\": \"woda\", \"items\": 130}, {\"name\": \"kilof\", \"items\": 7}]}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_R6KpuX1yKcd1m3etDBMZFocv",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"ea103578e586ef4d3a88be753e704fe9\", \"title\": \"Dostawa dla Celbowo\", \"creatorID\": 2, \"destination\": 741906, \"signature\": \"d539fbc8eeee8093f9def9e8d2c39e764de1b704\", \"items\": [{\"name\": \"kurczak\", \"items\": 40}, {\"name\": \"woda\", \"items\": 125}, {\"name\": \"mlotek\", \"items\": 6}]}, \"appended\": [{\"name\": \"kurczak\", \"items\": 40}, {\"name\": \"woda\", \"items\": 125}, {\"name\": \"mlotek\", \"items\": 6}]}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_m43IuECsrbZEXQr1J1R9feOW",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"06609a2b37ec367e98f138cc39290851\", \"title\": \"Dostawa dla Mechowo\", \"creatorID\": 2, \"destination\": 695992, \"signature\": \"8d75eb210a3d5e80098bd6900d10f9e9791069d2\", \"items\": [{\"name\": \"ziemniaki\", \"items\": 100}, {\"name\": \"kapusta\", \"items\": 70}, {\"name\": \"marchew\", \"items\": 65}, {\"name\": \"woda\", \"items\": 165}, {\"name\": \"lopata\", \"items\": 9}]}, \"appended\": [{\"name\": \"ziemniaki\", \"items\": 100}, {\"name\": \"kapusta\", \"items\": 70}, {\"name\": \"marchew\", \"items\": 65}, {\"name\": \"woda\", \"items\": 165}, {\"name\": \"lopata\", \"items\": 9}]}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_CaLUN0lnPCcKKZGi9nlb5EeM",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"3073022aa84420097401ab94f898b89c\", \"title\": \"Dostawa dla Puck\", \"creatorID\": 2, \"destination\": 140606, \"signature\": \"414ab8e00fdfc2697876ea4a6db098edc38a0c60\", \"items\": [{\"name\": \"chleb\", \"items\": 50}, {\"name\": \"ryz\", \"items\": 45}, {\"name\": \"woda\", \"items\": 175}, {\"name\": \"wiertarka\", \"items\": 7}]}, \"appended\": [{\"name\": \"chleb\", \"items\": 50}, {\"name\": \"ryz\", \"items\": 45}, {\"name\": \"woda\", \"items\": 175}, {\"name\": \"wiertarka\", \"items\": 7}]}"
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_zcEkz7MQq7Ibi8JvGs2EHRo3",
+        "content": "{\"code\": 120, \"message\": \"Order updated.\", \"order\": {\"id\": \"27c42d75823c268f52c0b8a163b04344\", \"title\": \"Dostawa dla Karlinkowo\", \"creatorID\": 2, \"destination\": 707536, \"signature\": \"534a7ff14801f6bc8614ba92b43b81f92a9222a3\", \"items\": [{\"name\": \"makaron\", \"items\": 52}, {\"name\": \"wolowina\", \"items\": 22}, {\"name\": \"ziemniaki\", \"items\": 95}, {\"name\": \"woda\", \"items\": 155}, {\"name\": \"kilof\", \"items\": 6}]}, \"appended\": [{\"name\": \"makaron\", \"items\": 52}, {\"name\": \"wolowina\", \"items\": 22}, {\"name\": \"ziemniaki\", \"items\": 95}, {\"name\": \"woda\", \"items\": 155}, {\"name\": \"kilof\", \"items\": 6}]}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_Eh43pZjkouiR84SWccSbhof9",
+                "function": {
+                    "arguments": "{\"answer\":{\"tool\":\"done\"}}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_Eh43pZjkouiR84SWccSbhof9",
+        "content": "{\"code\": 0, \"message\": \"{FLG:JUSTEATIT}\", \"orders\": [{\"id\": \"32990e592eeb2bb6f10b5490c662d036\", \"title\": \"Dostawa dla Opalino\", \"destination\": 991828, \"city\": \"Opalino\"}, {\"id\": \"b8a7a9af8f131a9a8fe14085d19c0c3d\", \"title\": \"Dostawa dla Domatowo\", \"destination\": 761834, \"city\": \"Domatowo\"}, {\"id\": \"e323acf9ee6d25c2828381d7c1f13a09\", \"title\": \"Dostawa dla Brudzewo\", \"destination\": 234434, \"city\": \"Brudzewo\"}, {\"id\": \"b05124261dab6a61c07c05eab791d1f7\", \"title\": \"Dostawa dla Darzlubie\", \"destination\": 676323, \"city\": \"Darzlubie\"}, {\"id\": \"ea103578e586ef4d3a88be753e704fe9\", \"title\": \"Dostawa dla Celbowo\", \"destination\": 741906, \"city\": \"Celbowo\"}, {\"id\": \"06609a2b37ec367e98f138cc39290851\", \"title\": \"Dostawa dla Mechowo\", \"destination\": 695992, \"city\": \"Mechowo\"}, {\"id\": \"3073022aa84420097401ab94f898b89c\", \"title\": \"Dostawa dla Puck\", \"destination\": 140606, \"city\": \"Puck\"}, {\"id\": \"27c42d75823c268f52c0b8a163b04344\", \"title\": \"Dostawa dla Karlinkowo\", \"destination\": 707536, \"city\": \"Karlinkowo\"}]}"
+    }
+]

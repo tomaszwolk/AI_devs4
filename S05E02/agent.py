@@ -80,7 +80,9 @@ class MainAgent:
     ):
         """Uruchamia główną pętlę agenta."""
         hint = (
-            continuation_hint if continuation_hint is not None else DEFAULT_CONTINUATION_HINT
+            continuation_hint
+            if continuation_hint is not None
+            else DEFAULT_CONTINUATION_HINT
         )
         logger.info("Rozpoczynam pracę Agenta...")
         self.messages.append({"role": "user", "content": user_prompt})
@@ -120,7 +122,9 @@ class MainAgent:
                         user_reply = ""
                     reply_stripped = user_reply.strip()
                     if reply_stripped:
-                        self.messages.append({"role": "user", "content": reply_stripped})
+                        self.messages.append(
+                            {"role": "user", "content": reply_stripped}
+                        )
                     else:
                         self.messages.append({"role": "user", "content": hint})
                 else:
@@ -136,28 +140,36 @@ class MainAgent:
                     args = json.loads(tool_call.function.arguments)
                 except json.JSONDecodeError as e:
                     logger.error(f"Błąd parsowania JSON dla narzędzia {tool_name}: {e}")
-                    self.messages.append({
-                        "role": "tool",
-                        "tool_call_id": tool_call.id,
-                        "content": f"Błąd parsowania JSON dla narzędzia {tool_name}: {str(e)}. Proszę, popraw formatowanie JSON."
-                    })
+                    self.messages.append(
+                        {
+                            "role": "tool",
+                            "tool_call_id": tool_call.id,
+                            "content": f"Błąd parsowania JSON dla narzędzia {tool_name}: {str(e)}. Proszę, popraw formatowanie JSON.",
+                        }
+                    )
                     continue
 
                 # --- LOGIKA POTWIERDZENIA WYKONANIA KODU PYTHON ---
                 if tool_name == "execute_python_code":
-                    print("\n" + "="*50)
+                    print("\n" + "=" * 50)
                     print("⚠️  AGENT CHCE URUCHOMIĆ KOD PYTHON:")
                     print("-" * 50)
                     print(args.get("code", "Brak kodu?"))
                     print("-" * 50)
 
-                    user_confirm = input("Czy chcesz wykonać ten kod? (y/n/edycja): ").strip().lower()
+                    user_confirm = (
+                        input("Czy chcesz wykonać ten kod? (y/n/edycja): ")
+                        .strip()
+                        .lower()
+                    )
 
-                    if user_confirm == 'n':
+                    if user_confirm == "n":
                         res = "Error: Execution cancelled by user."
                         logger.warning("Użytkownik odrzucił wykonanie kodu.")
-                    elif user_confirm == 'edycja':
-                        print("Tryb edycji: Wklej poprawiony kod i naciśnij Ctrl+D (Linux/Mac) lub Ctrl+Z (Win) + Enter:")
+                    elif user_confirm == "edycja":
+                        print(
+                            "Tryb edycji: Wklej poprawiony kod i naciśnij Ctrl+D (Linux/Mac) lub Ctrl+Z (Win) + Enter:"
+                        )
                         new_code = sys.stdin.read()
                         args["code"] = new_code
                         logger.info("Użytkownik ręcznie wyedytował kod.")

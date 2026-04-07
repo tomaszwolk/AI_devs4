@@ -8,10 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    agent = MainAgent(
-        model=settings.main_model,
-        system_prompt=settings.system_prompt
-    )
+    agent = MainAgent(model=settings.main_model, system_prompt=settings.system_prompt)
 
     user_prompt = textwrap.dedent("""
     Rozpocznij wykonanie zadania.

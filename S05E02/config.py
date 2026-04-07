@@ -87,7 +87,7 @@ settings = Settings(
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),
     system_prompt=MAIN_SYSTEM_PROMPT,
-    e2b_api_key=os.getenv("E2B_API_KEY")
+    e2b_api_key=os.getenv("E2B_API_KEY"),
 )
 
 

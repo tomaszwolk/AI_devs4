@@ -1,0 +1,1082 @@
+2026-04-07 10:24:50,691 - [INFO] Rozpoczynam pracę Agenta...
+2026-04-07 10:24:50,691 - [INFO] Iteration: 1
+2026-04-07 10:24:54,953 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:24:55,418 - [INFO] Tool call: call_verify_api with args: {'action': 'start'}
+
+2026-04-07 10:24:55,603 - [INFO] Tool response: {
+    "code": 110,
+    "message": "Gotowy do nasłuchu",
+    "action": "start"
+}
+
+2026-04-07 10:24:55,603 - [INFO] Iteration: 2
+2026-04-07 10:24:58,414 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:24:58,541 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:24:58,679 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Narewka mówi, że jeśli ktoś chciałby do nich przyjechać, to mają nawet miejsca noclegowe — co prawda w namiotach, ale to zawsze coś. Tylko ponoć bez ziemniaków nie ma tam co się zjawiać, bo innej waluty nie przyjmują. Mięsa też już nie chcą, bo mają własne. "
+}
+
+2026-04-07 10:24:58,679 - [INFO] Iteration: 3
+2026-04-07 10:25:00,747 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:01,123 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:01,265 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Z Syjonu się odezwali. Mówią, że brakuje im kilofów. No skubani, tego akurat nie umieją sami wyprodukować. Resztę mają. Ale nie, my im nie damy! Niech sobie sami radzą. Jak nasze miasto prosiło ich o wodę, to\"wody nie eksportujemy\", taaaak? A mają przecież tam praktycznie własną produkcję robią. A jak prosiliśmy ich o krowę, to nie - całej nie sprzedadzą! To niech się teraz wypchają. Kij im w oko... Czy tam kilof!"
+}
+
+2026-04-07 10:25:01,266 - [INFO] Iteration: 4
+2026-04-07 10:25:02,639 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:02,874 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:03,011 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Chłopaki na Syjonie zaczęli handlować bydłem! Słyszeliście? Ceny, to jak zawsze. Nawet nie ma co negocjować. Zamiast kupić od Ciebie kilof, to Cię kilofem zdzielą, jak powiesz, że za drogo. No taka prawda Hahahaha"
+}
+
+2026-04-07 10:25:03,012 - [INFO] Iteration: 5
+2026-04-07 10:25:04,182 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:04,317 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:04,451 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "No, Pogód się w ogóle wypiął chyba na wszystkich. Są nad rzeką, więc wody już nie zamawiają. Pola mają, to już nawet ziemniaków nie wezmą. Tak to jest: jak człowiek wszystko ma, to nagle nic nie potrzebuje. Już nie ma przyjaciół, nie ma handlu, a wsparliby kogoś może. Może by wysłali coś. Tam przynajmniej mają czystą wodę. Nie to, co w Skarszewach. Ale w Skarszewach znowu umieją oczyszczać, więc w sumie nie wiem, co lepsze, bo ta może wygląda na czystą, ale jaka ona jest naprawdę? a kto to wie?"
+}
+
+2026-04-07 10:25:04,452 - [INFO] Iteration: 6
+2026-04-07 10:25:05,441 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:05,450 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:05,625 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Ja słyszałem, że jedno miasto ma ryby. Tak, w Drohiczynie nad Bugiem. Rzeka jeszcze nie wyschła do końca. Tam mają, powiem Panu, w najgłębszym miejscu nawet ze 2 metry. I tam ponoć coś się namnożyło. Znaczy nie żeby od razu łowić i zjadać, bo to jeszcze za wcześnie, ale dajmy temu rok, dwa i jest szansa, że będzie co zjeść. Ale Drohiczyn i tak mówi, że oni woleliby świnię albo krowę, a nic nie mają. No ale mogą korzystać. Przecież te ryby, jak dorosną za te parę lat i się tego trochę namnoży, to będzie na handel wymienny, jak u wszystkich. Już nie muszą wszystkiego sami produkować. Po to mamy dział handlu. "
+}
+
+2026-04-07 10:25:05,626 - [INFO] Iteration: 7
+2026-04-07 10:25:07,007 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:07,165 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:07,320 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "szum ...powtarzam ostatni komunika...  szzzzz ...paliwo kończy się o świcie... bzzzzt ...tu patrol zwiado... szzzzz ...cztery-siedem-dwa...  szzzzz ...powtarzam ostatni komunikat... szzzzz ...odbierasz mni...  ksssssh ...jeśli ktoś słyszy ten...  trzask trzask ...potrzebujemy w...  trzask trzask ...zapas tlenu sp...  pisk ...powtarzam...  trzask trzask ...czy ktoś tam jest...  ksssssh ...nadaję z północnego sektora... kshhh ...proszę odpowiedz ... bzzzzt ...współrzędne to trzydzieści...  trzask ...współrzędne to trzydzieści...  szzzzz ...to jest stacja...  bzzzzzzz ...powtarzam ostatni komunikat... szzzzz ...powtarzam ostatni komunikat...  kshhhhh ...tu patrol zwiadowczy... bzzzzzzz ...paliwo kończy si...  szzzzz ...przechodzę na zapasową częstotliwość...  trzask trzask ...zapas tlenu spad... pisk ...czekam na potwierdzenie... pisk ...to jest ... pisk ...cztery-siedem-dwa... kshhh ...potrzebujemy ws... kshhhhh ...nie mamy wiele czasu...  ksssssh ...tu patrol zwi... ksssssh ...współrzędne to trzydzieści...  ksssssh ...tu patrol zwiadowczy...  trzask trzask ...nadaję z północnego sektora... trzask trzask ...jeśli ktoś słyszy ten sygnał...  trzask trzask ...jeśli ktoś słyszy ten sygnał...  szum ...nadaję z...  kshhh ...nie mamy wiele czasu...  bzzzzt ...cztery-siedem-dwa... kshhh ...zapas tlenu spa... ksssh ...przechodzę na zapasową częstotliwość... kshhh ...odbierasz mnie... bzzzzzzz ...sygnał za...  bzzzzzzz ...tu patrol zwiadowczy...  bzzt ...paliwo kończy się ... bzzt ...zapas tlenu sp...  ksssh ...jeśli ktoś słyszy ten sygnał...  trzask ...nie mamy wiele c... bzzzzt ...współrzędne to trzydzieści... kshhh ...współrzędne to trzydz...  szum ...jeśli ktoś słyszy ten syg...  ksssssh ...sygnał zanika...  kshhhhh ...cztery-siedem-dwa... szum ...cztery... bzzt ...odbiór jest... bardzo słaby...  ksssh ...nadaję z pół... trzask trzask ...odbiór jes... szzzzz ...powtarza... bzzzzt ...powtarzam... ksssh ...proszę odpowiedz ...  pisk ...jeśli ktoś słyszy ten sygnał... kshhh ...współrzędne to trzydzieś"
+}
+
+2026-04-07 10:25:07,321 - [INFO] Iteration: 8
+2026-04-07 10:25:08,141 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:08,236 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:08,410 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Słuchaj, wczoraj na szlaku z Rabat do Lendi widziałem jakichś kupców. Pewnie znowu coś chcieli sprzedać.\nWiedziałem, że nieśli kierowy łopaty i jakieś worki. Wiem, co to mogło być, ale mógłbyś się nabrać. Ziemniaki? Tylko zgaduję.\nNie czułbym się bezpiecznie. Też coś jest potrzebne. U nas z tymi ziemniakami jest ciężko ostatnio. Ziemia i zekaš. Małżorzna.\nA nawozów,to nikt nie sprzedaje. Wszystko trzeba było załatwiać od operatorów systemu. Tytlko ja tam nie mam wtyków."
+}
+
+2026-04-07 10:25:08,411 - [INFO] Iteration: 9
+2026-04-07 10:25:10,717 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:10,796 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:10,981 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "**[niesłyszalne]** bo tam się zabrało najwięcej ludzi wiesz? jak oni się tam mieszczą, to ja ci powiem, że nie rozumiem. To nie jest duże miasto i oni tam nigdy nie mieli infrastruktury przed wielką korektą. Teraz nagle wyskoczyli, że wszystko mają, bo to chyba przez tę organizację. I pomimo tego, że to duże miasto nie jest, to oni tam mają te namioty. Zbudowali takie polowe budowle też. Tam by się dużo ludzi zmieściło jakby to co przy mieści wykorzystać. Ale nie wiem, czy oni są chętni do jakiejś współpracy, bo na razie na handel to się wypinają, a jak coś chcą sprzedać, no to już ceny mają z kosmosu. Ale to chyba każdy o tym mówi. \n"
+}
+
+2026-04-07 10:25:10,982 - [INFO] Iteration: 10
+2026-04-07 10:25:11,990 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:12,218 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:12,375 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Karlikowo ostatnio rzuciło niezłe zapotrzebowanie na kilofy. U nas kilofów jest pod dostatkiem, tylko żelaza już nie ma, to im nie wyprodukujemy. Co oni tam kombinują? Dawno nikt nie chciał jakiejś dużej ilości kilofów. Pamiętam, jeszcze zanim Domatowo zniszczyli, że oni tam chyba z 7 sztuk chcielim, czy tam 8 maksymalnie. A teraz widziałeś wczoraj? 247 sztuk kilofów. Czaisz? To całe miasto będzie rąbać kilofami? Hehehe... Myślę, że oni podchodzą do tego ekonomicznie i po prostu chcą zawyżyć cenę kilofów, bo sprzątną je z rynku i nikt już nie będzie mógł nimi handlować i wtedy wszyscy będą musieli iść do nich. Wtedy pewnie załatwią sobie wołowinkę. Niegłupi plan.\n"
+}
+
+2026-04-07 10:25:12,375 - [INFO] Iteration: 11
+2026-04-07 10:25:13,336 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:13,463 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:13,584 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "40 kg ziemniaków, dwa kilofy i ok. 500 butelek wody bym potrzebował, bo u nas naprawdę nie ma dostępu do niczego, co da się pić. Ja wiem, że to będzie Ci pewnie trudno przewieźć, ale słuchaj: musisz dostarczyć nam to do końca tygodnia, bo mamy tutaj ok. 50 potrzebujących ludzi, a może nawet więcej, tylko nie wiem, czy liczyć dzieci. Przede wszystkim woda. Gdybyście byli w stanie załatwić cysternę, to by było coś. Wiem, że trudno to przewieźć tak, żeby tego nie zauważyli, ale musimy zaryzykować. Nie da się inaczej. Próbowałem dogadać się z Syjonem, ale mają takie ceny, że głowa mała. \n"
+}
+
+2026-04-07 10:25:13,584 - [INFO] Iteration: 12
+2026-04-07 10:25:14,771 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:14,904 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:15,038 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Brudzewo dostało wołowinę od **[niesłyszalne]**. Mówią, że jeszcze sporo tego mają, tylko ceny są jakieś astronomiczne. 20 kilofów za krowę? No chyba oszaleli. Po co im te kilofy? Przypominają mi się ceny sprzed wielkiej korekty. Wtedy mogłem normalnie kupić to w markecie, a teraz mam taszczyć kilofy przez całe pustkowia, żeby co? Żeby dostać pociętą na kawałki krowę? A potem w drugą stronę mam ją ciągnąć. Jakby jeszcze doliczyli do tego chociaż transport, to ta cena byłaby jeszcze jako taka, a teraz? to jest jakiś absurd jakiś! \n"
+}
+
+2026-04-07 10:25:15,039 - [INFO] Iteration: 13
+2026-04-07 10:25:16,216 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:16,375 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:16,505 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Słyszałeś, że tę elektrownię w Żarnowcu zbombardowali? Wysłali tam drona. No, nie ściemniam. Nic nie zostało, bo podobno ci goście od centrali coś kombinowali. Oni chyba współpracują z Zygfrydem... znaczy współpracowali jak żyli hehehehe... Ruch Oporu ich wydał i w sumie dobrze zrobił. Nie ma co rozpaczać nad zdrajcami. "
+}
+
+2026-04-07 10:25:16,506 - [INFO] Iteration: 14
+2026-04-07 10:25:18,189 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:18,321 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:18,483 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A Ci goście z **SSsssSszzZZZz** to skądś wytrzasnęli rybę. Do tej pory handlowali głównie wołowinąi **Sssszzzzzzz**. Myślę, że to [...] im sprzedała, bo kto inny? Znasz kogoś jeszcze, kto mógłby mi załatwić rybę? Ja bym kupił, tylko w dobrej cenie. Ale nie będę płacił ziemniakami, bo teraz ziemniaki są, powiem Ci szczerze, mocną walutą i wolałbym ją przetrzymać. W piwnicy trochę poleżą i na wartości zyskają. To jest dobra inwestycja. Poza tym na jesień chce je zasadzić. Część znaczy, bo wiadomo, że czymś płacić trzeba."
+}
+
+2026-04-07 10:25:18,483 - [INFO] Iteration: 15
+2026-04-07 10:25:19,763 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:19,906 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:20,059 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "bzzt ...współrzędne to trzydzieści... pisk ...czy ktoś tam jest...  bzzt ...paliwo kończy się o świcie...  bzzzzzzz ...tu patrol zwiado...  kshhh ...jeśli ktoś słyszy ten sygnał... bzzzzt ...czekam na potwierdzenie... szum ...nie mamy wiele ...  ksssh ...cztery-siedem-dwa...  trzask ...nadaję z północnego sektora...  ksssh ...sygnał... kshhhhh ...przechodzę na zapasową częstotliwość... kshhh ...nie mamy wiele czasu...  ksssh ...współrzędne to trzydzi... szzzzz ...odbier... ksssh ...potrzebujemy wsparcia... kshhhhh ...powtarzam ostatni komunikat...  kshhhhh ...paliwo kończy się o świcie... szum ...tu patrol zwiadowc...  ksssssh ...potrzebujemy wsparcia... bzzt ...nadaję z północnego sektora... ksssh ...przechodzę na zapasową częstotliwość... szum ...proszę odpowiedz na tym kanale...  bzzzzt ...czy kt...  kshhh ...czy ktoś tam jest... ksssh ...potrzebujem... bzzt ...powtarzam...  kshhhhh ...współrzędne to trzydzieści... pisk ...nadaję z północ... ksssssh ...odbiór jest... bardzo słaby...  bzzzzt ...proszę odpowiedz na tym kanale... szum ...cztery-siedem-dwa...  bzzt ...czekam na potw...  kshhhhh ...cztery-s...  trzask trzask ...proszę odpowiedz na tym kan...  trzask trzask ...cztery-siedem-dw...  ksssh ...zapas tlenu spa...  pisk ...tu patrol zwiadowczy...  bzzt ...to jest stacja... kshhhhh ...współrzędn...  kshhh ...nadaję z północ...  szum ...powtarzam...  bzzzzt ...proszę odpo...  bzzzzzzz ...powtarzam... kshhhhh ...jeśli ktoś słyszy ten sygnał... kshhhhh ...proszę odpowiedz na tym kanale...  pisk ...to jest stacja...  ksssssh ...cztery-siedem-dwa... ksssh ...czekam na potwier...  bzzzzt ...cztery-siedem...  kshhh ...przechodzę na zapas... trzask ...zapas tlenu spada...  szzzzz ...to jest stacj...  pisk ...powtarzam...  pisk ...zapas tlen...  pisk ...czy ktoś tam jest...  ksssh"
+}
+
+2026-04-07 10:25:20,060 - [INFO] Iteration: 16
+2026-04-07 10:25:20,722 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:20,800 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:20,984 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Miasto Narew. Mówi to coś Panu, Panie Stanisławie? No właśnie. Goście mają wszystkiego pod dostatkiem. A czego nie ma? No na liście handlu ich nie ma, proszę Pana! Tak. Bogacze się nawet na listę nie wpiszą, bo nic nie dadzą innym i sami ponoć niczego nie potrzebują. Ale ja tam wiem, proszę Pana... to tak miedzy nami, żeby Pan nie powtarzał innym, że oni nie mają... mięsa! Ja Panu powiem, że chodzą plotki, że to są sami weganie albo jeszcze coś gorszego. "
+}
+
+2026-04-07 10:25:20,985 - [INFO] Iteration: 17
+2026-04-07 10:25:21,903 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:21,992 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:22,142 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A z tym Domatowem to daj Pan spokój. Ludzie normalnie żyli i nagle co? Bombardowanie. Było miasto, nie ma miasta. Żaden chłop nie przeżył. W sumie baba i dziecko też nie. Chodzą ploty, że Domatowo gromadziło też ropę i oni po ropę przyszli. Ale są też inne ploty, że to konkurencja ich wybiła, bo handlowali. Pamięta Pan, nie? A ceny mieli dobre. Szkoda ich. W sensie tych cen."
+}
+
+2026-04-07 10:25:22,143 - [INFO] Iteration: 18
+2026-04-07 10:25:23,153 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:23,295 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:23,681 - [ERROR] Błąd dekodowania Base64: module 'datetime' has no attribute 'now'
+2026-04-07 10:25:23,681 - [ERROR] Error calling tool call_verify_api: cannot access local variable 'filename' where it is not associated with a value
+2026-04-07 10:25:23,684 - [INFO] Tool response: Error calling tool call_verify_api: cannot access local variable 'filename' where it is not associated with a value
+
+2026-04-07 10:25:23,684 - [INFO] Iteration: 19
+2026-04-07 10:25:24,628 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:24,764 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:24,992 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A w Karlinkowie chcieli makaron, wołowinę, ziemniaki i wodę. Widziałeś? A! Do tego jeszcze kilofy. Jedzenia jak dla robotników. Czy oni przypadkiem nie budują jakiejś kopalni? To jest podejrzane. Coś się chyba zapowiada, że na rynku pojawi się nowy surowiec. Tylko nie wiadomo, czy to będzie węgiel, czy może kopią złoto. Chociaż złoto w Karlinkowie? To głupio by było. Dobra, nieważne. Pewnie węgiel. Z wołowiną będzie ciężko bo wiadomo kto ma i za ile."
+}
+
+2026-04-07 10:25:24,993 - [INFO] Iteration: 20
+2026-04-07 10:25:26,308 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:26,445 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:26,660 - [ERROR] Błąd dekodowania Base64: module 'datetime' has no attribute 'now'
+2026-04-07 10:25:26,660 - [ERROR] Error calling tool call_verify_api: cannot access local variable 'filename' where it is not associated with a value
+2026-04-07 10:25:26,662 - [INFO] Tool response: Error calling tool call_verify_api: cannot access local variable 'filename' where it is not associated with a value
+
+2026-04-07 10:25:26,663 - [INFO] Iteration: 21
+2026-04-07 10:25:28,338 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:28,498 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:28,682 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "trzask trzask ...nie mamy wiele czasu...  bzzt ...jeśli ktoś słyszy ten sygnał...  bzzzzzzz ...potrzebujemy wsparcia... kshhhhh ...nadaję z północnego se...  trzask ...proszę odpowiedz ... kshhh ...tu patro... szum ...przechodzę na zapasową częstotliwość...  kshhh ...odbierasz... pisk ...jeśli ktoś słyszy ten sygnał...  ksssh ...przechodzę na zapasową częstotliwość... bzzt ...tu patrol zwiadow...  trzask trzask ...sygnał zanika... ksssssh ...potrzebujemy wsparcia...  trzask trzask ...cztery-siedem-dwa... szzzzz ...zapas tlenu spada... szum ...współrzędne to trzydzieści...  trzask ...powtarz... pisk ...tu patrol zwia... bzzzzzzz ...odbierasz mni... bzzt ...odbier...  bzzt ...nie mamy ... ksssssh ...potrzebujemy wsparcia... trzask trzask ...jeśli ktoś...  bzzt ...powtarz...  szzzzz ...przechodzę na zapasową częstotliwość... kshhhhh ...czy ktoś tam jest...  ksssh ...współrzędne to trzyd...  kshhhhh ...proszę odp...  ksssh ...czy ktoś ta...  bzzt ...proszę odpowiedz na tym kanale...  kshhhhh ...odbiór jest..... ksssssh ...zapas tlenu spada... bzzzzzzz ...powtarzam ostatni kom...  szum ...zapas tlenu spada...  pisk ...cztery... bzzzzzzz ...zapas tlenu...  pisk ...sygnał zanika...  bzzzzzzz ...paliwo kończy się o świcie... trzask ...proszę odpowiedz ...  ksssssh ...odbierasz m...  pisk ...czekam na potwierdzenie... ksssssh ...zapas tlenu spada...  trzask trzask ...współrzędne to trzydzieści...  bzzzzt ...odbierasz ...  trzask trzask ...to jest stacja... szum ...proszę odpowiedz na tym kan...  trzask trzask ...potrzebujemy ws...  szum ...czy ktoś tam jest... szum ...jeśli ...  bzzzzzzz ...potrzebujemy wsparcia.."
+}
+
+2026-04-07 10:25:28,683 - [INFO] Iteration: 22
+2026-04-07 10:25:30,152 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:25:30,304 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:25:30,480 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "*shhhhhh* TaTa TiTiTa TiTiTi TiTi TiTiTi TaTaTiTi (stop) TiTiTi TiTaTaTi TiTaTi TiTa TiTaTa TaTiTi TaTaTiTi TiTi TaTiTaTi (stop) TaTiTiTaTi TaTiTi Ti Ti TiTaTaTi Ti TiTaTi *khhhhhh*\n"
+}
+
+2026-04-07 10:25:30,480 - [INFO] Iteration: 23
+2026-04-07 10:34:46,419 - [INFO] Rozpoczynam pracę Agenta...
+2026-04-07 10:34:46,419 - [INFO] Iteration: 1
+2026-04-07 10:34:47,962 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:34:48,044 - [INFO] Tool call: call_verify_api with args: {'action': 'start'}
+
+2026-04-07 10:34:48,246 - [INFO] Tool response: {
+    "code": 110,
+    "message": "Gotowy do nasłuchu",
+    "action": "start"
+}
+
+2026-04-07 10:34:48,247 - [INFO] Iteration: 2
+2026-04-07 10:34:48,768 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:34:48,832 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:34:49,121 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Słuchaj, wczoraj na szlaku z Rabat do Lendi widziałem jakichś kupców. Pewnie znowu coś chcieli sprzedać.\nWiedziałem, że nieśli kierowy łopaty i jakieś worki. Wiem, co to mogło być, ale mógłbyś się nabrać. Ziemniaki? Tylko zgaduję.\nNie czułbym się bezpiecznie. Też coś jest potrzebne. U nas z tymi ziemniakami jest ciężko ostatnio. Ziemia i zekaš. Małżorzna.\nA nawozów,to nikt nie sprzedaje. Wszystko trzeba było załatwiać od operatorów systemu. Tytlko ja tam nie mam wtyków."
+}
+
+2026-04-07 10:34:49,122 - [INFO] Iteration: 3
+2026-04-07 10:34:49,614 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:34:49,659 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:34:49,842 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Miasto Narew. Mówi to coś Panu, Panie Stanisławie? No właśnie. Goście mają wszystkiego pod dostatkiem. A czego nie ma? No na liście handlu ich nie ma, proszę Pana! Tak. Bogacze się nawet na listę nie wpiszą, bo nic nie dadzą innym i sami ponoć niczego nie potrzebują. Ale ja tam wiem, proszę Pana... to tak miedzy nami, żeby Pan nie powtarzał innym, że oni nie mają... mięsa! Ja Panu powiem, że chodzą plotki, że to są sami weganie albo jeszcze coś gorszego. "
+}
+
+2026-04-07 10:34:49,842 - [INFO] Iteration: 4
+2026-04-07 10:34:50,324 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:34:50,384 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:34:50,568 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A w Karlinkowie chcieli makaron, wołowinę, ziemniaki i wodę. Widziałeś? A! Do tego jeszcze kilofy. Jedzenia jak dla robotników. Czy oni przypadkiem nie budują jakiejś kopalni? To jest podejrzane. Coś się chyba zapowiada, że na rynku pojawi się nowy surowiec. Tylko nie wiadomo, czy to będzie węgiel, czy może kopią złoto. Chociaż złoto w Karlinkowie? To głupio by było. Dobra, nieważne. Pewnie węgiel. Z wołowiną będzie ciężko bo wiadomo kto ma i za ile."
+}
+
+2026-04-07 10:34:50,568 - [INFO] Iteration: 5
+2026-04-07 10:34:51,560 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:34:51,648 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:36:58,493 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "text/xml",
+    "attachment": "[UKRYTO BASE64 PRZEZ SYSTEM. Zapisano na dysku jako intercepted_file_20260407103451.xml. Jeśli potrzebujesz zawartości tego pliku, użyj pythona lub poproś użytkownika]",
+    "filesize": 2684
+}
+
+2026-04-07 10:36:58,494 - [INFO] Iteration: 6
+2026-04-07 10:37:00,388 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:38:18,290 - [INFO] Użytkownik ręcznie wyedytował kod.
+2026-04-07 10:38:18,306 - [INFO] Request POST https://api.e2b.app/sandboxes
+2026-04-07 10:38:18,307 - [INFO] Request: POST https://api.e2b.app/sandboxes
+2026-04-07 10:38:18,854 - [INFO] Response: 201 https://api.e2b.app/sandboxes
+2026-04-07 10:38:18,855 - [INFO] HTTP Request: POST https://api.e2b.app/sandboxes "HTTP/1.1 201 Created"
+2026-04-07 10:38:18,855 - [INFO] Response 201
+2026-04-07 10:38:18,856 - [INFO] Request: POST https://49999-if70w1t1ot4a7a5r0chot.e2b.app/execute
+2026-04-07 10:38:19,181 - [INFO] Response: 200 https://49999-if70w1t1ot4a7a5r0chot.e2b.app/execute
+2026-04-07 10:38:19,182 - [INFO] HTTP Request: POST https://49999-if70w1t1ot4a7a5r0chot.e2b.app/execute "HTTP/1.1 200 OK"
+2026-04-07 10:38:19,490 - [INFO] Request DELETE https://api.e2b.app/sandboxes/if70w1t1ot4a7a5r0chot
+2026-04-07 10:38:19,491 - [INFO] Request: DELETE https://api.e2b.app/sandboxes/if70w1t1ot4a7a5r0chot
+2026-04-07 10:38:19,750 - [INFO] Response: 204 https://api.e2b.app/sandboxes/if70w1t1ot4a7a5r0chot
+2026-04-07 10:38:19,751 - [INFO] HTTP Request: DELETE https://api.e2b.app/sandboxes/if70w1t1ot4a7a5r0chot "HTTP/1.1 204 No Content"
+2026-04-07 10:38:19,751 - [INFO] Response 204
+2026-04-07 10:38:19,752 - [INFO] Tool call: execute_python_code with args: {'code': "import base64\nimport xml.etree.ElementTree as ET\n\n# Zakładamy, że plik został zapisany jako 'intercepted_file_20260407103451.xml'\nfile_path = 'logs/intercepted_file_20260407103451.xml'\n\n# Wczytanie pliku XML i parsowanie\ntree = ET.parse(file_path)\nroot = tree.getroot()\n\n# Zbieranie danych z pliku\ndata = {}\nfor element in root.iter():\n    if element.tag in ['cityName', 'cityArea', 'warehousesCount', 'phoneNumber']:\n        data[element.tag] = element.text\n\nprint(data)\n"}
+
+2026-04-07 10:38:19,752 - [INFO] Request POST https://api.e2b.app/sandboxes
+2026-04-07 10:38:19,754 - [INFO] Request: POST https://api.e2b.app/sandboxes
+2026-04-07 10:38:20,028 - [INFO] Response: 201 https://api.e2b.app/sandboxes
+2026-04-07 10:38:20,029 - [INFO] HTTP Request: POST https://api.e2b.app/sandboxes "HTTP/1.1 201 Created"
+2026-04-07 10:38:20,029 - [INFO] Response 201
+2026-04-07 10:38:20,031 - [INFO] Request: POST https://49999-i12dtyiujdvvxmjroze5u.e2b.app/execute
+2026-04-07 10:38:20,811 - [INFO] Response: 200 https://49999-i12dtyiujdvvxmjroze5u.e2b.app/execute
+2026-04-07 10:38:20,811 - [INFO] HTTP Request: POST https://49999-i12dtyiujdvvxmjroze5u.e2b.app/execute "HTTP/1.1 200 OK"
+2026-04-07 10:38:21,124 - [INFO] Request DELETE https://api.e2b.app/sandboxes/i12dtyiujdvvxmjroze5u
+2026-04-07 10:38:21,125 - [INFO] Request: DELETE https://api.e2b.app/sandboxes/i12dtyiujdvvxmjroze5u
+2026-04-07 10:38:21,377 - [INFO] Response: 204 https://api.e2b.app/sandboxes/i12dtyiujdvvxmjroze5u
+2026-04-07 10:38:21,378 - [INFO] HTTP Request: DELETE https://api.e2b.app/sandboxes/i12dtyiujdvvxmjroze5u "HTTP/1.1 204 No Content"
+2026-04-07 10:38:21,378 - [INFO] Response 204
+2026-04-07 10:38:21,378 - [INFO] Tool response: Błąd: [Errno 2] No such file or directory: 'logs/intercepted_file_20260407103451.xml'
+
+2026-04-07 10:38:21,379 - [INFO] Iteration: 7
+2026-04-07 10:38:22,318 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:38:22,368 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:38:22,564 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Słyszałeś, że tę elektrownię w Żarnowcu zbombardowali? Wysłali tam drona. No, nie ściemniam. Nic nie zostało, bo podobno ci goście od centrali coś kombinowali. Oni chyba współpracują z Zygfrydem... znaczy współpracowali jak żyli hehehehe... Ruch Oporu ich wydał i w sumie dobrze zrobił. Nie ma co rozpaczać nad zdrajcami. "
+}
+
+2026-04-07 10:38:22,564 - [INFO] Iteration: 8
+2026-04-07 10:38:23,136 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:38:23,168 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:38:23,372 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Brudzewo dostało wołowinę od **[niesłyszalne]**. Mówią, że jeszcze sporo tego mają, tylko ceny są jakieś astronomiczne. 20 kilofów za krowę? No chyba oszaleli. Po co im te kilofy? Przypominają mi się ceny sprzed wielkiej korekty. Wtedy mogłem normalnie kupić to w markecie, a teraz mam taszczyć kilofy przez całe pustkowia, żeby co? Żeby dostać pociętą na kawałki krowę? A potem w drugą stronę mam ją ciągnąć. Jakby jeszcze doliczyli do tego chociaż transport, to ta cena byłaby jeszcze jako taka, a teraz? to jest jakiś absurd jakiś! \n"
+}
+
+2026-04-07 10:38:23,373 - [INFO] Iteration: 9
+2026-04-07 10:38:24,059 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:38:24,161 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:38:24,325 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "trzask ...odbierasz mnie... kshhhhh ...odbier... szum ...potrzebujemy...  kshhh ...proszę odpowiedz na tym kanale...  bzzt ...potrzebujemy wsparcia... pisk ...to jest sta... trzask trzask ...nie mamy wiele cza... ksssh ...powtarz...  trzask ...zapas tlenu spada...  ksssssh ...odbiór jest... bardzo słaby...  bzzzzzzz ...czekam... kshhh ...jeśli ktoś słyszy ten sygnał... bzzzzt ...potrzebujemy wsparcia... szzzzz ...nie mamy wiele czasu... szum ...odbierasz ... pisk ...czy ktoś tam jest... bzzt ...odbierasz... trzask ...odbiór jest... bardzo słaby... bzzzzt ...współrzędn... ksssh ...zapas t...  pisk ...sygnał zanika...  kshhhhh ...współrzędne to trzydzieści... bzzzzt ...paliwo kończy się o św...  szzzzz ...współrzędne to trzydzieści...  bzzzzt ...powtarzam ostatni komunikat...  trzask ...zapas tlenu s... bzzzzt ...nadaję z północnego sektora...  trzask ...cztery-si... kshhh ...nie mam...  szum ...zapas tlenu spada...  trzask ...paliwo kończy się o świcie...  bzzzzt ...potrzebujemy wsparcia...  ksssh ...potrzebujemy wsparcia... bzzzzzzz ...paliwo kończy się o ś... ksssssh ...czekam na potwierdzenie... pisk ...sygnał zanika... trzask trzask ..."
+}
+
+2026-04-07 10:38:24,326 - [INFO] Iteration: 10
+2026-04-07 10:38:24,861 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:38:24,962 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:39:57,711 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "application/json",
+    "attachment": "[UKRYTO BASE64 PRZEZ SYSTEM. Zapisano na dysku jako intercepted_file_20260407103825.json. Jeśli potrzebujesz zawartości tego pliku, użyj pythona lub poproś użytkownika]",
+    "filesize": 2902
+}
+
+2026-04-07 10:39:57,711 - [INFO] Iteration: 11
+2026-04-07 10:40:02,771 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:40:51,364 - [INFO] Użytkownik ręcznie wyedytował kod.
+2026-04-07 10:40:51,364 - [INFO] Request POST https://api.e2b.app/sandboxes
+2026-04-07 10:40:51,365 - [INFO] Request: POST https://api.e2b.app/sandboxes
+2026-04-07 10:40:51,731 - [INFO] Response: 201 https://api.e2b.app/sandboxes
+2026-04-07 10:40:51,732 - [INFO] HTTP Request: POST https://api.e2b.app/sandboxes "HTTP/1.1 201 Created"
+2026-04-07 10:40:51,732 - [INFO] Response 201
+2026-04-07 10:40:51,732 - [INFO] Request: POST https://49999-iyybyj5iifkrjng2urg4k.e2b.app/execute
+2026-04-07 10:40:52,090 - [INFO] Response: 200 https://49999-iyybyj5iifkrjng2urg4k.e2b.app/execute
+2026-04-07 10:40:52,091 - [INFO] HTTP Request: POST https://49999-iyybyj5iifkrjng2urg4k.e2b.app/execute "HTTP/1.1 200 OK"
+2026-04-07 10:40:52,163 - [INFO] Request DELETE https://api.e2b.app/sandboxes/iyybyj5iifkrjng2urg4k
+2026-04-07 10:40:52,164 - [INFO] Request: DELETE https://api.e2b.app/sandboxes/iyybyj5iifkrjng2urg4k
+2026-04-07 10:40:52,413 - [INFO] Response: 204 https://api.e2b.app/sandboxes/iyybyj5iifkrjng2urg4k
+2026-04-07 10:40:52,414 - [INFO] HTTP Request: DELETE https://api.e2b.app/sandboxes/iyybyj5iifkrjng2urg4k "HTTP/1.1 204 No Content"
+2026-04-07 10:40:52,414 - [INFO] Response 204
+2026-04-07 10:40:52,414 - [INFO] Tool call: execute_python_code with args: {'code': "import json\n\n# Zakładamy, że plik został zapisany jako 'intercepted_file_20260407103825.json'\nfile_path = 'logs/intercepted_file_20260407103825.json'\n\n# Wczytanie pliku JSON i parsowanie\nwith open(file_path, 'r') as file:\n    data = json.load(file)\n\n# Zbieranie kluczowych danych\nrelevant_data = {key: data[key] for key in ['cityName', 'cityArea', 'warehousesCount', 'phoneNumber'] if key in data}    \n\nprint(relevant_data)\x1a\n"}
+
+2026-04-07 10:40:52,415 - [INFO] Request POST https://api.e2b.app/sandboxes
+2026-04-07 10:40:52,415 - [INFO] Request: POST https://api.e2b.app/sandboxes
+2026-04-07 10:40:52,673 - [INFO] Response: 201 https://api.e2b.app/sandboxes
+2026-04-07 10:40:52,674 - [INFO] HTTP Request: POST https://api.e2b.app/sandboxes "HTTP/1.1 201 Created"
+2026-04-07 10:40:52,674 - [INFO] Response 201
+2026-04-07 10:40:52,675 - [INFO] Request: POST https://49999-ikofrlckz75dazju1bemr.e2b.app/execute
+2026-04-07 10:40:52,984 - [INFO] Response: 200 https://49999-ikofrlckz75dazju1bemr.e2b.app/execute
+2026-04-07 10:40:52,984 - [INFO] HTTP Request: POST https://49999-ikofrlckz75dazju1bemr.e2b.app/execute "HTTP/1.1 200 OK"
+2026-04-07 10:40:53,044 - [INFO] Request DELETE https://api.e2b.app/sandboxes/ikofrlckz75dazju1bemr
+2026-04-07 10:40:53,044 - [INFO] Request: DELETE https://api.e2b.app/sandboxes/ikofrlckz75dazju1bemr
+2026-04-07 10:40:53,291 - [INFO] Response: 204 https://api.e2b.app/sandboxes/ikofrlckz75dazju1bemr
+2026-04-07 10:40:53,291 - [INFO] HTTP Request: DELETE https://api.e2b.app/sandboxes/ikofrlckz75dazju1bemr "HTTP/1.1 204 No Content"
+2026-04-07 10:40:53,292 - [INFO] Response 204
+2026-04-07 10:40:53,292 - [INFO] Tool response: Błąd: invalid non-printable character U+001A (2366269166.py, line 18)
+
+2026-04-07 10:40:53,292 - [INFO] Iteration: 12
+2026-04-07 10:40:53,986 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:40:54,089 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:43:10,523 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "audio/mpeg",
+    "attachment": "[UKRYTO BASE64 PRZEZ SYSTEM. Zapisano na dysku jako intercepted_file_20260407104054.mp3. Jeśli potrzebujesz zawartości tego pliku, użyj pythona lub poproś użytkownika]",
+    "filesize": 543700
+}
+
+2026-04-07 10:43:10,523 - [INFO] Iteration: 13
+2026-04-07 10:53:10,586 - [INFO] Retrying request to /chat/completions in 0.430876 seconds
+2026-04-07 10:53:12,280 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:12,329 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:12,533 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "40 kg ziemniaków, dwa kilofy i ok. 500 butelek wody bym potrzebował, bo u nas naprawdę nie ma dostępu do niczego, co da się pić. Ja wiem, że to będzie Ci pewnie trudno przewieźć, ale słuchaj: musisz dostarczyć nam to do końca tygodnia, bo mamy tutaj ok. 50 potrzebujących ludzi, a może nawet więcej, tylko nie wiem, czy liczyć dzieci. Przede wszystkim woda. Gdybyście byli w stanie załatwić cysternę, to by było coś. Wiem, że trudno to przewieźć tak, żeby tego nie zauważyli, ale musimy zaryzykować. Nie da się inaczej. Próbowałem dogadać się z Syjonem, ale mają takie ceny, że głowa mała. \n"
+}
+
+2026-04-07 10:53:12,535 - [INFO] Iteration: 14
+2026-04-07 10:53:13,013 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:13,043 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:13,314 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "image/jpeg",
+    "attachment": "[UKRYTO BASE64 PRZEZ SYSTEM. Zapisano na dysku jako intercepted_file_20260407105313.jpg. Jeśli potrzebujesz zawartości tego pliku, użyj pythona lub poproś użytkownika]",
+    "filesize": 248572
+}
+
+2026-04-07 10:53:13,316 - [INFO] Iteration: 15
+2026-04-07 10:53:13,774 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:13,866 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:13,998 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "szzzzz ...powtarzam o...  szum ...jeśli ktoś słyszy ten sygn... ksssssh ...przechodzę na zapasową... pisk ...zapas tlenu spada...  pisk ...tu patrol zwiadowczy...  szum ...cztery-sie...  szum ...przechodzę na zapasową częstotl... trzask ...cztery-siedem-dwa...  bzzt ...nie mamy wiele czasu... trzask trzask ...paliwo kończy się o świcie... kshhhhh ...powtarzam ...  ksssssh ...zapas tlenu...  ksssssh ...odbiór jest... bardzo słaby... bzzt ...potrzebu...  pisk ...przechodzę na zapasową częstotliwość...  bzzt ...potrzebu... bzzt ...powtarzam ostatni komunikat...  ksssh ...to jest stacja...  bzzzzt ...czy ktoś tam je... bzzt ...to jest stacja...  trzask trzask ...powtarzam... bzzzzt ...paliwo kończy się o świcie... ksssssh ...cztery-siedem-dwa... pisk ...to jest s...  szzzzz ...odbierasz mn...  bzzzzt ...proszę odpowiedz na tym kanale...  ksssssh ...proszę odpowiedz na tym kanale...  szum ...nadaję z północnego sektora...  trzask ...tu patrol ."
+}
+
+2026-04-07 10:53:13,998 - [INFO] Iteration: 16
+2026-04-07 10:53:14,473 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:14,542 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:14,683 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "bzzt ...to jest stacj...  trzask ...przechodzę na zapasową częstotliwość...  kshhhhh ...cztery-siede...  kshhh ...odbierasz mnie...  pisk ...czy ktoś tam jest... pisk ...tu patrol zwiadowczy... trzask trzask ...to jest stacja...  szum ...nie mamy wiele czasu...  pisk ...tu patrol zwia...  bzzt ...nie mamy wiele cz...  kshhh ...powtarza...  pisk ...jeśli ktoś słyszy ten sygnał... ksssssh ...odbiera...  bzzzzt ...powtarzam ost...  kshhh ...odbierasz mnie... trzask"
+}
+
+2026-04-07 10:53:14,684 - [INFO] Iteration: 17
+2026-04-07 10:53:15,146 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:15,190 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:15,337 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "ksssssh ...tu patrol zwiadowczy... trzask trzask ...powtarz...  bzzzzt ...jeśli ktoś słyszy ten sygnał...  szum ...proszę odpowiedz...  pisk ...nadaję z północnego sektora...  ksssssh ...tu patrol zwiadowczy...  bzzzzt ...potrzebujemy wsparcia...  ksssssh ...nadaję z północnego sektora... bzzzzzzz ...sygnał za...  kshhh ...powtarzam... bzzzzzzz ...sygnał zanika.."
+}
+
+2026-04-07 10:53:15,338 - [INFO] Iteration: 18
+2026-04-07 10:53:15,785 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:15,839 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:16,006 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Chłopaki na Syjonie zaczęli handlować bydłem! Słyszeliście? Ceny, to jak zawsze. Nawet nie ma co negocjować. Zamiast kupić od Ciebie kilof, to Cię kilofem zdzielą, jak powiesz, że za drogo. No taka prawda Hahahaha"
+}
+
+2026-04-07 10:53:16,006 - [INFO] Iteration: 19
+2026-04-07 10:53:16,512 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:16,562 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:16,706 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "W Narewce podobno zaczęli handlować dziczyzną. Coś przetrwało w tych ich lasach. Mają dobrą pozycję: ukryci, spokojnie, dużo przyrody, tak na uboczu. Potem wystarczy wziąć broń, upolować coś dzikiego w lesie i tyle. Nawet rzekę mają, chociaż nie wiem, czy nie wyschła. Trzeba by zapytać przy kolejnym transporcie. "
+}
+
+2026-04-07 10:53:16,707 - [INFO] Iteration: 20
+2026-04-07 10:53:17,143 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:17,195 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:17,366 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "*shhhhhh* TaTa TiTiTa TiTiTi TiTi TiTiTi TaTaTiTi (stop) TiTiTi TiTaTaTi TiTaTi TiTa TiTaTa TaTiTi TaTaTiTi TiTi TaTiTaTi (stop) TaTiTiTaTi TaTiTi Ti Ti TiTaTaTi Ti TiTaTi *khhhhhh*\n"
+}
+
+2026-04-07 10:53:17,367 - [INFO] Iteration: 21
+2026-04-07 10:53:17,855 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:17,922 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:18,088 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Z Syjonu się odezwali. Mówią, że brakuje im kilofów. No skubani, tego akurat nie umieją sami wyprodukować. Resztę mają. Ale nie, my im nie damy! Niech sobie sami radzą. Jak nasze miasto prosiło ich o wodę, to\"wody nie eksportujemy\", taaaak? A mają przecież tam praktycznie własną produkcję robią. A jak prosiliśmy ich o krowę, to nie - całej nie sprzedadzą! To niech się teraz wypchają. Kij im w oko... Czy tam kilof!"
+}
+
+2026-04-07 10:53:18,088 - [INFO] Iteration: 22
+2026-04-07 10:53:18,562 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:18,630 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:18,760 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "szum ...powtarzam ost... trzask ...nie mamy... trzask ...proszę odpowiedz na tym kanale... bzzt ...sygnał zanika... szzzzz ...czekam na... trzask ...nie mamy wiele czasu... trzask ...odbierasz mni... trzask trzask ...nie mamy wiele czasu...  bzzzzzzz ...potrzebujemy wsparcia...  szum ...tu patrol z...  szum ...odbier...  trzask ...potrzebujemy ws...  ksssssh ...paliwo kończy się o świcie... trzask trzask ...proszę odp... ksssssh ...powtarzam... pisk ...sygnał zanika...  kshhhhh ...nie mamy wiele czasu...  bzzzzzzz ...przechodzę na zapasową częstotliwość...  bzzzzzzz ...potrzebujemy wsparcia...  szzzzz ...tu patrol zwi...  bzzzzzzz ...odbiera... trzask trzask ...współrzędne to trzydzieści...  trzask trzask ...potrzebujemy wsparcia...  kshhhhh ...potrzebuj...  trzask ...czy ktoś ta...  bzzt ...proszę odpowiedz ... trzask ...zapas tle...  ksssssh ...sygnał zanika...  ksssssh ...zapas tlenu sp...  bzzzzt ...powtarzam ostatni komunikat... trzask ...powtarzam ostatni komunikat...  kshhhhh ...nie mam...  pisk ...przechodzę na zapasową częstotliwość...  bzzzzt ...powtarzam ostatni komunika"
+}
+
+2026-04-07 10:53:18,761 - [INFO] Iteration: 23
+2026-04-07 10:53:19,388 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:19,441 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:19,569 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Ja słyszałem, że jedno miasto ma ryby. Tak, w Drohiczynie nad Bugiem. Rzeka jeszcze nie wyschła do końca. Tam mają, powiem Panu, w najgłębszym miejscu nawet ze 2 metry. I tam ponoć coś się namnożyło. Znaczy nie żeby od razu łowić i zjadać, bo to jeszcze za wcześnie, ale dajmy temu rok, dwa i jest szansa, że będzie co zjeść. Ale Drohiczyn i tak mówi, że oni woleliby świnię albo krowę, a nic nie mają. No ale mogą korzystać. Przecież te ryby, jak dorosną za te parę lat i się tego trochę namnoży, to będzie na handel wymienny, jak u wszystkich. Już nie muszą wszystkiego sami produkować. Po to mamy dział handlu. "
+}
+
+2026-04-07 10:53:19,569 - [INFO] Iteration: 24
+2026-04-07 10:53:20,101 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:20,155 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:20,336 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Ze Skarszewami to zawsze był problem. Z handlem. Skubani prawie nic nie chcą. Najwyżej kilof od Ciebie kupią albo łopatę, bo bydło, mówią, że mają swoje. Nad rzeką mieszkają, więc wody nie potrzebują. Mają swoją podobno. Oczyszczają to, co im tam płynie.\n\nDla mnie to jest ściek, tak powiem, ale oni mają technologię, więc mogą to pić. O bydle już wspominałem? A pewnie tak. No i do lasów mają dostęp. Miasto ocalałych. Wszyscy jesteśmy miastami ocalałych, ale tamci zyskali taki przydomek akurat. Bo niektórzy mówią, że to taki prawie biblijny raj, bo tam akurat ziemia żyzna się trafiła.\n\nJa myślę, że to przez te ich ścieki, co płyną nieopodal. Radiacja też niska, więc spokojnie ziemniaki można jeść, i to bez żadnych procedur przygotowawczych. No i to bydło. Aaaaa... też bym chciał wołowinki spróbować. Jak tam u Was? Potrzebujecie czegoś?"
+}
+
+2026-04-07 10:53:20,336 - [INFO] Iteration: 25
+2026-04-07 10:53:20,880 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:20,948 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:21,073 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Odwiedzałem ostatnio Syjon i powiem Ci, że tam jest naprawdę na bogato. Wyremontowali sobie miasto. Nawet tak “od tyłu” u nich nie ma. Zamieśli wszystko schubami. Byłem jeszcze w Mielniku. Mielnik nie chce z nimi handlować i nie chodzi o cenę. Bo w Mielniku mają wodę, pola, lasy i co sobie złapią, to sobie zjedzą. Więc to nie jest dobrze, żeby te dwa miasta w ogóle jakoś handlowały razem, bo mi się wydaje, proszę pana, że to jest konkurencja. A może to nawet być — tak między nami mówię, oczywiście — że to może być zmowa cenowa, bo te ceny, co oni podają, często idą w górę w tym samym momencie i jakoś nie spadają, nie? Ciekawy zbieg okoliczności, prawda?"
+}
+
+2026-04-07 10:53:21,074 - [INFO] Iteration: 26
+2026-04-07 10:53:21,539 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:21,615 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:21,778 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A z tym Domatowem to daj Pan spokój. Ludzie normalnie żyli i nagle co? Bombardowanie. Było miasto, nie ma miasta. Żaden chłop nie przeżył. W sumie baba i dziecko też nie. Chodzą ploty, że Domatowo gromadziło też ropę i oni po ropę przyszli. Ale są też inne ploty, że to konkurencja ich wybiła, bo handlowali. Pamięta Pan, nie? A ceny mieli dobre. Szkoda ich. W sensie tych cen."
+}
+
+2026-04-07 10:53:21,778 - [INFO] Iteration: 27
+2026-04-07 10:53:22,236 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:22,288 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:22,494 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Karlikowo ostatnio rzuciło niezłe zapotrzebowanie na kilofy. U nas kilofów jest pod dostatkiem, tylko żelaza już nie ma, to im nie wyprodukujemy. Co oni tam kombinują? Dawno nikt nie chciał jakiejś dużej ilości kilofów. Pamiętam, jeszcze zanim Domatowo zniszczyli, że oni tam chyba z 7 sztuk chcielim, czy tam 8 maksymalnie. A teraz widziałeś wczoraj? 247 sztuk kilofów. Czaisz? To całe miasto będzie rąbać kilofami? Hehehe... Myślę, że oni podchodzą do tego ekonomicznie i po prostu chcą zawyżyć cenę kilofów, bo sprzątną je z rynku i nikt już nie będzie mógł nimi handlować i wtedy wszyscy będą musieli iść do nich. Wtedy pewnie załatwią sobie wołowinkę. Niegłupi plan.\n"
+}
+
+2026-04-07 10:53:22,495 - [INFO] Iteration: 28
+2026-04-07 10:53:22,998 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:23,060 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:23,203 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "**[niesłyszalne]** bo tam się zabrało najwięcej ludzi wiesz? jak oni się tam mieszczą, to ja ci powiem, że nie rozumiem. To nie jest duże miasto i oni tam nigdy nie mieli infrastruktury przed wielką korektą. Teraz nagle wyskoczyli, że wszystko mają, bo to chyba przez tę organizację. I pomimo tego, że to duże miasto nie jest, to oni tam mają te namioty. Zbudowali takie polowe budowle też. Tam by się dużo ludzi zmieściło jakby to co przy mieści wykorzystać. Ale nie wiem, czy oni są chętni do jakiejś współpracy, bo na razie na handel to się wypinają, a jak coś chcą sprzedać, no to już ceny mają z kosmosu. Ale to chyba każdy o tym mówi. \n"
+}
+
+2026-04-07 10:53:23,204 - [INFO] Iteration: 29
+2026-04-07 10:53:23,721 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:23,783 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:23,954 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "szzzzz ...nie mamy wiele...  trzask ...powtarzam... kshhhhh ...przechodzę na zapasową częstotliwość... trzask trzask ...zapas tlenu s... kshhhhh ...to jest stac... trzask trzask ...współrzędne to trzydzie...  bzzt ...sygnał zanika... trzask ...tu patrol zwiadowczy...  szzzzz ...powtar...  bzzzzt ...powtarzam ostatni...  kshhh ...sygnał zanika...  ksssssh ...powtarzam ostatni komunikat... szum ...sygnał zan...  pisk ...potrzebujemy wspar...  kshhhhh ...potrze... bzzzzt ...współrzędne to...  kshhh ...to jest...  bzzzzt ...czekam na ...  kshhh ...jeśli ktoś słyszy ten sygnał...  ksssssh ...tu patrol ... trzask ...odbierasz ...  trzask trzask ...proszę odpowiedz na tym kanale... bzzzzzzz ...nie mamy wiele czasu... bzzzzzzz ...potrzeb... pisk ...nadaję z północnego sektora... trzask ...jeśli ktoś słyszy ten sygnał... kshhhhh ...to jest s...  bzzzzt ...czekam na potwierdzenie...  bzzzzzzz ...nie mamy ...  bzzt ...sygnał...  szum ...tu patrol zwiadowczy... ksssh ...przechodzę na zapasową częstotliwość... pisk ...sygnał zanika...  szum .."
+}
+
+2026-04-07 10:53:23,955 - [INFO] Iteration: 30
+2026-04-07 10:53:24,451 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:24,528 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:24,676 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "No, Pogód się w ogóle wypiął chyba na wszystkich. Są nad rzeką, więc wody już nie zamawiają. Pola mają, to już nawet ziemniaków nie wezmą. Tak to jest: jak człowiek wszystko ma, to nagle nic nie potrzebuje. Już nie ma przyjaciół, nie ma handlu, a wsparliby kogoś może. Może by wysłali coś. Tam przynajmniej mają czystą wodę. Nie to, co w Skarszewach. Ale w Skarszewach znowu umieją oczyszczać, więc w sumie nie wiem, co lepsze, bo ta może wygląda na czystą, ale jaka ona jest naprawdę? a kto to wie?"
+}
+
+2026-04-07 10:53:24,676 - [INFO] Iteration: 31
+2026-04-07 10:53:25,205 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:25,250 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:25,577 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "image/png",
+    "attachment": "[UKRYTO BASE64 PRZEZ SYSTEM. Zapisano na dysku jako intercepted_file_20260407105325.png. Jeśli potrzebujesz zawartości tego pliku, użyj pythona lub poproś użytkownika]",
+    "filesize": 560994
+}
+
+2026-04-07 10:53:25,579 - [INFO] Iteration: 32
+2026-04-07 10:53:26,133 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:26,173 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:26,314 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A Ci goście z **SSsssSszzZZZz** to skądś wytrzasnęli rybę. Do tej pory handlowali głównie wołowinąi **Sssszzzzzzz**. Myślę, że to [...] im sprzedała, bo kto inny? Znasz kogoś jeszcze, kto mógłby mi załatwić rybę? Ja bym kupił, tylko w dobrej cenie. Ale nie będę płacił ziemniakami, bo teraz ziemniaki są, powiem Ci szczerze, mocną walutą i wolałbym ją przetrzymać. W piwnicy trochę poleżą i na wartości zyskają. To jest dobra inwestycja. Poza tym na jesień chce je zasadzić. Część znaczy, bo wiadomo, że czymś płacić trzeba."
+}
+
+2026-04-07 10:53:26,314 - [INFO] Iteration: 33
+2026-04-07 10:53:26,865 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:26,934 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:27,065 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Chcesz coś z Celbowa? będę tam po drodze. Mogę Ci wziąć. Mieli makaron ostatnio. Dobry jest. Sami robią."
+}
+
+2026-04-07 10:53:27,065 - [INFO] Iteration: 34
+2026-04-07 10:53:27,559 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:27,614 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:27,730 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Narewka mówi, że jeśli ktoś chciałby do nich przyjechać, to mają nawet miejsca noclegowe — co prawda w namiotach, ale to zawsze coś. Tylko ponoć bez ziemniaków nie ma tam co się zjawiać, bo innej waluty nie przyjmują. Mięsa też już nie chcą, bo mają własne. "
+}
+
+2026-04-07 10:53:27,731 - [INFO] Iteration: 35
+2026-04-07 10:53:28,236 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:28,544 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:28,665 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Z Domatowa już nic nie zostało. Przyszli niszczyciele. Taaa... ktoś ich wydał. Ja bym stawiał, że to Karlikowo, bo oni handlowali ziemniakami, a Domatowo chyba też miało coś z ziemniaków. No i trzeba było się pozbyć konkurencji. Ja myślę, że to nieuczciwe. Tak nie powinno się robić, bo słuchaj: my wszyscy jesteśmy w trudnej sytuacji i ja wiem, że potrzebne jest jedzenie i te wszystkie inne rzeczy, ale to, co oni zrobili, to jest przesada. To jest po prostu świństwo. Tak się nie robi. Mówię Ci...\n"
+}
+
+2026-04-07 10:53:28,665 - [INFO] Iteration: 36
+2026-04-07 10:53:29,194 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:29,260 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:29,375 - [ERROR] Błąd dekodowania Base64: 
+2026-04-07 10:53:29,377 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "text/csv",
+    "attachment": "[UKRYTO BASE64 PRZEZ SYSTEM. Zapisano na dysku jako intercepted_file_20260407105329.csv. Jeśli potrzebujesz zawartości tego pliku, użyj pythona lub poproś użytkownika]",
+    "filesize": 1593
+}
+
+2026-04-07 10:53:29,377 - [INFO] Iteration: 37
+2026-04-07 10:53:29,995 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:30,073 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 10:53:30,192 - [INFO] Tool response: {
+    "code": 101,
+    "message": "Baterie w nadajniku padly, ale mamy juz dostatecznie duzo materialu, aby rozpoczac analize.",
+    "hint": "Możesz wywołać akcję \"start\" aby zacząć od nowa jeśli potrzebujesz"
+}
+
+2026-04-07 10:53:30,192 - [INFO] Iteration: 38
+2026-04-07 10:53:30,787 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 10:53:32,561 - [ERROR] Error: 
+2026-04-07 11:11:04,986 - [INFO] Rozpoczynam pracę Agenta...
+2026-04-07 11:11:04,986 - [INFO] Iteration: 1
+2026-04-07 11:11:06,767 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:06,926 - [INFO] Tool call: call_verify_api with args: {'action': 'start'}
+
+2026-04-07 11:11:07,151 - [INFO] Tool response: {
+    "code": 110,
+    "message": "Gotowy do nasłuchu",
+    "action": "start"
+}
+
+2026-04-07 11:11:07,151 - [INFO] Iteration: 2
+2026-04-07 11:11:07,842 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:07,911 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:08,031 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "40 kg ziemniaków, dwa kilofy i ok. 500 butelek wody bym potrzebował, bo u nas naprawdę nie ma dostępu do niczego, co da się pić. Ja wiem, że to będzie Ci pewnie trudno przewieźć, ale słuchaj: musisz dostarczyć nam to do końca tygodnia, bo mamy tutaj ok. 50 potrzebujących ludzi, a może nawet więcej, tylko nie wiem, czy liczyć dzieci. Przede wszystkim woda. Gdybyście byli w stanie załatwić cysternę, to by było coś. Wiem, że trudno to przewieźć tak, żeby tego nie zauważyli, ale musimy zaryzykować. Nie da się inaczej. Próbowałem dogadać się z Syjonem, ale mają takie ceny, że głowa mała. \n"
+}
+
+2026-04-07 11:11:08,031 - [INFO] Iteration: 3
+2026-04-07 11:11:08,788 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:08,887 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:09,032 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Brudzewo dostało wołowinę od **[niesłyszalne]**. Mówią, że jeszcze sporo tego mają, tylko ceny są jakieś astronomiczne. 20 kilofów za krowę? No chyba oszaleli. Po co im te kilofy? Przypominają mi się ceny sprzed wielkiej korekty. Wtedy mogłem normalnie kupić to w markecie, a teraz mam taszczyć kilofy przez całe pustkowia, żeby co? Żeby dostać pociętą na kawałki krowę? A potem w drugą stronę mam ją ciągnąć. Jakby jeszcze doliczyli do tego chociaż transport, to ta cena byłaby jeszcze jako taka, a teraz? to jest jakiś absurd jakiś! \n"
+}
+
+2026-04-07 11:11:09,033 - [INFO] Iteration: 4
+2026-04-07 11:11:09,929 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:10,001 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:10,127 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Karlikowo ostatnio rzuciło niezłe zapotrzebowanie na kilofy. U nas kilofów jest pod dostatkiem, tylko żelaza już nie ma, to im nie wyprodukujemy. Co oni tam kombinują? Dawno nikt nie chciał jakiejś dużej ilości kilofów. Pamiętam, jeszcze zanim Domatowo zniszczyli, że oni tam chyba z 7 sztuk chcielim, czy tam 8 maksymalnie. A teraz widziałeś wczoraj? 247 sztuk kilofów. Czaisz? To całe miasto będzie rąbać kilofami? Hehehe... Myślę, że oni podchodzą do tego ekonomicznie i po prostu chcą zawyżyć cenę kilofów, bo sprzątną je z rynku i nikt już nie będzie mógł nimi handlować i wtedy wszyscy będą musieli iść do nich. Wtedy pewnie załatwią sobie wołowinkę. Niegłupi plan.\n"
+}
+
+2026-04-07 11:11:10,127 - [INFO] Iteration: 5
+2026-04-07 11:11:10,977 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:11,019 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:11,191 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "szum ...współrzędne to trzydzieści... kshhhhh ...potrzebujemy w...  ksssssh ...cztery-sied... szum ...sygnał zanika...  trzask ...czekam na potwierdzenie... szum ...powtarzam ostatni komunikat...  szzzzz ...tu patrol zwiadowc... kshhhhh ...cztery-siedem-dwa...  trzask ...potrzebuj... bzzzzt ...tu patrol zw... bzzzzt ...cztery-sied...  bzzzzzzz ...nie mamy wiele czasu... bzzzzzzz ...odbierasz m... kshhhhh ...czy ktoś tam jest...  szzzzz ...sygnał zanika...  kshhhhh ...potrzebujemy ...  kshhh ...nadaję z półn... ksssssh ...proszę odpowiedz na tym k... szum ...nadaję z północnego sektora...  ksssh ...odbiór jest... bardzo słaby... kshhh ...czekam na potwierdzenie... bzzt ...czekam na potwierd... pisk ...powtarzam...  bzzt ...odbiór jest... bardzo sł...  kshhhhh ...odbiór jest... ... bzzzzt ...przecho... kshhh ...cztery-siedem...  bzzzzzzz ...powtarz... kshhhhh ...tu patr... trzask trzask ...zapas ...  szzzzz ...potrzebujemy wsparcia...  bzzzzt ...cztery... kshhh ...powtarzam ostatni komunikat... bzzzzt ...odbiór jest... bardzo słaby... kshhh ...powtarza... kshhh ...potrzebujemy wsparcia... bzzzzzzz ...sygnał zanika...  kshhhhh ...nadaję z północnego sektora...  bzzzzt ...sygnał z... szzzzz ...nadaję z...  szzzzz ...to jest stacja...  ksssssh ...współrzędne to trzydzieści...  bzzt ...czy ktoś tam je... szum ...nie mamy wiele czasu...  szzzzz ...tu patrol zwiadowczy...  szum ...odbieras...  kshhh ...nie mamy wie... trzask trzask ...cztery... trzask ...jeśli ktoś słyszy ten sygnał... kshhh ...odbiór jest... bardzo słab... kshhh ...potrzebujemy wsparcia... pisk ...proszę odpowiedz n... ksssssh ...tu patrol zwi... szum ...zapas tl...  bzzt ...czy ktoś tam jest... szum ...proszę odpowiedz na tym kanale...  bzzzzt ...tu patrol zwiadowczy... szum ...cztery-siedem-d...  szum ...cztery-siede...  ksssh ...nadaję... ksssssh ...czekam na potwierdzenie."
+}
+
+2026-04-07 11:11:11,192 - [INFO] Iteration: 6
+2026-04-07 11:11:11,947 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:12,016 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:12,175 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Chcesz coś z Celbowa? będę tam po drodze. Mogę Ci wziąć. Mieli makaron ostatnio. Dobry jest. Sami robią."
+}
+
+2026-04-07 11:11:12,175 - [INFO] Iteration: 7
+2026-04-07 11:11:13,188 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:13,337 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:13,453 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A w Karlinkowie chcieli makaron, wołowinę, ziemniaki i wodę. Widziałeś? A! Do tego jeszcze kilofy. Jedzenia jak dla robotników. Czy oni przypadkiem nie budują jakiejś kopalni? To jest podejrzane. Coś się chyba zapowiada, że na rynku pojawi się nowy surowiec. Tylko nie wiadomo, czy to będzie węgiel, czy może kopią złoto. Chociaż złoto w Karlinkowie? To głupio by było. Dobra, nieważne. Pewnie węgiel. Z wołowiną będzie ciężko bo wiadomo kto ma i za ile."
+}
+
+2026-04-07 11:11:13,453 - [INFO] Iteration: 8
+2026-04-07 11:11:14,474 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:14,539 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:14,677 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Narewka mówi, że jeśli ktoś chciałby do nich przyjechać, to mają nawet miejsca noclegowe — co prawda w namiotach, ale to zawsze coś. Tylko ponoć bez ziemniaków nie ma tam co się zjawiać, bo innej waluty nie przyjmują. Mięsa też już nie chcą, bo mają własne. "
+}
+
+2026-04-07 11:11:14,677 - [INFO] Iteration: 9
+2026-04-07 11:11:15,796 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:15,916 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:16,062 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "*shhhhhh* TaTa TiTiTa TiTiTi TiTi TiTiTi TaTaTiTi (stop) TiTiTi TiTaTaTi TiTaTi TiTa TiTaTa TaTiTi TaTaTiTi TiTi TaTiTaTi (stop) TaTiTiTaTi TaTiTi Ti Ti TiTaTaTi Ti TiTaTi *khhhhhh*\n"
+}
+
+2026-04-07 11:11:16,062 - [INFO] Iteration: 10
+2026-04-07 11:11:17,099 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:17,163 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:17,306 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "ksssh ...odbiór jest... b... kshhh ...powtarzam...  kshhhhh ...paliwo kończy się o świc... ksssssh ...odbiór jest... bardzo słaby... pisk ...paliwo kończy się o świcie...  trzask ...odbiór ...  pisk ...potrzebujemy wsparcia...  pisk ...proszę odpowiedz na tym k...  trzask trzask ...powtarzam ostatni... szzzzz ...powtarzam...  bzzt ...paliwo kończy ...  ksssssh ...jeśli ktoś słyszy ten sygnał...  ksssh ...odbierasz mnie...  ksssssh ...współrzędne to trzydz... szum ...proszę odpowiedz na tym kanale... kshhh ...proszę odpowiedz n... trzask ...powtarzam ostatni komunikat...  bzzt ...odbiór jest... bardzo słaby... trzask trzask ...odbierasz mn...  kshhhhh ...zapas ... trzask ...powtarzam ostatni komunikat...  kshhhhh ...nadaję z północneg... bzzzzt ...zapas t... szum ...powtarzam ostatni komunikat... bzzzzt ...cztery-siedem-dwa...  pisk ...potrzebujemy... bzzzzt ...czy ktoś tam jest...  szzzzz ...paliwo kończy się o świcie...  trzask ...zapas tlenu...  bzzt ...to jest ... trzask ...czekam na...  ksssh ...odbierasz m...  bzzzzt ...sygnał zanika...  szzzzz ...paliwo kończy się o świcie... bzzzzzzz ...paliwo koń...  bzzzzzzz ...potrzebujemy wsparcia... kshhh ...powtar... kshhh ...współrzędne to trzydzieści... kshhhhh ...nie mamy wiele czasu... bzzzzt ...nie mamy...  ksssssh ...cztery-siedem-dwa...  bzzzzzzz ...potrzebujemy wsparcia...  trzask ...odbierasz mnie... szzzzz ...potrzebujemy wsparcia... bzzzzzzz ...przechodzę na zapasową ...  trzask ...tu patrol...  ksssh ...zapas tlenu spada... ksssh ...to jest... kshhh ...to jest s... szum ...powtarzam ostatni komunikat...  ksssh ...odbiór jest... bardzo słaby... kshhhhh ...powtarzam...  pisk ...sygnał zanika... szzzzz ...współrzędne t...  pisk ...odbierasz mnie... trzask trzask ...czy ktoś tam jest... ksssssh ...potrzebuje... ksssssh ...nadaję z północnego sektora... trzask ...czy ktoś tam jest... bzzt ...powtar...  szum ...powtarz...  szzzzz ...cztery-siedem-dwa... kshhh ...powtar"
+}
+
+2026-04-07 11:11:17,306 - [INFO] Iteration: 11
+2026-04-07 11:11:18,103 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:18,166 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:18,290 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "No, Pogód się w ogóle wypiął chyba na wszystkich. Są nad rzeką, więc wody już nie zamawiają. Pola mają, to już nawet ziemniaków nie wezmą. Tak to jest: jak człowiek wszystko ma, to nagle nic nie potrzebuje. Już nie ma przyjaciół, nie ma handlu, a wsparliby kogoś może. Może by wysłali coś. Tam przynajmniej mają czystą wodę. Nie to, co w Skarszewach. Ale w Skarszewach znowu umieją oczyszczać, więc w sumie nie wiem, co lepsze, bo ta może wygląda na czystą, ale jaka ona jest naprawdę? a kto to wie?"
+}
+
+2026-04-07 11:11:18,291 - [INFO] Iteration: 12
+2026-04-07 11:11:19,059 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:19,155 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:19,318 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Z Domatowa już nic nie zostało. Przyszli niszczyciele. Taaa... ktoś ich wydał. Ja bym stawiał, że to Karlikowo, bo oni handlowali ziemniakami, a Domatowo chyba też miało coś z ziemniaków. No i trzeba było się pozbyć konkurencji. Ja myślę, że to nieuczciwe. Tak nie powinno się robić, bo słuchaj: my wszyscy jesteśmy w trudnej sytuacji i ja wiem, że potrzebne jest jedzenie i te wszystkie inne rzeczy, ale to, co oni zrobili, to jest przesada. To jest po prostu świństwo. Tak się nie robi. Mówię Ci...\n"
+}
+
+2026-04-07 11:11:19,318 - [INFO] Iteration: 13
+2026-04-07 11:11:20,070 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:20,126 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:20,369 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "bzzzzt ...to jest sta... bzzt ...nadaję z północnego sektora...  ksssssh ...potrzebujemy wsparcia... ksssh ...jeśli ktoś słyszy ten sygnał... bzzzzzzz ...sygnał ...  ksssssh ...to jest stac...  pisk ...czy ktoś t... ksssh ...jeśli ktoś słyszy ten sygn... kshhhhh ...czy ktoś tam jest...  kshhhhh ...nie mamy wiele czasu... bzzt ...potrzebujemy wsparcia... szum ...czy ktoś tam jest...  bzzzzt ...to jest stacja...  trzask trzask ...współrzędne to ... kshhh ...tu patrol zwi...  szum ...zapas tlenu spada...  bzzzzzzz ...proszę odpowiedz na tym kanale... bzzzzt ...odbierasz m...  bzzt ...czekam na pot...  ksssssh ...potrzebujemy ws...  bzzzzzzz ...czy ktoś tam jest...  bzzzzzzz ...tu patrol zwiad...  ksssssh ...odbiór jest... bardzo słab...  ksssssh ...odbiór jest... bardzo słaby...  kshhhhh ...nadaję z północnego sektora... ksssh ...to jest ... pisk ...paliwo kończ...  kshhh ...cztery-siedem-dwa...  kshhhhh ...powtarza...  ksssh ...czekam na potwierdze... bzzzzzzz ...przechodzę na zapasową częstotliw... ksssh ...zapas tl... ksssssh ...powtar...  pisk ...odbierasz mnie... trzask ...paliwo kończy się o świcie... bzzt ...współrzędne to trzydzieści...  bzzzzt ...paliwo kończy... ksssssh ...proszę odpowiedz na tym kanale...  kshhh ...zapas ... pisk ...paliwo kończy się o świcie... bzzt ...czy kto... ksssssh ...odbiór jest... bardzo...  ksssh ...odbiór jest... ... ksssh ...nadaję z północnego sektora... kshhhhh ...potrzebuj...  bzzzzzzz ...to jest stacja... ksssh ...czy ktoś tam j... bzzzzzzz ...cztery-sied... ksssssh ...przechodzę na zapasową częstotliwość... bzzt ...potrzebuje... kshhhhh ...czy ktoś...  bzzzzzzz ...powtarzam..."
+}
+
+2026-04-07 11:11:20,369 - [INFO] Iteration: 14
+2026-04-07 11:11:21,123 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:21,186 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:21,307 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "bzzt ...czy ktoś tam jest...  pisk ...nie mamy wiele czasu... bzzzzt ...potrzebujemy wspar... szzzzz ...odbierasz mnie... ksssssh ...zapas tlenu spad...  bzzzzzzz ...potrzebujemy wsparcia...  szum ...powtarzam o... szzzzz ...nie mamy wiele cza... kshhhhh ...cztery-sie... ksssssh ...powtar... kshhh ...przechodzę na zapasową częstotliwość... pisk ...czy ktoś tam jest...  bzzzzt ...powtarzam... ksssh ...to jest stacja... szum ...to jest sta...  ksssh ...współrzędne to trzydzieści... trzask ...nadaję z północnego sektor...  bzzzzt ...jeśli ktoś słyszy ten sygnał... kshhh ...czy ktoś tam jest... bzzt .."
+}
+
+2026-04-07 11:11:21,307 - [INFO] Iteration: 15
+2026-04-07 11:11:22,013 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:22,073 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:22,207 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "bzzzzt ...czy ktoś tam jest...  ksssh ...cztery-siedem-dwa...  szum ...jeśli ktoś słyszy ten sygnał... kshhh ...zapas tlenu spada... bzzt ...odbierasz m...  bzzzzzzz ...czy ktoś tam jes...  trzask trzask ...powtarz...  pisk ...potrzebuje... pisk ...odbiór... kshhhhh ...tu patrol z... szzzzz ...cztery-... bzzzzt ...czekam na potwierdzenie... trzask trzask ...odbieras... ksssh ...tu patrol zwiadowczy...  bzzt ...czy ktoś tam jest... bzzzzzzz ...cztery-siedem...  trzask ...przechodzę na zapasową częs...  ksssssh ...zapas t... bzzzzzzz ...sygnał zanika...  trzask ...cztery-si... kshhh ...potrzebujemy wsparcia... kshhhhh ...odbiera...  bzzt ...powtar...  trzask ...czekam na potwierdzenie... bzzzzt ...odbieras...  kshhhhh ...współrz...  trzask trzask ...powtarzam ostatni komunikat...  bzzzzt ...to jest stacja... trzask ...sygnał ... trzask ...powtarzam...  kshhh ...czy ktoś tam jest... bzzt ...czekam na potwierdzenie...  trzask ...powtarzam ostat... bzzt ...proszę odpowiedz na tym kanale...  bzzt ...cztery-si... pisk ...odbiór jest... bardzo słaby... szzzzz ...to jest stacja...  ksssssh ...potrzebujemy wsparcia... kshhhhh ...proszę ...  kshhhhh ...odbiór jest... bardzo słab... szzzzz ...odbiór jest... bardzo słaby... kshhh ...potrze... kshhhhh ...cztery-siedem-dwa... ksssh ...nie mamy wiele ... szzzzz ...odbiór jest... bardzo słaby...  szzzzz ."
+}
+
+2026-04-07 11:11:22,207 - [INFO] Iteration: 16
+2026-04-07 11:11:22,935 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:23,008 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:23,196 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Ze Skarszewami to zawsze był problem. Z handlem. Skubani prawie nic nie chcą. Najwyżej kilof od Ciebie kupią albo łopatę, bo bydło, mówią, że mają swoje. Nad rzeką mieszkają, więc wody nie potrzebują. Mają swoją podobno. Oczyszczają to, co im tam płynie.\n\nDla mnie to jest ściek, tak powiem, ale oni mają technologię, więc mogą to pić. O bydle już wspominałem? A pewnie tak. No i do lasów mają dostęp. Miasto ocalałych. Wszyscy jesteśmy miastami ocalałych, ale tamci zyskali taki przydomek akurat. Bo niektórzy mówią, że to taki prawie biblijny raj, bo tam akurat ziemia żyzna się trafiła.\n\nJa myślę, że to przez te ich ścieki, co płyną nieopodal. Radiacja też niska, więc spokojnie ziemniaki można jeść, i to bez żadnych procedur przygotowawczych. No i to bydło. Aaaaa... też bym chciał wołowinki spróbować. Jak tam u Was? Potrzebujecie czegoś?"
+}
+
+2026-04-07 11:11:23,196 - [INFO] Iteration: 17
+2026-04-07 11:11:23,960 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:24,021 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:48,984 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "application/json",
+    "attachment": "[DEKODOWANY PLIK application/json]:\n[\n    {\n      \"name\": \"Brudzewo\",\n      \"latitude\": 54.685556,\n      \"longitude\": 18.354444,\n      \"occupiedArea\": 0.5538,\n      \"riverAccess\": false,\n      \"farmAnimals\": false,\n      \"inhabitants\": 214\n    },\n    {\n      \"name\": \"Celbowo\",\n      \"latitude\": 54.685833,\n      \"longitude\": 18.369444,\n      \"occupiedArea\": 0.7142,\n      \"riverAccess\": false,\n      \"farmAnimals\": false,\n      \"inhabitants\": 173\n    },\n    {\n      \"name\": \"Darzlubie\",\n      \"latitude\": 54.703306,\n      \"longitude\": 18.323111,\n      \"occupiedArea\": 1.2187,\n      \"riverAccess\": false,\n      \"farmAnimals\": false,\n      \"inhabitants\": 289\n    },\n    {\n      \"name\": \"Domatowo\",\n      \"latitude\": 54.716694,\n      \"longitude\": 18.233306,\n      \"occupiedArea\": 1.6349,\n      \"riverAccess\": true,\n      \"farmAnimals\": false,\n      \"inhabitants\": 0\n    },\n    {\n      \"name\": \"Drohiczyn\",\n      \"latitude\": 52.398611,\n      \"longitude\": 22.658889,\n      \"occupiedArea\": 15.6841,\n      \"riverAccess\": true,\n      \"farmAnimals\": true,\n      \"inhabitants\": 156\n    },\n    {\n      \"name\": \"Karlikowo\",\n      \"latitude\": 54.736694,\n      \"longitude\": 18.15,\n      \"occupiedArea\": 0.4635,\n      \"riverAccess\": false,\n      \"farmAnimals\": false,\n      \"inhabitants\": 98\n    },\n    {\n      \"name\": \"Mechowo\",\n      \"latitude\": 54.713333,\n      \"longitude\": 18.278889,\n      \"occupiedArea\": 0.6674,\n      \"riverAccess\": false,\n      \"farmAnimals\": false,\n      \"inhabitants\": 247\n    },\n    {\n      \"name\": \"Mielnik\",\n      \"latitude\": 52.331111,\n      \"longitude\": 23.045833,\n      \"occupiedArea\": 4.0836,\n      \"riverAccess\": true,\n      \"farmAnimals\": false,\n      \"inhabitants\": 331\n    },\n    {\n      \"name\": \"Narew\",\n      \"latitude\": 52.91278,\n      \"longitude\": 23.52083,\n      \"occupiedArea\": 3.2195,\n      \"riverAccess\": true,\n      \"farmAnimals\": false,\n      \"inhabitants\": 264\n    },\n    {\n      \"name\": \"Narewka\",\n      \"latitude\": 52.83611,\n      \"longitude\": 23.7575,\n      \"occupiedArea\": 2.5196,\n      \"riverAccess\": true,\n      \"farmAnimals\": false,\n      \"inhabitants\": 119\n    },\n    {\n      \"name\": \"Opalino\",\n      \"latitude\": 54.710833,\n      \"longitude\": 18.098056,\n      \"occupiedArea\": 0.2718,\n      \"riverAccess\": false,\n      \"farmAnimals\": false,\n      \"inhabitants\": 57\n    },\n    {\n      \"name\": \"Puck\",\n      \"latitude\": 54.717222,\n      \"longitude\": 18.4075,\n      \"occupiedArea\": 16.9473,\n      \"riverAccess\": true,\n      \"farmAnimals\": false,\n      \"inhabitants\": 340\n    },\n    {\n      \"name\": \"Skarszewy\",\n      \"latitude\": 54.069722,\n      \"longitude\": 18.444167,\n      \"occupiedArea\": 10.7284,\n      \"riverAccess\": true,\n      \"farmAnimals\": true,\n      \"inhabitants\": 201\n    },\n    {\n      \"name\": \"Żarnowiec\",\n      \"latitude\": 54.787222,\n      \"longitude\": 18.087778,\n      \"occupiedArea\": 1.1372,\n      \"riverAccess\": true,\n      \"farmAnimals\": false,\n      \"inhabitants\": 145\n    }\n  ]",
+    "filesize": 2902
+}
+
+2026-04-07 11:11:48,985 - [INFO] Iteration: 18
+2026-04-07 11:11:49,883 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:49,959 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:50,126 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "W Narewce podobno zaczęli handlować dziczyzną. Coś przetrwało w tych ich lasach. Mają dobrą pozycję: ukryci, spokojnie, dużo przyrody, tak na uboczu. Potem wystarczy wziąć broń, upolować coś dzikiego w lesie i tyle. Nawet rzekę mają, chociaż nie wiem, czy nie wyschła. Trzeba by zapytać przy kolejnym transporcie. "
+}
+
+2026-04-07 11:11:50,126 - [INFO] Iteration: 19
+2026-04-07 11:11:50,876 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:50,964 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:11:51,089 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "szum ...odbierasz mnie... bzzt ...współrzędne to trzydzieści... trzask ...nie mamy wiele czasu... bzzzzzzz ...jeśli ktoś słyszy ten sygnał...  ksssssh ...czekam na potwierdzenie...  trzask trzask ...współrzędne to trzydzieści...  pisk ...nadaję z północnego sektora...  trzask ...proszę odpowiedz na tym kana...  szum ...to jest stacj... bzzzzzzz ...nadaję z północnego sektora...  szum ...proszę odpowie...  kshhhhh ...odbierasz mnie...  szum ...jeśli ktoś słyszy ten sygnał... bzzzzzzz ...odbierasz mnie... ksssh ...powtarzam ost... bzzzzt ...cztery-siedem-...  bzzt ...proszę odpowiedz na tym kanale... bzzt ...czekam na potwierdzeni...  bzzzzzzz ...cztery... trzask ...zapas tlenu spada...  kshhhhh ...przechodzę na zapasową częstotliwość...  ksssssh ...cztery-siedem-dwa... szzzzz ...odbierasz mnie... trzask ...sygnał zanika...  kshhh ...czy ktoś tam jest... bzzzzt ...potrzebujemy wsparcia...  bzzt ...powtarzam...  kshhh ...cztery-siedem-dwa...  bzzt ...współrzędne to trzydzieści... pisk ...to jest s...  trzask ...to jest s...  bzzt ...tu patrol zwiadowczy... kshhhhh ...czekam na potwierdzenie...  bzzzzzzz ...to jest stacja... ksssh ...potrzebujemy wsparcia...  pisk ...odbierasz... bzzzzt ...paliwo kończy się o świcie... bzzzzt ...powtarzam ... szzzzz ...paliwo kończy się o ... szum ...cztery-siedem-dwa...  kshhhhh ...jeśli ktoś słyszy ten sygnał...  trzask trzask ...zapas tlenu spada... ksssh ...tu patro...  bzzzzt ...powtarzam ostatni komunikat...  bzzzzzzz ...jeśli ktoś słyszy ten sygnał...  szum ...czekam na potwierdzenie...  trzask ...odbiór jest... bardzo słaby... bzzt ...współrzę...  kshhh ...współr...  bzzzzt ...nie mamy wiele czasu... szum ...powtarzam ostatni komunikat... pisk ...to jest stacja... pisk ...to j"
+}
+
+2026-04-07 11:11:51,089 - [INFO] Iteration: 20
+2026-04-07 11:11:51,807 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:11:51,876 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:13:23,727 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "image/jpeg",
+    "attachment": "[OPERATOR PRZEANALIZOWAŁ PLIK I RAPORTUJE]: Jest to plik .jpg nieistotny dla zadania. Kontynuuj używając listen",
+    "filesize": 248572
+}
+
+2026-04-07 11:13:23,727 - [INFO] Iteration: 21
+2026-04-07 11:13:25,358 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:13:25,485 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:26,360 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "audio/mpeg",
+    "attachment": "[OPERATOR PRZEANALIZOWAŁ PLIK I RAPORTUJE]: Jest to plik audio informujący, że w miejscowości Skarszewy mają 11 magazynów",
+    "filesize": 543700
+}
+
+2026-04-07 11:16:26,360 - [INFO] Iteration: 22
+2026-04-07 11:16:27,344 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:27,456 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:27,642 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Odwiedzałem ostatnio Syjon i powiem Ci, że tam jest naprawdę na bogato. Wyremontowali sobie miasto. Nawet tak “od tyłu” u nich nie ma. Zamieśli wszystko schubami. Byłem jeszcze w Mielniku. Mielnik nie chce z nimi handlować i nie chodzi o cenę. Bo w Mielniku mają wodę, pola, lasy i co sobie złapią, to sobie zjedzą. Więc to nie jest dobrze, żeby te dwa miasta w ogóle jakoś handlowały razem, bo mi się wydaje, proszę pana, że to jest konkurencja. A może to nawet być — tak między nami mówię, oczywiście — że to może być zmowa cenowa, bo te ceny, co oni podają, często idą w górę w tym samym momencie i jakoś nie spadają, nie? Ciekawy zbieg okoliczności, prawda?"
+}
+
+2026-04-07 11:16:27,642 - [INFO] Iteration: 23
+2026-04-07 11:16:28,997 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:29,126 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:39,949 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "text/csv",
+    "attachment": "[DEKODOWANY PLIK text/csv]:\nmiasto,akcja,towar,ilosc,w_zamian\nSyjon,szuka,kilof,,bydło\nPuck,szuka,wiertarka,7,proszę o kontakt\nMechowo,szuka,łopata,9,proszę o kontakt\nNarew,szuka,mięso,,proszę o kontakt\nSkarszewy,szuka,kilof,,wołowina\nDrohiczyn,sprzedaje,ryba,,świnia\nMechowo,szuka,marchew,65,do ustalenia\nMechowo,szuka,kapusta,70,do ustalenia\nPuck,szuka,ryż,45,do ustalenia\nCelbowo,sprzedaje,makaron,,proszę o kontakt\nBrudzewo,szuka,woda,140,usługi transportowe\nOpalino,szuka,chleb,45,do ustalenia\nSkarszewy,szuka,łopata,,wołowina\nSyjon,sprzedaje,bydło,,kilof\nSkarszewy,sprzedaje,wołowina,1,kilof\nDrohiczyn,szuka,krowa,,ryba\nNarewka,sprzedaje,dziczyzna,,ziemniaki\nCelbowo,szuka,młotek,6,możemy wypożyczyć robotników\nOpalino,szuka,młotek,6,proszę o kontakt\nKarlikowo,szuka,woda,155,więcej na priv\nPuck,szuka,chleb,50,do ustalenia\nMechowo,szuka,woda,165,usługi transportowe\nMechowo,szuka,ziemniaki,100,do ustalenia\nCelbowo,szuka,woda,125,usługi transportowe\nKarlikowo,szuka,wołowina,22,więcej na priv\nOpalino,szuka,woda,120,usługi transportowe\nKarlikowo,szuka,makaron,52,więcej na priv\nPuck,szuka,woda,175,usługi transportowe\nDarzlubie,szuka,woda,130,usługi transportowe\nDrohiczyn,sprzedaje,ryba,,krowa\nBrudzewo,szuka,wiertarka,5,proszę o kontakt\nNarewka,szuka,ziemniaki,,dziczyzna\nKarlikowo,szuka,ziemniaki,95,więcej na priv\nDarzlubie,szuka,wołowina,25,do ustalenia\nCelbowo,szuka,kurczak,40,do ustalenia\nDrohiczyn,szuka,świnia,,ryba\nBrudzewo,szuka,ryż,55,do ustalenia\nDarzlubie,szuka,kilof,7,proszę o kontakt\nBrudzewo,szuka,wołowina,1,kilof\nKarlikowo,szuka,kilof,247,więcej na priv\n",
+    "filesize": 1593
+}
+
+2026-04-07 11:16:39,950 - [INFO] Iteration: 24
+2026-04-07 11:16:40,922 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:41,058 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:41,210 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Ja słyszałem, że jedno miasto ma ryby. Tak, w Drohiczynie nad Bugiem. Rzeka jeszcze nie wyschła do końca. Tam mają, powiem Panu, w najgłębszym miejscu nawet ze 2 metry. I tam ponoć coś się namnożyło. Znaczy nie żeby od razu łowić i zjadać, bo to jeszcze za wcześnie, ale dajmy temu rok, dwa i jest szansa, że będzie co zjeść. Ale Drohiczyn i tak mówi, że oni woleliby świnię albo krowę, a nic nie mają. No ale mogą korzystać. Przecież te ryby, jak dorosną za te parę lat i się tego trochę namnoży, to będzie na handel wymienny, jak u wszystkich. Już nie muszą wszystkiego sami produkować. Po to mamy dział handlu. "
+}
+
+2026-04-07 11:16:41,210 - [INFO] Iteration: 25
+2026-04-07 11:16:42,108 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:42,109 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:42,233 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Słyszałeś, że tę elektrownię w Żarnowcu zbombardowali? Wysłali tam drona. No, nie ściemniam. Nic nie zostało, bo podobno ci goście od centrali coś kombinowali. Oni chyba współpracują z Zygfrydem... znaczy współpracowali jak żyli hehehehe... Ruch Oporu ich wydał i w sumie dobrze zrobił. Nie ma co rozpaczać nad zdrajcami. "
+}
+
+2026-04-07 11:16:42,234 - [INFO] Iteration: 26
+2026-04-07 11:16:43,072 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:43,211 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:43,371 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Słuchaj, wczoraj na szlaku z Rabat do Lendi widziałem jakichś kupców. Pewnie znowu coś chcieli sprzedać.\nWiedziałem, że nieśli kierowy łopaty i jakieś worki. Wiem, co to mogło być, ale mógłbyś się nabrać. Ziemniaki? Tylko zgaduję.\nNie czułbym się bezpiecznie. Też coś jest potrzebne. U nas z tymi ziemniakami jest ciężko ostatnio. Ziemia i zekaš. Małżorzna.\nA nawozów,to nikt nie sprzedaje. Wszystko trzeba było załatwiać od operatorów systemu. Tytlko ja tam nie mam wtyków."
+}
+
+2026-04-07 11:16:43,373 - [INFO] Iteration: 27
+2026-04-07 11:16:44,297 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:44,434 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:44,559 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Z Syjonu się odezwali. Mówią, że brakuje im kilofów. No skubani, tego akurat nie umieją sami wyprodukować. Resztę mają. Ale nie, my im nie damy! Niech sobie sami radzą. Jak nasze miasto prosiło ich o wodę, to\"wody nie eksportujemy\", taaaak? A mają przecież tam praktycznie własną produkcję robią. A jak prosiliśmy ich o krowę, to nie - całej nie sprzedadzą! To niech się teraz wypchają. Kij im w oko... Czy tam kilof!"
+}
+
+2026-04-07 11:16:44,559 - [INFO] Iteration: 28
+2026-04-07 11:16:45,611 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:45,747 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:45,909 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A Ci goście z **SSsssSszzZZZz** to skądś wytrzasnęli rybę. Do tej pory handlowali głównie wołowinąi **Sssszzzzzzz**. Myślę, że to [...] im sprzedała, bo kto inny? Znasz kogoś jeszcze, kto mógłby mi załatwić rybę? Ja bym kupił, tylko w dobrej cenie. Ale nie będę płacił ziemniakami, bo teraz ziemniaki są, powiem Ci szczerze, mocną walutą i wolałbym ją przetrzymać. W piwnicy trochę poleżą i na wartości zyskają. To jest dobra inwestycja. Poza tym na jesień chce je zasadzić. Część znaczy, bo wiadomo, że czymś płacić trzeba."
+}
+
+2026-04-07 11:16:45,910 - [INFO] Iteration: 29
+2026-04-07 11:16:46,736 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:46,908 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:16:47,154 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Miasto Narew. Mówi to coś Panu, Panie Stanisławie? No właśnie. Goście mają wszystkiego pod dostatkiem. A czego nie ma? No na liście handlu ich nie ma, proszę Pana! Tak. Bogacze się nawet na listę nie wpiszą, bo nic nie dadzą innym i sami ponoć niczego nie potrzebują. Ale ja tam wiem, proszę Pana... to tak miedzy nami, żeby Pan nie powtarzał innym, że oni nie mają... mięsa! Ja Panu powiem, że chodzą plotki, że to są sami weganie albo jeszcze coś gorszego. "
+}
+
+2026-04-07 11:16:47,154 - [INFO] Iteration: 30
+2026-04-07 11:16:48,127 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:16:48,265 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:18:04,289 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "text/xml",
+    "attachment": "[DEKODOWANY PLIK text/xml]:\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<cityStatistics generatedAt=\"2026-04-01\" trainingData=\"true\" setting=\"postapocalyptic-archive\">\n  <city id=\"TRN-001\">\n    <name>Nowogród Północny</name>\n    <region>Strefa Północnego Wybrzeża</region>\n    <country>Dawna Polska</country>\n    <status>Miasto zostało całkowicie zniszczone podczas Wielkiej Korekty i istnieje już tylko w archiwalnych zapisach.</status>\n    <fate>Ruiny uznano za nienadające się do ponownego zasiedlenia.</fate>\n  </city>\n\n  <formerPopulation>\n    <estimatedResidentsBeforeDestruction>182400</estimatedResidentsBeforeDestruction>\n    <industrialWorkers>48600</industrialWorkers>\n    <marketDistrictResidents>22100</marketDistrictResidents>\n    <portLaborers>9400</portLaborers>\n    <childrenAndYouth>28700</childrenAndYouth>\n  </formerPopulation>\n\n  <formerInfrastructure>\n    <residentialSectors>9</residentialSectors>\n    <transitTunnels>14</transitTunnels>\n    <waterTreatmentPlants>2</waterTreatmentPlants>\n    <radioTowers>3</radioTowers>\n    <industrialBlocks>6</industrialBlocks>\n  </formerInfrastructure>\n\n  <destruction>\n    <eventName>Wielka Korekta</eventName>\n    <destructionLevel unit=\"percent\">100</destructionLevel>\n    <confirmedEvacuationCorridors>1</confirmedEvacuationCorridors>\n    <knownSurvivingDistricts>0</knownSurvivingDistricts>\n    <archiveNote>Po wydarzeniu nie odnotowano trwałego odtworzenia struktur miejskich.</archiveNote>\n  </destruction>\n\n  <formerTrade>\n    <marketDaysPerMonth>11</marketDaysPerMonth>\n    <mainCurrency>kredyty portowe</mainCurrency>\n    <exportedGoods>\n      <item>oczyszczona woda</item>\n      <item>konserwy białkowe</item>\n      <item>złom elektroniczny</item>\n      <item>filtry przeciwpyłowe</item>\n    </exportedGoods>\n    <importedGoods>\n      <item>leki polowe</item>\n      <item>części zamienne do generatorów</item>\n      <item>amunicja</item>\n      <item>nasiona do upraw zamkniętych</item>\n    </importedGoods>\n    <tradeStatus>Handel ustał wraz z całkowitym zniszczeniem miasta.</tradeStatus>\n  </formerTrade>\n\n  <formerDefense>\n    <watchtowers>12</watchtowers>\n    <militiaUnits>5</militiaUnits>\n    <wallIntegrityBeforeFall unit=\"percent\">64</wallIntegrityBeforeFall>\n    <airRaidSirens>18</airRaidSirens>\n    <lastRecordedThreatLevel>krytyczny</lastRecordedThreatLevel>\n  </formerDefense>\n\n  <hazards>\n    <radiationZonesNearby>4</radiationZonesNearby>\n    <airToxicityIndex>89</airToxicityIndex>\n    <mutantSightingsInRuins>27</mutantSightingsInRuins>\n    <acidRainDaysPerMonthAverage>5</acidRainDaysPerMonthAverage>\n    <accessRecommendation>wstęp do ruin odradzany</accessRecommendation>\n  </hazards>\n</cityStatistics>\n",
+    "filesize": 2684
+}
+
+2026-04-07 11:18:04,289 - [INFO] Iteration: 31
+2026-04-07 11:28:04,368 - [INFO] Retrying request to /chat/completions in 0.419034 seconds
+2026-04-07 11:28:05,744 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:28:05,803 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:28:06,011 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "Chłopaki na Syjonie zaczęli handlować bydłem! Słyszeliście? Ceny, to jak zawsze. Nawet nie ma co negocjować. Zamiast kupić od Ciebie kilof, to Cię kilofem zdzielą, jak powiesz, że za drogo. No taka prawda Hahahaha"
+}
+
+2026-04-07 11:28:06,012 - [INFO] Iteration: 32
+2026-04-07 11:28:06,816 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:28:06,962 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:29:38,886 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "meta": "image/png",
+    "attachment": "[OPERATOR PRZEANALIZOWAŁ PLIK I RAPORTUJE]: jest to zdjęcie kartki z napisame: \"Jacek Kramer - zadzwonić w sprawie noclegu na Syjonie i handlu wołowiną. 644-122-092\"",
+    "filesize": 560994
+}
+
+2026-04-07 11:29:38,886 - [INFO] Iteration: 33
+2026-04-07 11:29:39,766 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:29:39,832 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:29:40,038 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "A z tym Domatowem to daj Pan spokój. Ludzie normalnie żyli i nagle co? Bombardowanie. Było miasto, nie ma miasta. Żaden chłop nie przeżył. W sumie baba i dziecko też nie. Chodzą ploty, że Domatowo gromadziło też ropę i oni po ropę przyszli. Ale są też inne ploty, że to konkurencja ich wybiła, bo handlowali. Pamięta Pan, nie? A ceny mieli dobre. Szkoda ich. W sensie tych cen."
+}
+
+2026-04-07 11:29:40,038 - [INFO] Iteration: 34
+2026-04-07 11:29:40,724 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:29:40,830 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:29:41,007 - [INFO] Tool response: {
+    "code": 100,
+    "message": "Signal captured.",
+    "transcription": "**[niesłyszalne]** bo tam się zabrało najwięcej ludzi wiesz? jak oni się tam mieszczą, to ja ci powiem, że nie rozumiem. To nie jest duże miasto i oni tam nigdy nie mieli infrastruktury przed wielką korektą. Teraz nagle wyskoczyli, że wszystko mają, bo to chyba przez tę organizację. I pomimo tego, że to duże miasto nie jest, to oni tam mają te namioty. Zbudowali takie polowe budowle też. Tam by się dużo ludzi zmieściło jakby to co przy mieści wykorzystać. Ale nie wiem, czy oni są chętni do jakiejś współpracy, bo na razie na handel to się wypinają, a jak coś chcą sprzedać, no to już ceny mają z kosmosu. Ale to chyba każdy o tym mówi. \n"
+}
+
+2026-04-07 11:29:41,008 - [INFO] Iteration: 35
+2026-04-07 11:29:41,619 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:29:41,715 - [INFO] Tool call: call_verify_api with args: {'action': 'listen'}
+
+2026-04-07 11:29:41,913 - [INFO] Tool response: {
+    "code": 101,
+    "message": "Baterie w nadajniku padly, ale mamy juz dostatecznie duzo materialu, aby rozpoczac analize.",
+    "hint": "Możesz wywołać akcję \"start\" aby zacząć od nowa jeśli potrzebujesz"
+}
+
+2026-04-07 11:29:41,913 - [INFO] Iteration: 36
+2026-04-07 11:29:42,481 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:30:25,242 - [INFO] Użytkownik zatwierdził wykonanie kodu.
+2026-04-07 11:30:25,254 - [INFO] Request POST https://api.e2b.app/sandboxes
+2026-04-07 11:30:25,254 - [INFO] Request: POST https://api.e2b.app/sandboxes
+2026-04-07 11:30:25,788 - [INFO] Response: 201 https://api.e2b.app/sandboxes
+2026-04-07 11:30:25,789 - [INFO] HTTP Request: POST https://api.e2b.app/sandboxes "HTTP/1.1 201 Created"
+2026-04-07 11:30:25,789 - [INFO] Response 201
+2026-04-07 11:30:25,790 - [INFO] Request: POST https://49999-i8v2sokme30ri6x4b58c6.e2b.app/execute
+2026-04-07 11:30:26,130 - [INFO] Response: 200 https://49999-i8v2sokme30ri6x4b58c6.e2b.app/execute
+2026-04-07 11:30:26,130 - [INFO] HTTP Request: POST https://49999-i8v2sokme30ri6x4b58c6.e2b.app/execute "HTTP/1.1 200 OK"
+2026-04-07 11:30:26,195 - [INFO] Request DELETE https://api.e2b.app/sandboxes/i8v2sokme30ri6x4b58c6
+2026-04-07 11:30:26,195 - [INFO] Request: DELETE https://api.e2b.app/sandboxes/i8v2sokme30ri6x4b58c6
+2026-04-07 11:30:26,446 - [INFO] Response: 204 https://api.e2b.app/sandboxes/i8v2sokme30ri6x4b58c6
+2026-04-07 11:30:26,448 - [INFO] HTTP Request: DELETE https://api.e2b.app/sandboxes/i8v2sokme30ri6x4b58c6 "HTTP/1.1 204 No Content"
+2026-04-07 11:30:26,448 - [INFO] Response 204
+2026-04-07 11:30:26,450 - [INFO] Tool call: execute_python_code with args: {'code': 'import math\n\ndef round_to_string(value, decimal_places):\n    rounded_value = round(value, decimal_places)\n    return "{:.2f}".format(rounded_value)\n\ncity_areas = {\n    "Brudzewo": 0.5538,\n    "Celbowo": 0.7142,\n    "Darzlubie": 1.2187,\n    "Domatowo": 1.6349,\n    "Drohiczyn": 15.6841,\n    "Karlikowo": 0.4635,\n    "Mechowo": 0.6674,\n    "Mielnik": 4.0836,\n    "Narew": 3.2195,\n    "Narewka": 2.5196,\n    "Opalino": 0.2718,\n    "Puck": 16.9473,\n    "Skarszewy": 10.7284,\n    "Żarnowiec": 1.1372\n}\n\ncityName = "Syjon"\nround_to_string(city_areas["Skarszewy"], 2)'}
+
+2026-04-07 11:30:26,452 - [INFO] Request POST https://api.e2b.app/sandboxes
+2026-04-07 11:30:26,452 - [INFO] Request: POST https://api.e2b.app/sandboxes
+2026-04-07 11:30:26,915 - [INFO] Response: 201 https://api.e2b.app/sandboxes
+2026-04-07 11:30:26,916 - [INFO] HTTP Request: POST https://api.e2b.app/sandboxes "HTTP/1.1 201 Created"
+2026-04-07 11:30:26,916 - [INFO] Response 201
+2026-04-07 11:30:26,917 - [INFO] Request: POST https://49999-ighw2uyh2i7alu8da7lc8.e2b.app/execute
+2026-04-07 11:30:27,280 - [INFO] Response: 200 https://49999-ighw2uyh2i7alu8da7lc8.e2b.app/execute
+2026-04-07 11:30:27,281 - [INFO] HTTP Request: POST https://49999-ighw2uyh2i7alu8da7lc8.e2b.app/execute "HTTP/1.1 200 OK"
+2026-04-07 11:30:27,386 - [INFO] Request DELETE https://api.e2b.app/sandboxes/ighw2uyh2i7alu8da7lc8
+2026-04-07 11:30:27,386 - [INFO] Request: DELETE https://api.e2b.app/sandboxes/ighw2uyh2i7alu8da7lc8
+2026-04-07 11:30:27,641 - [INFO] Response: 204 https://api.e2b.app/sandboxes/ighw2uyh2i7alu8da7lc8
+2026-04-07 11:30:27,642 - [INFO] HTTP Request: DELETE https://api.e2b.app/sandboxes/ighw2uyh2i7alu8da7lc8 "HTTP/1.1 204 No Content"
+2026-04-07 11:30:27,642 - [INFO] Response 204
+2026-04-07 11:30:27,644 - [INFO] Tool response: []
+
+2026-04-07 11:30:27,644 - [INFO] Iteration: 37
+2026-04-07 11:30:28,577 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:30:29,347 - [INFO] Tool call: call_verify_api with args: {'action': 'transmit', 'cityName': 'Syjon', 'cityArea': '10.73', 'warehousesCount': 11, 'phoneNumber': '644-122-092'}
+
+2026-04-07 11:30:29,547 - [ERROR] Error: 400 Client Error: Bad Request for url: https:///verify
+2026-04-07 11:30:29,551 - [INFO] Tool response: {
+    "error": "Błąd komunikacji z API: 400 Client Error: Bad Request for url: https:///verify"
+}
+
+2026-04-07 11:30:29,553 - [INFO] Iteration: 38
+2026-04-07 11:30:30,049 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-07 11:30:31,429 - [INFO] Tool call: call_verify_api with args: {'action': 'transmit', 'cityName': 'Skarszewy', 'cityArea': '10.73', 'warehousesCount': 11, 'phoneNumber': '644-122-092'}
+
+2026-04-07 11:30:31,586 - [INFO] Tool response: {
+    "code": 0,
+    "message": "{FLG:GOODMORNINGZION}",
+    "action": "transmit",
+    "cityName": "Skarszewy",
+    "cityArea": "10.73",
+    "warehousesCount": 11,
+    "phoneNumber": "644122092"
+}
+
+2026-04-07 11:30:31,587 - [INFO] >>> Zdobyto flagę <<< {
+    "code": 0,
+    "message": "{FLG:GOODMORNINGZION}",
+    "action": "transmit",
+    "cityName": "Skarszewy",
+    "cityArea": "10.73",
+    "warehousesCount": 11,
+    "phoneNumber": "644122092"
+}
+2026-04-07 11:30:31,589 - [INFO] Historia konwersacji zapisana do success_history.json

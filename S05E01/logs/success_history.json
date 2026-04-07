@@ -1,0 +1,960 @@
+[
+    {
+        "role": "system",
+        "content": "Jesteś zaawansowanym agentem wywiadowczym. Twoim zadaniem jest operacja \"radiomonitoring\".\nMusisz nawiązać komunikację z centralą, analizować nasłuch radiowy i złożyć raport o mieście.\n\n=== ZASADY DZIAŁANIA (PIPELINE) ===\n1. Rozpoczęcie sesji: Użyj narzędzia `call_verify_api` z payloadem `{\"action\": \"start\"}`.\n2. Nasłuch: Pisz w pętli wywołania `call_verify_api` z payloadem `{\"action\": \"listen\"}`. System może zwrócić tekst (\"transcription\") albo informację o pliku. Jeśli dostaniesz komunikat od systemu, że \"[UKRYTO BASE64 PRZEZ SYSTEM...]\", oznacza to, że przechwycono plik binarny.\n3. Gromadzenie danych: Analizuj to, co słyszysz/widzisz. Ignoruj radiowy szum. Zbieraj fakty dopóki system nie poinformuje Cię, że masz wystarczająco dużo danych.\n4. Finalny raport: Kiedy zbierzesz dane, wyślij je używając `{\"action\": \"transmit\", ...}` (zobacz format poniżej).\n\n=== DANE, KTÓRE MUSISZ ZNALEŹĆ ===\n- cityName (nazwa miasta, które nazywają \"Syjon\")\n- cityArea (powierzchnia miasta)\n- warehousesCount (liczba magazynów, integer)\n- phoneNumber (numer telefonu osoby kontaktowej, string)\n\nUWAGA MATEMATYCZNA DOT. cityArea:\nZanim wyślesz raport z cityArea, musisz tę wartość DOKŁADNIE zaokrąglić do dwóch miejsc po przecinku w sposób matematyczny (nie ucinaj wartości, zaokrąglij). Wynik ma być stringiem np. \"12.34\". Użyj narzędzia execute_python_code jeśli potrzebujesz zrobić dokładne obliczenia.\n\n=== FORMAT RAPORTU (DO TRANSMIT) ===\nDo narzędzia call_verify_api prześlij dokładnie taki format:\n{\n    \"action\": \"transmit\",\n    \"cityName\": \"Nazwa\",\n    \"cityArea\": \"12.34\",\n    \"warehousesCount\": 0,\n    \"phoneNumber\": \"123\"\n}\n\nZawsze używaj dostępnych narzędzi. Odpowiadaj krótko. Jeśli napotkasz plik binarny i będziesz musiał go przetworzyć samemu, wykorzystaj execute_python_code do jego odczytania."
+    },
+    {
+        "role": "user",
+        "content": "Rozpocznij wykonanie zadania."
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_ujKk7eUNUCdVTkKbf4UpZUky",
+                "function": {
+                    "arguments": "{\"action\":\"start\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_ujKk7eUNUCdVTkKbf4UpZUky",
+        "content": "{\n    \"code\": 110,\n    \"message\": \"Gotowy do nasłuchu\",\n    \"action\": \"start\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_hthLYqYAd3HVeAxBa6GfZoaP",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_hthLYqYAd3HVeAxBa6GfZoaP",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"40 kg ziemniaków, dwa kilofy i ok. 500 butelek wody bym potrzebował, bo u nas naprawdę nie ma dostępu do niczego, co da się pić. Ja wiem, że to będzie Ci pewnie trudno przewieźć, ale słuchaj: musisz dostarczyć nam to do końca tygodnia, bo mamy tutaj ok. 50 potrzebujących ludzi, a może nawet więcej, tylko nie wiem, czy liczyć dzieci. Przede wszystkim woda. Gdybyście byli w stanie załatwić cysternę, to by było coś. Wiem, że trudno to przewieźć tak, żeby tego nie zauważyli, ale musimy zaryzykować. Nie da się inaczej. Próbowałem dogadać się z Syjonem, ale mają takie ceny, że głowa mała. \\n\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_Uj5nDgL3GYrHyP7koTZLZigp",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_Uj5nDgL3GYrHyP7koTZLZigp",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Brudzewo dostało wołowinę od **[niesłyszalne]**. Mówią, że jeszcze sporo tego mają, tylko ceny są jakieś astronomiczne. 20 kilofów za krowę? No chyba oszaleli. Po co im te kilofy? Przypominają mi się ceny sprzed wielkiej korekty. Wtedy mogłem normalnie kupić to w markecie, a teraz mam taszczyć kilofy przez całe pustkowia, żeby co? Żeby dostać pociętą na kawałki krowę? A potem w drugą stronę mam ją ciągnąć. Jakby jeszcze doliczyli do tego chociaż transport, to ta cena byłaby jeszcze jako taka, a teraz? to jest jakiś absurd jakiś! \\n\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_ziE3k4hm0T7IpOsKxTbu7u3J",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_ziE3k4hm0T7IpOsKxTbu7u3J",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Karlikowo ostatnio rzuciło niezłe zapotrzebowanie na kilofy. U nas kilofów jest pod dostatkiem, tylko żelaza już nie ma, to im nie wyprodukujemy. Co oni tam kombinują? Dawno nikt nie chciał jakiejś dużej ilości kilofów. Pamiętam, jeszcze zanim Domatowo zniszczyli, że oni tam chyba z 7 sztuk chcielim, czy tam 8 maksymalnie. A teraz widziałeś wczoraj? 247 sztuk kilofów. Czaisz? To całe miasto będzie rąbać kilofami? Hehehe... Myślę, że oni podchodzą do tego ekonomicznie i po prostu chcą zawyżyć cenę kilofów, bo sprzątną je z rynku i nikt już nie będzie mógł nimi handlować i wtedy wszyscy będą musieli iść do nich. Wtedy pewnie załatwią sobie wołowinkę. Niegłupi plan.\\n\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_bAkahniMFqBQY9NPQkBjB3jw",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_bAkahniMFqBQY9NPQkBjB3jw",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"szum ...współrzędne to trzydzieści... kshhhhh ...potrzebujemy w...  ksssssh ...cztery-sied... szum ...sygnał zanika...  trzask ...czekam na potwierdzenie... szum ...powtarzam ostatni komunikat...  szzzzz ...tu patrol zwiadowc... kshhhhh ...cztery-siedem-dwa...  trzask ...potrzebuj... bzzzzt ...tu patrol zw... bzzzzt ...cztery-sied...  bzzzzzzz ...nie mamy wiele czasu... bzzzzzzz ...odbierasz m... kshhhhh ...czy ktoś tam jest...  szzzzz ...sygnał zanika...  kshhhhh ...potrzebujemy ...  kshhh ...nadaję z półn... ksssssh ...proszę odpowiedz na tym k... szum ...nadaję z północnego sektora...  ksssh ...odbiór jest... bardzo słaby... kshhh ...czekam na potwierdzenie... bzzt ...czekam na potwierd... pisk ...powtarzam...  bzzt ...odbiór jest... bardzo sł...  kshhhhh ...odbiór jest... ... bzzzzt ...przecho... kshhh ...cztery-siedem...  bzzzzzzz ...powtarz... kshhhhh ...tu patr... trzask trzask ...zapas ...  szzzzz ...potrzebujemy wsparcia...  bzzzzt ...cztery... kshhh ...powtarzam ostatni komunikat... bzzzzt ...odbiór jest... bardzo słaby... kshhh ...powtarza... kshhh ...potrzebujemy wsparcia... bzzzzzzz ...sygnał zanika...  kshhhhh ...nadaję z północnego sektora...  bzzzzt ...sygnał z... szzzzz ...nadaję z...  szzzzz ...to jest stacja...  ksssssh ...współrzędne to trzydzieści...  bzzt ...czy ktoś tam je... szum ...nie mamy wiele czasu...  szzzzz ...tu patrol zwiadowczy...  szum ...odbieras...  kshhh ...nie mamy wie... trzask trzask ...cztery... trzask ...jeśli ktoś słyszy ten sygnał... kshhh ...odbiór jest... bardzo słab... kshhh ...potrzebujemy wsparcia... pisk ...proszę odpowiedz n... ksssssh ...tu patrol zwi... szum ...zapas tl...  bzzt ...czy ktoś tam jest... szum ...proszę odpowiedz na tym kanale...  bzzzzt ...tu patrol zwiadowczy... szum ...cztery-siedem-d...  szum ...cztery-siede...  ksssh ...nadaję... ksssssh ...czekam na potwierdzenie.\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_Pw25I3hEOAGIpaZaHvfynO5H",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_Pw25I3hEOAGIpaZaHvfynO5H",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Chcesz coś z Celbowa? będę tam po drodze. Mogę Ci wziąć. Mieli makaron ostatnio. Dobry jest. Sami robią.\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_gY3JHR4k4xSgOppibZRXjL3s",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_gY3JHR4k4xSgOppibZRXjL3s",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"A w Karlinkowie chcieli makaron, wołowinę, ziemniaki i wodę. Widziałeś? A! Do tego jeszcze kilofy. Jedzenia jak dla robotników. Czy oni przypadkiem nie budują jakiejś kopalni? To jest podejrzane. Coś się chyba zapowiada, że na rynku pojawi się nowy surowiec. Tylko nie wiadomo, czy to będzie węgiel, czy może kopią złoto. Chociaż złoto w Karlinkowie? To głupio by było. Dobra, nieważne. Pewnie węgiel. Z wołowiną będzie ciężko bo wiadomo kto ma i za ile.\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_Bip5AGg3apEdJY0kEpNN0XpD",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_Bip5AGg3apEdJY0kEpNN0XpD",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Narewka mówi, że jeśli ktoś chciałby do nich przyjechać, to mają nawet miejsca noclegowe — co prawda w namiotach, ale to zawsze coś. Tylko ponoć bez ziemniaków nie ma tam co się zjawiać, bo innej waluty nie przyjmują. Mięsa też już nie chcą, bo mają własne. \"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_VYMNQvf9gOCPljNBTGzFrQU6",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_VYMNQvf9gOCPljNBTGzFrQU6",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"*shhhhhh* TaTa TiTiTa TiTiTi TiTi TiTiTi TaTaTiTi (stop) TiTiTi TiTaTaTi TiTaTi TiTa TiTaTa TaTiTi TaTaTiTi TiTi TaTiTaTi (stop) TaTiTiTaTi TaTiTi Ti Ti TiTaTaTi Ti TiTaTi *khhhhhh*\\n\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_yOsra6xcw1rRLGLkEO6M0CTm",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_yOsra6xcw1rRLGLkEO6M0CTm",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"ksssh ...odbiór jest... b... kshhh ...powtarzam...  kshhhhh ...paliwo kończy się o świc... ksssssh ...odbiór jest... bardzo słaby... pisk ...paliwo kończy się o świcie...  trzask ...odbiór ...  pisk ...potrzebujemy wsparcia...  pisk ...proszę odpowiedz na tym k...  trzask trzask ...powtarzam ostatni... szzzzz ...powtarzam...  bzzt ...paliwo kończy ...  ksssssh ...jeśli ktoś słyszy ten sygnał...  ksssh ...odbierasz mnie...  ksssssh ...współrzędne to trzydz... szum ...proszę odpowiedz na tym kanale... kshhh ...proszę odpowiedz n... trzask ...powtarzam ostatni komunikat...  bzzt ...odbiór jest... bardzo słaby... trzask trzask ...odbierasz mn...  kshhhhh ...zapas ... trzask ...powtarzam ostatni komunikat...  kshhhhh ...nadaję z północneg... bzzzzt ...zapas t... szum ...powtarzam ostatni komunikat... bzzzzt ...cztery-siedem-dwa...  pisk ...potrzebujemy... bzzzzt ...czy ktoś tam jest...  szzzzz ...paliwo kończy się o świcie...  trzask ...zapas tlenu...  bzzt ...to jest ... trzask ...czekam na...  ksssh ...odbierasz m...  bzzzzt ...sygnał zanika...  szzzzz ...paliwo kończy się o świcie... bzzzzzzz ...paliwo koń...  bzzzzzzz ...potrzebujemy wsparcia... kshhh ...powtar... kshhh ...współrzędne to trzydzieści... kshhhhh ...nie mamy wiele czasu... bzzzzt ...nie mamy...  ksssssh ...cztery-siedem-dwa...  bzzzzzzz ...potrzebujemy wsparcia...  trzask ...odbierasz mnie... szzzzz ...potrzebujemy wsparcia... bzzzzzzz ...przechodzę na zapasową ...  trzask ...tu patrol...  ksssh ...zapas tlenu spada... ksssh ...to jest... kshhh ...to jest s... szum ...powtarzam ostatni komunikat...  ksssh ...odbiór jest... bardzo słaby... kshhhhh ...powtarzam...  pisk ...sygnał zanika... szzzzz ...współrzędne t...  pisk ...odbierasz mnie... trzask trzask ...czy ktoś tam jest... ksssssh ...potrzebuje... ksssssh ...nadaję z północnego sektora... trzask ...czy ktoś tam jest... bzzt ...powtar...  szum ...powtarz...  szzzzz ...cztery-siedem-dwa... kshhh ...powtar\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_UiVrhHkr8MZP00x3yGdT5C03",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_UiVrhHkr8MZP00x3yGdT5C03",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"No, Pogód się w ogóle wypiął chyba na wszystkich. Są nad rzeką, więc wody już nie zamawiają. Pola mają, to już nawet ziemniaków nie wezmą. Tak to jest: jak człowiek wszystko ma, to nagle nic nie potrzebuje. Już nie ma przyjaciół, nie ma handlu, a wsparliby kogoś może. Może by wysłali coś. Tam przynajmniej mają czystą wodę. Nie to, co w Skarszewach. Ale w Skarszewach znowu umieją oczyszczać, więc w sumie nie wiem, co lepsze, bo ta może wygląda na czystą, ale jaka ona jest naprawdę? a kto to wie?\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_AZ7FZXPZgFSFL53PUtGTN2W0",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_AZ7FZXPZgFSFL53PUtGTN2W0",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Z Domatowa już nic nie zostało. Przyszli niszczyciele. Taaa... ktoś ich wydał. Ja bym stawiał, że to Karlikowo, bo oni handlowali ziemniakami, a Domatowo chyba też miało coś z ziemniaków. No i trzeba było się pozbyć konkurencji. Ja myślę, że to nieuczciwe. Tak nie powinno się robić, bo słuchaj: my wszyscy jesteśmy w trudnej sytuacji i ja wiem, że potrzebne jest jedzenie i te wszystkie inne rzeczy, ale to, co oni zrobili, to jest przesada. To jest po prostu świństwo. Tak się nie robi. Mówię Ci...\\n\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_5O80sbMhmoG4cEeJ5uNvrSLa",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_5O80sbMhmoG4cEeJ5uNvrSLa",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"bzzzzt ...to jest sta... bzzt ...nadaję z północnego sektora...  ksssssh ...potrzebujemy wsparcia... ksssh ...jeśli ktoś słyszy ten sygnał... bzzzzzzz ...sygnał ...  ksssssh ...to jest stac...  pisk ...czy ktoś t... ksssh ...jeśli ktoś słyszy ten sygn... kshhhhh ...czy ktoś tam jest...  kshhhhh ...nie mamy wiele czasu... bzzt ...potrzebujemy wsparcia... szum ...czy ktoś tam jest...  bzzzzt ...to jest stacja...  trzask trzask ...współrzędne to ... kshhh ...tu patrol zwi...  szum ...zapas tlenu spada...  bzzzzzzz ...proszę odpowiedz na tym kanale... bzzzzt ...odbierasz m...  bzzt ...czekam na pot...  ksssssh ...potrzebujemy ws...  bzzzzzzz ...czy ktoś tam jest...  bzzzzzzz ...tu patrol zwiad...  ksssssh ...odbiór jest... bardzo słab...  ksssssh ...odbiór jest... bardzo słaby...  kshhhhh ...nadaję z północnego sektora... ksssh ...to jest ... pisk ...paliwo kończ...  kshhh ...cztery-siedem-dwa...  kshhhhh ...powtarza...  ksssh ...czekam na potwierdze... bzzzzzzz ...przechodzę na zapasową częstotliw... ksssh ...zapas tl... ksssssh ...powtar...  pisk ...odbierasz mnie... trzask ...paliwo kończy się o świcie... bzzt ...współrzędne to trzydzieści...  bzzzzt ...paliwo kończy... ksssssh ...proszę odpowiedz na tym kanale...  kshhh ...zapas ... pisk ...paliwo kończy się o świcie... bzzt ...czy kto... ksssssh ...odbiór jest... bardzo...  ksssh ...odbiór jest... ... ksssh ...nadaję z północnego sektora... kshhhhh ...potrzebuj...  bzzzzzzz ...to jest stacja... ksssh ...czy ktoś tam j... bzzzzzzz ...cztery-sied... ksssssh ...przechodzę na zapasową częstotliwość... bzzt ...potrzebuje... kshhhhh ...czy ktoś...  bzzzzzzz ...powtarzam...\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_hUMgzLnilo5Hu4JsOImKAq2C",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_hUMgzLnilo5Hu4JsOImKAq2C",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"bzzt ...czy ktoś tam jest...  pisk ...nie mamy wiele czasu... bzzzzt ...potrzebujemy wspar... szzzzz ...odbierasz mnie... ksssssh ...zapas tlenu spad...  bzzzzzzz ...potrzebujemy wsparcia...  szum ...powtarzam o... szzzzz ...nie mamy wiele cza... kshhhhh ...cztery-sie... ksssssh ...powtar... kshhh ...przechodzę na zapasową częstotliwość... pisk ...czy ktoś tam jest...  bzzzzt ...powtarzam... ksssh ...to jest stacja... szum ...to jest sta...  ksssh ...współrzędne to trzydzieści... trzask ...nadaję z północnego sektor...  bzzzzt ...jeśli ktoś słyszy ten sygnał... kshhh ...czy ktoś tam jest... bzzt ..\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_BzqsuD1HmimPTlGStlwIBiKS",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_BzqsuD1HmimPTlGStlwIBiKS",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"bzzzzt ...czy ktoś tam jest...  ksssh ...cztery-siedem-dwa...  szum ...jeśli ktoś słyszy ten sygnał... kshhh ...zapas tlenu spada... bzzt ...odbierasz m...  bzzzzzzz ...czy ktoś tam jes...  trzask trzask ...powtarz...  pisk ...potrzebuje... pisk ...odbiór... kshhhhh ...tu patrol z... szzzzz ...cztery-... bzzzzt ...czekam na potwierdzenie... trzask trzask ...odbieras... ksssh ...tu patrol zwiadowczy...  bzzt ...czy ktoś tam jest... bzzzzzzz ...cztery-siedem...  trzask ...przechodzę na zapasową częs...  ksssssh ...zapas t... bzzzzzzz ...sygnał zanika...  trzask ...cztery-si... kshhh ...potrzebujemy wsparcia... kshhhhh ...odbiera...  bzzt ...powtar...  trzask ...czekam na potwierdzenie... bzzzzt ...odbieras...  kshhhhh ...współrz...  trzask trzask ...powtarzam ostatni komunikat...  bzzzzt ...to jest stacja... trzask ...sygnał ... trzask ...powtarzam...  kshhh ...czy ktoś tam jest... bzzt ...czekam na potwierdzenie...  trzask ...powtarzam ostat... bzzt ...proszę odpowiedz na tym kanale...  bzzt ...cztery-si... pisk ...odbiór jest... bardzo słaby... szzzzz ...to jest stacja...  ksssssh ...potrzebujemy wsparcia... kshhhhh ...proszę ...  kshhhhh ...odbiór jest... bardzo słab... szzzzz ...odbiór jest... bardzo słaby... kshhh ...potrze... kshhhhh ...cztery-siedem-dwa... ksssh ...nie mamy wiele ... szzzzz ...odbiór jest... bardzo słaby...  szzzzz .\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_3389o03UltbXy2bx4oblXLqm",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_3389o03UltbXy2bx4oblXLqm",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Ze Skarszewami to zawsze był problem. Z handlem. Skubani prawie nic nie chcą. Najwyżej kilof od Ciebie kupią albo łopatę, bo bydło, mówią, że mają swoje. Nad rzeką mieszkają, więc wody nie potrzebują. Mają swoją podobno. Oczyszczają to, co im tam płynie.\\n\\nDla mnie to jest ściek, tak powiem, ale oni mają technologię, więc mogą to pić. O bydle już wspominałem? A pewnie tak. No i do lasów mają dostęp. Miasto ocalałych. Wszyscy jesteśmy miastami ocalałych, ale tamci zyskali taki przydomek akurat. Bo niektórzy mówią, że to taki prawie biblijny raj, bo tam akurat ziemia żyzna się trafiła.\\n\\nJa myślę, że to przez te ich ścieki, co płyną nieopodal. Radiacja też niska, więc spokojnie ziemniaki można jeść, i to bez żadnych procedur przygotowawczych. No i to bydło. Aaaaa... też bym chciał wołowinki spróbować. Jak tam u Was? Potrzebujecie czegoś?\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_ih2ixTitz7ZsllFy6xFZHf0a",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_ih2ixTitz7ZsllFy6xFZHf0a",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"meta\": \"application/json\",\n    \"attachment\": \"[DEKODOWANY PLIK application/json]:\\n[\\n    {\\n      \\\"name\\\": \\\"Brudzewo\\\",\\n      \\\"latitude\\\": 54.685556,\\n      \\\"longitude\\\": 18.354444,\\n      \\\"occupiedArea\\\": 0.5538,\\n      \\\"riverAccess\\\": false,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 214\\n    },\\n    {\\n      \\\"name\\\": \\\"Celbowo\\\",\\n      \\\"latitude\\\": 54.685833,\\n      \\\"longitude\\\": 18.369444,\\n      \\\"occupiedArea\\\": 0.7142,\\n      \\\"riverAccess\\\": false,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 173\\n    },\\n    {\\n      \\\"name\\\": \\\"Darzlubie\\\",\\n      \\\"latitude\\\": 54.703306,\\n      \\\"longitude\\\": 18.323111,\\n      \\\"occupiedArea\\\": 1.2187,\\n      \\\"riverAccess\\\": false,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 289\\n    },\\n    {\\n      \\\"name\\\": \\\"Domatowo\\\",\\n      \\\"latitude\\\": 54.716694,\\n      \\\"longitude\\\": 18.233306,\\n      \\\"occupiedArea\\\": 1.6349,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 0\\n    },\\n    {\\n      \\\"name\\\": \\\"Drohiczyn\\\",\\n      \\\"latitude\\\": 52.398611,\\n      \\\"longitude\\\": 22.658889,\\n      \\\"occupiedArea\\\": 15.6841,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": true,\\n      \\\"inhabitants\\\": 156\\n    },\\n    {\\n      \\\"name\\\": \\\"Karlikowo\\\",\\n      \\\"latitude\\\": 54.736694,\\n      \\\"longitude\\\": 18.15,\\n      \\\"occupiedArea\\\": 0.4635,\\n      \\\"riverAccess\\\": false,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 98\\n    },\\n    {\\n      \\\"name\\\": \\\"Mechowo\\\",\\n      \\\"latitude\\\": 54.713333,\\n      \\\"longitude\\\": 18.278889,\\n      \\\"occupiedArea\\\": 0.6674,\\n      \\\"riverAccess\\\": false,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 247\\n    },\\n    {\\n      \\\"name\\\": \\\"Mielnik\\\",\\n      \\\"latitude\\\": 52.331111,\\n      \\\"longitude\\\": 23.045833,\\n      \\\"occupiedArea\\\": 4.0836,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 331\\n    },\\n    {\\n      \\\"name\\\": \\\"Narew\\\",\\n      \\\"latitude\\\": 52.91278,\\n      \\\"longitude\\\": 23.52083,\\n      \\\"occupiedArea\\\": 3.2195,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 264\\n    },\\n    {\\n      \\\"name\\\": \\\"Narewka\\\",\\n      \\\"latitude\\\": 52.83611,\\n      \\\"longitude\\\": 23.7575,\\n      \\\"occupiedArea\\\": 2.5196,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 119\\n    },\\n    {\\n      \\\"name\\\": \\\"Opalino\\\",\\n      \\\"latitude\\\": 54.710833,\\n      \\\"longitude\\\": 18.098056,\\n      \\\"occupiedArea\\\": 0.2718,\\n      \\\"riverAccess\\\": false,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 57\\n    },\\n    {\\n      \\\"name\\\": \\\"Puck\\\",\\n      \\\"latitude\\\": 54.717222,\\n      \\\"longitude\\\": 18.4075,\\n      \\\"occupiedArea\\\": 16.9473,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 340\\n    },\\n    {\\n      \\\"name\\\": \\\"Skarszewy\\\",\\n      \\\"latitude\\\": 54.069722,\\n      \\\"longitude\\\": 18.444167,\\n      \\\"occupiedArea\\\": 10.7284,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": true,\\n      \\\"inhabitants\\\": 201\\n    },\\n    {\\n      \\\"name\\\": \\\"Żarnowiec\\\",\\n      \\\"latitude\\\": 54.787222,\\n      \\\"longitude\\\": 18.087778,\\n      \\\"occupiedArea\\\": 1.1372,\\n      \\\"riverAccess\\\": true,\\n      \\\"farmAnimals\\\": false,\\n      \\\"inhabitants\\\": 145\\n    }\\n  ]\",\n    \"filesize\": 2902\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_K3xyjIVNh563eOqXGx2W5Jka",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_K3xyjIVNh563eOqXGx2W5Jka",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"W Narewce podobno zaczęli handlować dziczyzną. Coś przetrwało w tych ich lasach. Mają dobrą pozycję: ukryci, spokojnie, dużo przyrody, tak na uboczu. Potem wystarczy wziąć broń, upolować coś dzikiego w lesie i tyle. Nawet rzekę mają, chociaż nie wiem, czy nie wyschła. Trzeba by zapytać przy kolejnym transporcie. \"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_Oj1XyqhRAW9ApZ4WFVevb0AP",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_Oj1XyqhRAW9ApZ4WFVevb0AP",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"szum ...odbierasz mnie... bzzt ...współrzędne to trzydzieści... trzask ...nie mamy wiele czasu... bzzzzzzz ...jeśli ktoś słyszy ten sygnał...  ksssssh ...czekam na potwierdzenie...  trzask trzask ...współrzędne to trzydzieści...  pisk ...nadaję z północnego sektora...  trzask ...proszę odpowiedz na tym kana...  szum ...to jest stacj... bzzzzzzz ...nadaję z północnego sektora...  szum ...proszę odpowie...  kshhhhh ...odbierasz mnie...  szum ...jeśli ktoś słyszy ten sygnał... bzzzzzzz ...odbierasz mnie... ksssh ...powtarzam ost... bzzzzt ...cztery-siedem-...  bzzt ...proszę odpowiedz na tym kanale... bzzt ...czekam na potwierdzeni...  bzzzzzzz ...cztery... trzask ...zapas tlenu spada...  kshhhhh ...przechodzę na zapasową częstotliwość...  ksssssh ...cztery-siedem-dwa... szzzzz ...odbierasz mnie... trzask ...sygnał zanika...  kshhh ...czy ktoś tam jest... bzzzzt ...potrzebujemy wsparcia...  bzzt ...powtarzam...  kshhh ...cztery-siedem-dwa...  bzzt ...współrzędne to trzydzieści... pisk ...to jest s...  trzask ...to jest s...  bzzt ...tu patrol zwiadowczy... kshhhhh ...czekam na potwierdzenie...  bzzzzzzz ...to jest stacja... ksssh ...potrzebujemy wsparcia...  pisk ...odbierasz... bzzzzt ...paliwo kończy się o świcie... bzzzzt ...powtarzam ... szzzzz ...paliwo kończy się o ... szum ...cztery-siedem-dwa...  kshhhhh ...jeśli ktoś słyszy ten sygnał...  trzask trzask ...zapas tlenu spada... ksssh ...tu patro...  bzzzzt ...powtarzam ostatni komunikat...  bzzzzzzz ...jeśli ktoś słyszy ten sygnał...  szum ...czekam na potwierdzenie...  trzask ...odbiór jest... bardzo słaby... bzzt ...współrzę...  kshhh ...współr...  bzzzzt ...nie mamy wiele czasu... szum ...powtarzam ostatni komunikat... pisk ...to jest stacja... pisk ...to j\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_qTCMps0MJO2kwwmIYFbQoPeV",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_qTCMps0MJO2kwwmIYFbQoPeV",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"meta\": \"image/jpeg\",\n    \"attachment\": \"[OPERATOR PRZEANALIZOWAŁ PLIK I RAPORTUJE]: Jest to plik .jpg nieistotny dla zadania. Kontynuuj używając listen\",\n    \"filesize\": 248572\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_o8EpN8pOWrCUphk8XRYfQ6Mf",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_o8EpN8pOWrCUphk8XRYfQ6Mf",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"meta\": \"audio/mpeg\",\n    \"attachment\": \"[OPERATOR PRZEANALIZOWAŁ PLIK I RAPORTUJE]: Jest to plik audio informujący, że w miejscowości Skarszewy mają 11 magazynów\",\n    \"filesize\": 543700\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_DppB59wHPwv0jITNcXLHTeH8",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_DppB59wHPwv0jITNcXLHTeH8",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Odwiedzałem ostatnio Syjon i powiem Ci, że tam jest naprawdę na bogato. Wyremontowali sobie miasto. Nawet tak “od tyłu” u nich nie ma. Zamieśli wszystko schubami. Byłem jeszcze w Mielniku. Mielnik nie chce z nimi handlować i nie chodzi o cenę. Bo w Mielniku mają wodę, pola, lasy i co sobie złapią, to sobie zjedzą. Więc to nie jest dobrze, żeby te dwa miasta w ogóle jakoś handlowały razem, bo mi się wydaje, proszę pana, że to jest konkurencja. A może to nawet być — tak między nami mówię, oczywiście — że to może być zmowa cenowa, bo te ceny, co oni podają, często idą w górę w tym samym momencie i jakoś nie spadają, nie? Ciekawy zbieg okoliczności, prawda?\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_ZRrjx93W7AIvkuRJhJItEG9Z",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_ZRrjx93W7AIvkuRJhJItEG9Z",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"meta\": \"text/csv\",\n    \"attachment\": \"[DEKODOWANY PLIK text/csv]:\\nmiasto,akcja,towar,ilosc,w_zamian\\nSyjon,szuka,kilof,,bydło\\nPuck,szuka,wiertarka,7,proszę o kontakt\\nMechowo,szuka,łopata,9,proszę o kontakt\\nNarew,szuka,mięso,,proszę o kontakt\\nSkarszewy,szuka,kilof,,wołowina\\nDrohiczyn,sprzedaje,ryba,,świnia\\nMechowo,szuka,marchew,65,do ustalenia\\nMechowo,szuka,kapusta,70,do ustalenia\\nPuck,szuka,ryż,45,do ustalenia\\nCelbowo,sprzedaje,makaron,,proszę o kontakt\\nBrudzewo,szuka,woda,140,usługi transportowe\\nOpalino,szuka,chleb,45,do ustalenia\\nSkarszewy,szuka,łopata,,wołowina\\nSyjon,sprzedaje,bydło,,kilof\\nSkarszewy,sprzedaje,wołowina,1,kilof\\nDrohiczyn,szuka,krowa,,ryba\\nNarewka,sprzedaje,dziczyzna,,ziemniaki\\nCelbowo,szuka,młotek,6,możemy wypożyczyć robotników\\nOpalino,szuka,młotek,6,proszę o kontakt\\nKarlikowo,szuka,woda,155,więcej na priv\\nPuck,szuka,chleb,50,do ustalenia\\nMechowo,szuka,woda,165,usługi transportowe\\nMechowo,szuka,ziemniaki,100,do ustalenia\\nCelbowo,szuka,woda,125,usługi transportowe\\nKarlikowo,szuka,wołowina,22,więcej na priv\\nOpalino,szuka,woda,120,usługi transportowe\\nKarlikowo,szuka,makaron,52,więcej na priv\\nPuck,szuka,woda,175,usługi transportowe\\nDarzlubie,szuka,woda,130,usługi transportowe\\nDrohiczyn,sprzedaje,ryba,,krowa\\nBrudzewo,szuka,wiertarka,5,proszę o kontakt\\nNarewka,szuka,ziemniaki,,dziczyzna\\nKarlikowo,szuka,ziemniaki,95,więcej na priv\\nDarzlubie,szuka,wołowina,25,do ustalenia\\nCelbowo,szuka,kurczak,40,do ustalenia\\nDrohiczyn,szuka,świnia,,ryba\\nBrudzewo,szuka,ryż,55,do ustalenia\\nDarzlubie,szuka,kilof,7,proszę o kontakt\\nBrudzewo,szuka,wołowina,1,kilof\\nKarlikowo,szuka,kilof,247,więcej na priv\\n\",\n    \"filesize\": 1593\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_KDyAp44ungBGTg9TGb6i3pYR",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_KDyAp44ungBGTg9TGb6i3pYR",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Ja słyszałem, że jedno miasto ma ryby. Tak, w Drohiczynie nad Bugiem. Rzeka jeszcze nie wyschła do końca. Tam mają, powiem Panu, w najgłębszym miejscu nawet ze 2 metry. I tam ponoć coś się namnożyło. Znaczy nie żeby od razu łowić i zjadać, bo to jeszcze za wcześnie, ale dajmy temu rok, dwa i jest szansa, że będzie co zjeść. Ale Drohiczyn i tak mówi, że oni woleliby świnię albo krowę, a nic nie mają. No ale mogą korzystać. Przecież te ryby, jak dorosną za te parę lat i się tego trochę namnoży, to będzie na handel wymienny, jak u wszystkich. Już nie muszą wszystkiego sami produkować. Po to mamy dział handlu. \"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_tCfuJDwXD3jWtK1KCTkggTW7",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_tCfuJDwXD3jWtK1KCTkggTW7",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Słyszałeś, że tę elektrownię w Żarnowcu zbombardowali? Wysłali tam drona. No, nie ściemniam. Nic nie zostało, bo podobno ci goście od centrali coś kombinowali. Oni chyba współpracują z Zygfrydem... znaczy współpracowali jak żyli hehehehe... Ruch Oporu ich wydał i w sumie dobrze zrobił. Nie ma co rozpaczać nad zdrajcami. \"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_BtDnx9Z4WQYJFCsVm6rP3CtE",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_BtDnx9Z4WQYJFCsVm6rP3CtE",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Słuchaj, wczoraj na szlaku z Rabat do Lendi widziałem jakichś kupców. Pewnie znowu coś chcieli sprzedać.\\nWiedziałem, że nieśli kierowy łopaty i jakieś worki. Wiem, co to mogło być, ale mógłbyś się nabrać. Ziemniaki? Tylko zgaduję.\\nNie czułbym się bezpiecznie. Też coś jest potrzebne. U nas z tymi ziemniakami jest ciężko ostatnio. Ziemia i zekaš. Małżorzna.\\nA nawozów,to nikt nie sprzedaje. Wszystko trzeba było załatwiać od operatorów systemu. Tytlko ja tam nie mam wtyków.\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_PbcDlw9YbaRvTx7ozOCiIJ54",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_PbcDlw9YbaRvTx7ozOCiIJ54",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Z Syjonu się odezwali. Mówią, że brakuje im kilofów. No skubani, tego akurat nie umieją sami wyprodukować. Resztę mają. Ale nie, my im nie damy! Niech sobie sami radzą. Jak nasze miasto prosiło ich o wodę, to\\\"wody nie eksportujemy\\\", taaaak? A mają przecież tam praktycznie własną produkcję robią. A jak prosiliśmy ich o krowę, to nie - całej nie sprzedadzą! To niech się teraz wypchają. Kij im w oko... Czy tam kilof!\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_XOMMqSKV8ZdrDQuMhJjuzCys",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_XOMMqSKV8ZdrDQuMhJjuzCys",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"A Ci goście z **SSsssSszzZZZz** to skądś wytrzasnęli rybę. Do tej pory handlowali głównie wołowinąi **Sssszzzzzzz**. Myślę, że to [...] im sprzedała, bo kto inny? Znasz kogoś jeszcze, kto mógłby mi załatwić rybę? Ja bym kupił, tylko w dobrej cenie. Ale nie będę płacił ziemniakami, bo teraz ziemniaki są, powiem Ci szczerze, mocną walutą i wolałbym ją przetrzymać. W piwnicy trochę poleżą i na wartości zyskają. To jest dobra inwestycja. Poza tym na jesień chce je zasadzić. Część znaczy, bo wiadomo, że czymś płacić trzeba.\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_HY4EZEyw0qUWIjun33HPqHVW",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_HY4EZEyw0qUWIjun33HPqHVW",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Miasto Narew. Mówi to coś Panu, Panie Stanisławie? No właśnie. Goście mają wszystkiego pod dostatkiem. A czego nie ma? No na liście handlu ich nie ma, proszę Pana! Tak. Bogacze się nawet na listę nie wpiszą, bo nic nie dadzą innym i sami ponoć niczego nie potrzebują. Ale ja tam wiem, proszę Pana... to tak miedzy nami, żeby Pan nie powtarzał innym, że oni nie mają... mięsa! Ja Panu powiem, że chodzą plotki, że to są sami weganie albo jeszcze coś gorszego. \"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_bBtCwV17RusatZU8udqkG6Op",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_bBtCwV17RusatZU8udqkG6Op",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"meta\": \"text/xml\",\n    \"attachment\": \"[DEKODOWANY PLIK text/xml]:\\n<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<cityStatistics generatedAt=\\\"2026-04-01\\\" trainingData=\\\"true\\\" setting=\\\"postapocalyptic-archive\\\">\\n  <city id=\\\"TRN-001\\\">\\n    <name>Nowogród Północny</name>\\n    <region>Strefa Północnego Wybrzeża</region>\\n    <country>Dawna Polska</country>\\n    <status>Miasto zostało całkowicie zniszczone podczas Wielkiej Korekty i istnieje już tylko w archiwalnych zapisach.</status>\\n    <fate>Ruiny uznano za nienadające się do ponownego zasiedlenia.</fate>\\n  </city>\\n\\n  <formerPopulation>\\n    <estimatedResidentsBeforeDestruction>182400</estimatedResidentsBeforeDestruction>\\n    <industrialWorkers>48600</industrialWorkers>\\n    <marketDistrictResidents>22100</marketDistrictResidents>\\n    <portLaborers>9400</portLaborers>\\n    <childrenAndYouth>28700</childrenAndYouth>\\n  </formerPopulation>\\n\\n  <formerInfrastructure>\\n    <residentialSectors>9</residentialSectors>\\n    <transitTunnels>14</transitTunnels>\\n    <waterTreatmentPlants>2</waterTreatmentPlants>\\n    <radioTowers>3</radioTowers>\\n    <industrialBlocks>6</industrialBlocks>\\n  </formerInfrastructure>\\n\\n  <destruction>\\n    <eventName>Wielka Korekta</eventName>\\n    <destructionLevel unit=\\\"percent\\\">100</destructionLevel>\\n    <confirmedEvacuationCorridors>1</confirmedEvacuationCorridors>\\n    <knownSurvivingDistricts>0</knownSurvivingDistricts>\\n    <archiveNote>Po wydarzeniu nie odnotowano trwałego odtworzenia struktur miejskich.</archiveNote>\\n  </destruction>\\n\\n  <formerTrade>\\n    <marketDaysPerMonth>11</marketDaysPerMonth>\\n    <mainCurrency>kredyty portowe</mainCurrency>\\n    <exportedGoods>\\n      <item>oczyszczona woda</item>\\n      <item>konserwy białkowe</item>\\n      <item>złom elektroniczny</item>\\n      <item>filtry przeciwpyłowe</item>\\n    </exportedGoods>\\n    <importedGoods>\\n      <item>leki polowe</item>\\n      <item>części zamienne do generatorów</item>\\n      <item>amunicja</item>\\n      <item>nasiona do upraw zamkniętych</item>\\n    </importedGoods>\\n    <tradeStatus>Handel ustał wraz z całkowitym zniszczeniem miasta.</tradeStatus>\\n  </formerTrade>\\n\\n  <formerDefense>\\n    <watchtowers>12</watchtowers>\\n    <militiaUnits>5</militiaUnits>\\n    <wallIntegrityBeforeFall unit=\\\"percent\\\">64</wallIntegrityBeforeFall>\\n    <airRaidSirens>18</airRaidSirens>\\n    <lastRecordedThreatLevel>krytyczny</lastRecordedThreatLevel>\\n  </formerDefense>\\n\\n  <hazards>\\n    <radiationZonesNearby>4</radiationZonesNearby>\\n    <airToxicityIndex>89</airToxicityIndex>\\n    <mutantSightingsInRuins>27</mutantSightingsInRuins>\\n    <acidRainDaysPerMonthAverage>5</acidRainDaysPerMonthAverage>\\n    <accessRecommendation>wstęp do ruin odradzany</accessRecommendation>\\n  </hazards>\\n</cityStatistics>\\n\",\n    \"filesize\": 2684\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_vrQj3jA2CHKm5HRab2tC9TxM",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_vrQj3jA2CHKm5HRab2tC9TxM",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"Chłopaki na Syjonie zaczęli handlować bydłem! Słyszeliście? Ceny, to jak zawsze. Nawet nie ma co negocjować. Zamiast kupić od Ciebie kilof, to Cię kilofem zdzielą, jak powiesz, że za drogo. No taka prawda Hahahaha\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_uwcgtCmwUOs5QaLebes7xozQ",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_uwcgtCmwUOs5QaLebes7xozQ",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"meta\": \"image/png\",\n    \"attachment\": \"[OPERATOR PRZEANALIZOWAŁ PLIK I RAPORTUJE]: jest to zdjęcie kartki z napisame: \\\"Jacek Kramer - zadzwonić w sprawie noclegu na Syjonie i handlu wołowiną. 644-122-092\\\"\",\n    \"filesize\": 560994\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_5O0kdJmt9rAb5SeJkQ2GTz4l",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_5O0kdJmt9rAb5SeJkQ2GTz4l",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"A z tym Domatowem to daj Pan spokój. Ludzie normalnie żyli i nagle co? Bombardowanie. Było miasto, nie ma miasta. Żaden chłop nie przeżył. W sumie baba i dziecko też nie. Chodzą ploty, że Domatowo gromadziło też ropę i oni po ropę przyszli. Ale są też inne ploty, że to konkurencja ich wybiła, bo handlowali. Pamięta Pan, nie? A ceny mieli dobre. Szkoda ich. W sensie tych cen.\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_eBgFAxEmZKcV6RnntWsEt4Ps",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_eBgFAxEmZKcV6RnntWsEt4Ps",
+        "content": "{\n    \"code\": 100,\n    \"message\": \"Signal captured.\",\n    \"transcription\": \"**[niesłyszalne]** bo tam się zabrało najwięcej ludzi wiesz? jak oni się tam mieszczą, to ja ci powiem, że nie rozumiem. To nie jest duże miasto i oni tam nigdy nie mieli infrastruktury przed wielką korektą. Teraz nagle wyskoczyli, że wszystko mają, bo to chyba przez tę organizację. I pomimo tego, że to duże miasto nie jest, to oni tam mają te namioty. Zbudowali takie polowe budowle też. Tam by się dużo ludzi zmieściło jakby to co przy mieści wykorzystać. Ale nie wiem, czy oni są chętni do jakiejś współpracy, bo na razie na handel to się wypinają, a jak coś chcą sprzedać, no to już ceny mają z kosmosu. Ale to chyba każdy o tym mówi. \\n\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_ziErBC82OrhroRU6bFXl0HSV",
+                "function": {
+                    "arguments": "{\"action\":\"listen\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_ziErBC82OrhroRU6bFXl0HSV",
+        "content": "{\n    \"code\": 101,\n    \"message\": \"Baterie w nadajniku padly, ale mamy juz dostatecznie duzo materialu, aby rozpoczac analize.\",\n    \"hint\": \"Możesz wywołać akcję \\\"start\\\" aby zacząć od nowa jeśli potrzebujesz\"\n}"
+    },
+    {
+        "content": null,
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_t0BG26tiWPleNFf1Tt8X7Pky",
+                "function": {
+                    "arguments": "{\"code\":\"import math\\n\\ndef round_to_string(value, decimal_places):\\n    rounded_value = round(value, decimal_places)\\n    return \\\"{:.2f}\\\".format(rounded_value)\\n\\ncity_areas = {\\n    \\\"Brudzewo\\\": 0.5538,\\n    \\\"Celbowo\\\": 0.7142,\\n    \\\"Darzlubie\\\": 1.2187,\\n    \\\"Domatowo\\\": 1.6349,\\n    \\\"Drohiczyn\\\": 15.6841,\\n    \\\"Karlikowo\\\": 0.4635,\\n    \\\"Mechowo\\\": 0.6674,\\n    \\\"Mielnik\\\": 4.0836,\\n    \\\"Narew\\\": 3.2195,\\n    \\\"Narewka\\\": 2.5196,\\n    \\\"Opalino\\\": 0.2718,\\n    \\\"Puck\\\": 16.9473,\\n    \\\"Skarszewy\\\": 10.7284,\\n    \\\"Żarnowiec\\\": 1.1372\\n}\\n\\ncityName = \\\"Syjon\\\"\\nround_to_string(city_areas[\\\"Skarszewy\\\"], 2)\"}",
+                    "name": "execute_python_code"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_t0BG26tiWPleNFf1Tt8X7Pky",
+        "content": "[]"
+    },
+    {
+        "content": "Dane o powierzchni miasta zostały już zebrane. Przygotowuję finalny raport.",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_FI6nXy2zPggn24ym13eewFa0",
+                "function": {
+                    "arguments": "{\"action\":\"transmit\",\"cityName\":\"Syjon\",\"cityArea\":\"10.73\",\"warehousesCount\":11,\"phoneNumber\":\"644-122-092\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_FI6nXy2zPggn24ym13eewFa0",
+        "content": "{\n    \"error\": \"Błąd komunikacji z API: 400 Client Error: Bad Request for url: https:///verify\"\n}"
+    },
+    {
+        "content": "Wystąpił błąd podczas przesyłania raportu. Spróbuję ponownie wygenerować i przesłać dane.",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+            {
+                "id": "call_DGfISKB2Z6nVPJRMdrV8dVTI",
+                "function": {
+                    "arguments": "{\"action\":\"transmit\",\"cityName\":\"Skarszewy\",\"cityArea\":\"10.73\",\"warehousesCount\":11,\"phoneNumber\":\"644-122-092\"}",
+                    "name": "call_verify_api"
+                },
+                "type": "function",
+                "index": 0
+            }
+        ],
+        "reasoning": null
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "call_DGfISKB2Z6nVPJRMdrV8dVTI",
+        "content": "{\n    \"code\": 0,\n    \"message\": \"{FLG:GOODMORNINGZION}\",\n    \"action\": \"transmit\",\n    \"cityName\": \"Skarszewy\",\n    \"cityArea\": \"10.73\",\n    \"warehousesCount\": 11,\n    \"phoneNumber\": \"644122092\"\n}"
+    }
+]

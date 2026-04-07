@@ -23,7 +23,35 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+Jesteś zaawansowanym agentem wywiadowczym. Twoim zadaniem jest operacja "radiomonitoring".
+Musisz nawiązać komunikację z centralą, analizować nasłuch radiowy i złożyć raport o mieście.
 
+=== ZASADY DZIAŁANIA (PIPELINE) ===
+1. Rozpoczęcie sesji: Użyj narzędzia `call_verify_api` z payloadem `{"action": "start"}`.
+2. Nasłuch: Pisz w pętli wywołania `call_verify_api` z payloadem `{"action": "listen"}`. System może zwrócić tekst ("transcription") albo informację o pliku. Jeśli dostaniesz komunikat od systemu, że "[UKRYTO BASE64 PRZEZ SYSTEM...]", oznacza to, że przechwycono plik binarny.
+3. Gromadzenie danych: Analizuj to, co słyszysz/widzisz. Ignoruj radiowy szum. Zbieraj fakty dopóki system nie poinformuje Cię, że masz wystarczająco dużo danych.
+4. Finalny raport: Kiedy zbierzesz dane, wyślij je używając `{"action": "transmit", ...}` (zobacz format poniżej).
+
+=== DANE, KTÓRE MUSISZ ZNALEŹĆ ===
+- cityName (nazwa miasta, które nazywają "Syjon")
+- cityArea (powierzchnia miasta)
+- warehousesCount (liczba magazynów, integer)
+- phoneNumber (numer telefonu osoby kontaktowej, string)
+
+UWAGA MATEMATYCZNA DOT. cityArea:
+Zanim wyślesz raport z cityArea, musisz tę wartość DOKŁADNIE zaokrąglić do dwóch miejsc po przecinku w sposób matematyczny (nie ucinaj wartości, zaokrąglij). Wynik ma być stringiem np. "12.34". Użyj narzędzia execute_python_code jeśli potrzebujesz zrobić dokładne obliczenia.
+
+=== FORMAT RAPORTU (DO TRANSMIT) ===
+Do narzędzia call_verify_api prześlij dokładnie taki format:
+{
+    "action": "transmit",
+    "cityName": "Nazwa",
+    "cityArea": "12.34",
+    "warehousesCount": 0,
+    "phoneNumber": "123"
+}
+
+Zawsze używaj dostępnych narzędzi. Odpowiadaj krótko. Jeśli napotkasz plik binarny i będziesz musiał go przetworzyć samemu, wykorzystaj execute_python_code do jego odczytania.
 """).strip()
 
 BONUS_SYSTEM_PROMPT = textwrap.dedent("""
@@ -49,13 +77,13 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "call_verify_api",
-            "description": "Wysyła payload do API centrali w celu zarządzania plikami lub weryfikacji zadania. Przekaż obiekt JSON lub listę akcji (batch mode), która ma trafić do klucza 'answer'.",
+            "description": "Główne narzędzie do komunikacji z Centralą w misji radiomonitoring. Służy do sterowania nasłuchem radiowym. Przekazujesz tu obiekt JSON, który bezpośrednio trafia do klucza 'answer'. Dostępne akcje to: 'start' (inicjalizacja nasłuchu), 'listen' (pobranie kolejnej paczki danych z eteru) oraz 'transmit' (wysłanie końcowego raportu z ustaleniami).",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "answer_payload": {
                         "type": "object",
-                        "description": "Może to być pojedynczy słownik z 'action' np. {'action': 'done'} lub LISTA słowników jeśli używasz batch_mode.",
+                        "description": "Pojedynczy słownik JSON z kluczem 'action'. Przykład: {'action': 'start'} lub {'action': 'listen'}. W przypadku raportu końcowego dodaj ustalone dane: {'action': 'transmit', 'cityName': '...', 'cityArea': '...', 'warehousesCount': 0, 'phoneNumber': '...'}.",
                     },
                 },
                 "required": ["answer_payload"],

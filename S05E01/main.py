@@ -13,7 +13,7 @@ def main():
         system_prompt=settings.system_prompt
     )
 
-    user_prompt = textwrap.dedent(f"""
+    user_prompt = textwrap.dedent("""
     Rozpocznij wykonanie zadania.
     """).strip()
 

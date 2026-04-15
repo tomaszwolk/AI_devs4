@@ -8,6 +8,7 @@ wheels/
 *.zip
 a.py
 .bonus.py
+bonus.py
 
 # Virtual environments
 .venv

@@ -16,7 +16,7 @@ is to gain experience with OpenAI and other AI tools, not to show off python ski
 uv sync
 ```
 
-1. Create .env file using .env.example
+2. Create .env file using .env.example
 
 # Usage:
 

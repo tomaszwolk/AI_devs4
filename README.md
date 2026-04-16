@@ -22,7 +22,7 @@ uv sync
 
 Go to folder with lesson and run `main.py`. For example:
 
-`cd S05E05`
+`cd S05E05`  
 `uv run main.py`
 
 ## Links

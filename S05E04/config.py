@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -22,7 +21,7 @@ class Settings:
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
     Jesteś systemem nawigacyjnym rakiety. Twoim celem jest dotarcie do bazy w Grudziądzu (kolumna 12).
     Poruszasz się po siatce: 3 wiersze (1 - góra, 2 - środek, 3 - dół) x 12 kolumn.
     Startujesz zawsze w wierszu 2, kolumnie 1.
@@ -62,7 +61,7 @@ MAIN_SYSTEM_PROMPT = textwrap.dedent("""
     - Twoja pierwsza akcja to zawsze call_verify_api({"command": "start"}).
 """).strip()
 
-BONUS_SYSTEM_PROMPT = textwrap.dedent("""
+BONUS_SYSTEM_PROMPT = ("""
 
 """).strip()
 
@@ -95,7 +94,7 @@ TOOLS_SCHEMA = [
                         "properties": {
                             "command": {
                                 "type": "string",
-                                "enum":["start", "go", "left", "right"]
+                                "enum": ["start", "go", "left", "right"]
                             }
                         },
                         "required": ["command"]

@@ -17,16 +17,17 @@ def main():
     print(data)
 
     client = OpenAI(
-        base_url=os.getenv("BASE_URL"),
+        base_url=os.getenv("OPENROUTER_URL"),
         api_key=os.getenv("OPENROUTER_API_KEY"),
     )
 
     user_prompt = """
         Pobierz dane z hubu i wyślij prompt do hubu w celu klasyfikacji.
         """
-    messages = [{
-        "role": "system",
-        "content": SYSTEM_PROMPT
+    messages = [
+        {
+            "role": "system",
+            "content": SYSTEM_PROMPT
         },
         {
             "role": "user",
@@ -37,7 +38,7 @@ def main():
     for i in range(25):
         print(f"Iteration: {i}")
         response = client.chat.completions.create(
-            model=os.getenv("MODEL_ID"),
+            model=os.getenv("STRONG_MODEL_ID"),
             messages=messages,
             tools=TOOLS,
             temperature=0,

@@ -1,6 +1,5 @@
 import sys
 import logging
-import textwrap
 from tools import call_verify_api
 from config import settings
 from agent import MainAgent
@@ -17,9 +16,8 @@ def main():
 
     windpower_help = call_verify_api(answer_payload={"action": "help"})
 
-    user_prompt = textwrap.dedent(f"""
-    Użyj narzędzia call_verify_api aby uzyskać informacje o dostępnych akcjach i parametrach.
-    # Parametry są opisane w {json.loads(windpower_help)["actions"]}.
+    user_prompt = (f"""Użyj narzędzia call_verify_api aby uzyskać informacje o dostępnych akcjach i parametrach.
+    Parametry są opisane w {json.loads(windpower_help)["actions"]}.
     """).strip()
 
     try:

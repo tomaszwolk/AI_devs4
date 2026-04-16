@@ -5,7 +5,7 @@ from pprint import pprint
 
 def main():
     # Uruchom uv run bonus.py
-    # Wyśle narzędzia do centrali. Potem zobacz na /debug
+    # Wyśle narzędzia do centrali. Potem zobacz na {HUB_URL}/debug
     response = send_tools()
     pprint(response)
 

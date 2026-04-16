@@ -1051,9 +1051,9 @@
 2026-04-07 11:30:28,577 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
 2026-04-07 11:30:29,347 - [INFO] Tool call: call_verify_api with args: {'action': 'transmit', 'cityName': 'Syjon', 'cityArea': '10.73', 'warehousesCount': 11, 'phoneNumber': '644-122-092'}
 
-2026-04-07 11:30:29,547 - [ERROR] Error: 400 Client Error: Bad Request for url: https:///verify
+2026-04-07 11:30:29,547 - [ERROR] Error: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify
 2026-04-07 11:30:29,551 - [INFO] Tool response: {
-    "error": "Błąd komunikacji z API: 400 Client Error: Bad Request for url: https:///verify"
+    "error": "Błąd komunikacji z API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"
 }
 
 2026-04-07 11:30:29,553 - [INFO] Iteration: 38

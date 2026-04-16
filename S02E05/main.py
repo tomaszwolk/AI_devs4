@@ -1,4 +1,3 @@
-import textwrap
 from agent import MainAgent
 from config import (
     MAIN_MODEL, MAIN_SYSTEM_PROMPT, POWER_STATION_ID,
@@ -10,8 +9,7 @@ def main():
     with open(DRONE_INSTRUCTIONS_PATH, "r") as file:
         DRONE_INSTRUCTIONS = file.read()
 
-    user_prompt = textwrap.dedent(f"""
-    Wyślij drona do elektrowni, na podstawie mapy ustal koordynaty.
+    user_prompt = (f"""Wyślij drona do elektrowni, na podstawie mapy ustal koordynaty.
     Na podstawie dokumentacji API drona wykonaj odpowiednie instrukcje.
     - lokalizacja elektrowni (cel misji): {POWER_STATION_ID}
     - dokumentacja API drona: {DRONE_INSTRUCTIONS}

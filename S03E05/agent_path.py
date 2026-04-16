@@ -30,9 +30,9 @@ goal = (4, 8)
 # fuel_per_move, food_per_move (base)
 # tree_extra_fuel: extra fuel on tree tiles
 vehicles = {
-    "walk":   {"fuel": 0.0, "food": 2.5, "can_water": True,  "tree_fuel": 0.0},
-    "horse":  {"fuel": 0.0, "food": 1.6, "can_water": True,  "tree_fuel": 0.0},
-    "car":    {"fuel": 0.7, "food": 1.0, "can_water": False, "tree_fuel": 0.2},
+    "walk": {"fuel": 0.0, "food": 2.5, "can_water": True, "tree_fuel": 0.0},
+    "horse": {"fuel": 0.0, "food": 1.6, "can_water": True, "tree_fuel": 0.0},
+    "car": {"fuel": 0.7, "food": 1.0, "can_water": False, "tree_fuel": 0.2},
     "rocket": {"fuel": 1.0, "food": 0.1, "can_water": False, "tree_fuel": 0.2},
 }
 
@@ -41,11 +41,12 @@ MAX_FOOD = 10.0
 
 # Directions
 DIRS = {
-    "up":    (-1, 0),
-    "down":  (+1, 0),
-    "left":  (0, -1),
+    "up": (-1, 0),
+    "down": (+1, 0),
+    "left": (0, -1),
     "right": (0, +1),
 }
+
 
 def can_enter(tile, vehicle):
     if tile == "R":
@@ -53,6 +54,7 @@ def can_enter(tile, vehicle):
     if tile == "W" and not vehicles[vehicle]["can_water"]:
         return False
     return True
+
 
 def move_cost(tile, vehicle):
     v = vehicles[vehicle]

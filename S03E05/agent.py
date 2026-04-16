@@ -2,13 +2,12 @@ import sys
 import json
 import logging
 import os
-import textwrap
 import time
 from openai import OpenAI
 from dotenv import load_dotenv
 
 from tools import TOOLS_DICT
-from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, BASE_URL, LOGS_DIR_PATH
+from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, OPENROUTER_URL, LOGS_DIR_PATH
 
 os.makedirs(LOGS_DIR_PATH, exist_ok=True)
 
@@ -28,7 +27,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 CLIENT: OpenAI = OpenAI(
-    base_url=BASE_URL,
+    base_url=OPENROUTER_URL,
     api_key=OPENROUTER_API_KEY,
 )
 
@@ -55,9 +54,7 @@ def _assistant_message_to_dict(msg) -> dict:
     return d
 
 
-DEFAULT_CONTINUATION_HINT = textwrap.dedent("""
-    Kontynuuj działanie używając dostępnych narzędzi,
-    aż zdobędziesz flagę {FLG:...}.""").strip()
+DEFAULT_CONTINUATION_HINT = ("""Kontynuuj działanie używając dostępnych narzędzi, aż zdobędziesz flagę {FLG:...}.""").strip()
 
 
 class MainAgent:
@@ -136,7 +133,7 @@ class MainAgent:
 
                 # --- LOGIKA POTWIERDZENIA WYKONANIA KODU PYTHON ---
                 if tool_name == "execute_python_code":
-                    print("\n" + "="*50)
+                    print("\n" + "=" * 50)
                     print("⚠️  AGENT CHCE URUCHOMIĆ KOD PYTHON:")
                     print("-" * 50)
                     print(args.get("code", "Brak kodu?"))

@@ -1,6 +1,5 @@
 import sys
 import logging
-import textwrap
 import json
 from config import settings
 from agent import MainAgent
@@ -23,7 +22,7 @@ def main():
     with open("data/natan_notes/transakcje.txt", "r") as f:
         transakcje_data = f.read()
 
-    user_prompt = textwrap.dedent(f"""
+    user_prompt = (f"""
     Rozpocznij wykonanie zadania.
     - informacje o dostępnych akcjach i parametrach są opisane w {help_data}.
     - wzmianki o zapotrzebowaniu różnych miast spisane z kartek znalezionych przy Natanie są opisane w {ogłoszenia_data}.

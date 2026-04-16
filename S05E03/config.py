@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -22,7 +21,7 @@ class Settings:
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
     Jesteś analitykiem śledczym i elitarnym agentem AI rozwiązującym zadanie CTF "shellaccess".
     Masz dostęp do zdalnego serwera Linux przez narzędzie "call_verify_api".
     Narzędzie to przyjmuje payload w formacie: {"cmd": "twoja_komenda_tutaj"}.
@@ -50,7 +49,7 @@ MAIN_SYSTEM_PROMPT = textwrap.dedent("""
     Po wykonaniu poprawnego echa, serwer przechwyci standardowe wyjście i narzędzie "call_verify_api" zwróci Ci ciąg zawierający flagę "FLG:". Wtedy zadanie jest zakończone sukcesem.
 """).strip()
 
-BONUS_SYSTEM_PROMPT = textwrap.dedent("""
+BONUS_SYSTEM_PROMPT = ("""
 
 """).strip()
 

@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -21,8 +20,7 @@ class Settings:
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
-    Jesteś agentem AI. Ratujesz elektrownię konfigurując turbinę wiatrową.
+MAIN_SYSTEM_PROMPT = ("""Jesteś agentem AI. Ratujesz elektrownię konfigurując turbinę wiatrową.
     MASZ KRYTYCZNY LIMIT CZASU: 40 SEKUND! Odpowiadaj BŁYSKAWICZNIE. Zero tekstu opisowego. Zawsze używaj Parallel Tool Calling.
 
     === KRYTYCZNE ZASADY ===
@@ -43,7 +41,7 @@ MAIN_SYSTEM_PROMPT = textwrap.dedent("""
     KROK 2: Wywołaj narzędzie `getResult` (pobranie pogody z kolejki).
     KROK 3: Wywołaj RÓWNOLEGLE `unlockCodeGenerator` dla WSZYSTKICH punktów z pogody naraz (np. 3 wichury i 1 produkcja = 4 wywołania w jednym kroku!).
     KROK 4: Wywołaj RÓWNOLEGLE `getResult` tyle razy, ile generujesz kodów (aby odebrać je wszystkie naraz).
-    KROK 5: Wywołaj RÓWNOLEGLE 2 narzędzia (kompresja czasu): 
+    KROK 5: Wywołaj RÓWNOLEGLE 2 narzędzia (kompresja czasu):
             - Wyślij przygotowany `config`
             - Wyślij `get` z parametrem `turbinecheck`
     KROK 6: Wywołaj RÓWNOLEGLE 2 narzędzia (muszą być w tej kolejności w JSONie tool_calls):
@@ -85,9 +83,9 @@ TOOLS_SCHEMA = [
 ]
 
 
-    # KROK 6: TEST TURBINY PRZED ZAKOŃCZENIEM
-    # - Wywołaj `{"action": "get", "param": "turbinecheck"}`.
-    # - Następnie wywołaj `{"action": "getResult"}`, aby odebrać wynik testu.
+# KROK 6: TEST TURBINY PRZED ZAKOŃCZENIEM
+# - Wywołaj `{"action": "get", "param": "turbinecheck"}`.
+# - Następnie wywołaj `{"action": "getResult"}`, aby odebrać wynik testu.
 
-    # KROK 7: ZAKOŃCZENIE
-    # Po poprawnym turbinecheck, wywołaj `{"action": "done"}`. To zwróci flagę {{FLG:XXX}}.
+# KROK 7: ZAKOŃCZENIE
+# Po poprawnym turbinecheck, wywołaj `{"action": "done"}`. To zwróci flagę {{FLG:XXX}}.

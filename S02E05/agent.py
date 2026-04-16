@@ -4,7 +4,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 from tools import TOOLS_DICT
-from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, BASE_URL
+from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, OPENROUTER_URL
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 CLIENT: OpenAI = OpenAI(
-    base_url=BASE_URL,
+    base_url=OPENROUTER_URL,
     api_key=OPENROUTER_API_KEY,
 )
 

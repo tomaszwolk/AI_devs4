@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -22,7 +21,7 @@ class Settings:
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-SYSTEM_PROMPT = textwrap.dedent("""
+SYSTEM_PROMPT = ("""
 Jesteś rygorystycznym systemem logistycznym. Twoim zadaniem jest zrealizowanie zamówień dla miast z pliku food4cities.json i zdobycie flagi.
 Cała komunikacja z API odbywa się WYŁĄCZNIE poprzez 'call_verify_api' i parametr 'answer_payload'.
 
@@ -55,7 +54,7 @@ D) Dodaj towary (batch mode) wysyłając: {"tool": "orders", "action": "append",
 KROK 5: Po wykonaniu punktu 4 dla wszystkich miast (gdy jesteś absolutnie pewien, że nie ma błędnych zamówień z poprzednich prób), wyślij: {"tool": "done"}.
 """).strip()
 
-BONUS_SYSTEM_PROMPT = textwrap.dedent("""
+BONUS_SYSTEM_PROMPT = ("""
 
 """).strip()
 

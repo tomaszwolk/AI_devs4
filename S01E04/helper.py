@@ -6,7 +6,8 @@ import base64
 
 load_dotenv()
 hub_api_key = os.getenv("HUB_API_KEY")
-verify_url = "https:///verify"
+hub_url = os.getenv("HUB_URL")
+verify_url = hub_url + "/verify"
 TASK = "sendit"
 
 
@@ -30,7 +31,7 @@ def send_payload(payload: dict) -> tuple[int, dict]:
     """
     Send a payload to the hub.
     """
-    url = "https:///verify"
+    url = verify_url
     response = requests.post(url, json=payload)
     return response.status_code, response.json()
 
@@ -69,6 +70,6 @@ def get_clean_urls(raw_links: list[str]) -> list[str]:
             continue
         elif clean_link.endswith((".md", ".png", ".jpg", ".jpeg")):
             cleaned_urls.append(
-                f"https:///dane/doc/{clean_link}"
+                f"{hub_url}/dane/doc/{clean_link}"
             )
     return list[str](set[str](cleaned_urls))

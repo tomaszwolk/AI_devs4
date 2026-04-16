@@ -26,10 +26,10 @@ def call_verify_api(**kwargs) -> str:
         answer_payload = kwargs
 
     payload = {
-            "apikey": settings.api_key,
-            "task": settings.task,
-            "answer": answer_payload
-        }
+        "apikey": settings.api_key,
+        "task": settings.task,
+        "answer": answer_payload
+    }
     try:
         response = requests.post(settings.verify_url, json=payload, timeout=30)
         response.raise_for_status()  # Wyrzuci błąd jeśli status nie jest 200
@@ -79,12 +79,12 @@ def decode_base64(base64_data: str, meta_type: str, filesize: int) -> str:
             f.write(file_bytes)
 
         # Powiadomienie użytkownika i pauza
-        print("\n" + "!"*60)
+        print("\n" + "!" * 60)
         print("🚨🚨🚨 UWAGA! PRZECHWYCONO PLIK BINARNY 🚨🚨🚨")
         print(f"Typ: {meta_type}")
         print(f"Rozmiar: {filesize if filesize else len(file_bytes)} bajtów")
         print(f"Zapisano jako: {filename}")
-        print("!"*60)
+        print("!" * 60)
 
         while True:
             print("\nCo chcesz zrobić z tym plikiem?")

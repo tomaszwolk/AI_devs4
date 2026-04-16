@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from config import (
     API_KEY,
-    BASE_URL,
+    OPENROUTER_URL,
     LOGS_DIR_PATH,
     MAIN_MODEL,
     MAIN_SYSTEM_PROMPT,
@@ -43,7 +43,7 @@ def configure_logging() -> None:
 configure_logging()
 
 ACLIENT = AsyncOpenAI(
-    base_url=BASE_URL,
+    base_url=OPENROUTER_URL,
     api_key=OPENROUTER_API_KEY,
 )
 

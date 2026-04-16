@@ -6,11 +6,12 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 API_KEY = os.getenv("HUB_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-MAIL_URL = "https:///api/zmail"
-VERIFY_URL = "https:///verify"
+HUB_URL = os.getenv("HUB_URL")
+MAIL_URL = f"{HUB_URL}/api/zmail"
+VERIFY_URL = HUB_URL + "/verify"
 TASK = "mailbox"
 
 MAIN_MODEL = os.getenv("VISION_MODEL_ID")

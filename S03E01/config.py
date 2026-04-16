@@ -6,10 +6,11 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 API_KEY = os.getenv("HUB_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+HUB_URL = os.getenv("HUB_URL")
 
-VERIFY_URL = "https:///verify"
+VERIFY_URL = HUB_URL + "/verify"
 TASK = "evaluation"
 
 DATA_PATH = Path(__file__).parent / "data" / "sensors"

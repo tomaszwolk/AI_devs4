@@ -930,7 +930,7 @@
     {
         "role": "tool",
         "tool_call_id": "call_FI6nXy2zPggn24ym13eewFa0",
-        "content": "{\n    \"error\": \"Błąd komunikacji z API: 400 Client Error: Bad Request for url: https:///verify\"\n}"
+        "content": "{\n    \"error\": \"Błąd komunikacji z API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify\"\n}"
     },
     {
         "content": "Wystąpił błąd podczas przesyłania raportu. Spróbuję ponownie wygenerować i przesłać dane.",

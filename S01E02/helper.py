@@ -1,7 +1,65 @@
 import requests
 import json
 from pathlib import Path
-from math import radians, sin, cos, sqrt, atan2
+from dotenv import load_dotenv
+from haversine import haversine
+import os
+
+load_dotenv()
+API_KEY = os.getenv("HUB_API_KEY")
+HUB_URL = os.getenv("HUB_URL")
+
+
+def get_closest_power_plant(
+    person_locations: list[dict],
+    power_plants_list: list[dict]
+) -> tuple[dict, float]:
+    """
+    To narzędzie przyjmuje listę lokalizacji osoby i listę elektrowni,
+    zwraca tę elektrownię, która jest najbliżej.
+    """
+    closest_power_plant = None
+    closest_distance = float('inf')
+
+    for location in power_plants_list:
+        for person_location in person_locations:
+            distance = haversine(
+                (person_location["latitude"], person_location["longitude"]),
+                (location["latitude"], location["longitude"]),
+            )
+            print(f"distance: {distance}, closest_distance: {closest_distance}")
+            if distance < closest_distance:
+                closest_distance = distance
+                closest_power_plant = location
+    print(f"closest_plant: {closest_power_plant}, distance: {closest_distance}")
+    return {"closest_plant": closest_power_plant, "distance": closest_distance}
+
+
+def get_person_locations(name: str, surname: str):
+    url = HUB_URL + "/api/location"
+    resp = requests.post(
+        url,
+        json={
+            "apikey": API_KEY,
+            "name": name,
+            "surname": surname,
+        },
+    )
+    return resp.json()
+
+
+def get_access_level(name: str, surname: str, birthYear: int):
+    url = HUB_URL + "/api/accesslevel"
+    resp = requests.post(
+        url,
+        json={
+            "apikey": API_KEY,
+            "name": name,
+            "surname": surname,
+            "birthYear": birthYear,
+        },
+    )
+    return resp.json()
 
 
 def get_save_data_from_hub(hub_api_key: str, filename: str) -> dict:
@@ -11,10 +69,11 @@ def get_save_data_from_hub(hub_api_key: str, filename: str) -> dict:
     out_path = Path(__file__).parent / filename
 
     if not out_path.exists():
-        url = f"https:///data/{hub_api_key}/{filename}"
+        url = HUB_URL + f"/data/{hub_api_key}/{filename}"
         response = requests.get(url)
         data = response.json()
-        save_to_file(data, out_path)
+        with open(out_path, "w") as f:
+            json.dump(data, f)
         print(f"Data saved to {out_path}")
     else:
         print(f"Data already exists in {out_path}")
@@ -22,91 +81,13 @@ def get_save_data_from_hub(hub_api_key: str, filename: str) -> dict:
     return data
 
 
-def save_to_file(data: dict, out_path: Path) -> None:
+def get_power_plants_data():
     """
-    Save data to a file.
+    Zwraca modelowi listę elektrowni z koordynatami.
     """
-    with open(out_path, "w") as f:
-        json.dump(data, f)
-
-
-def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    """
-    Calculate the distance between two points on the Earth's surface
-    using the Haversine formula.
-
-    Args:
-        lat1: float - latitude of the first point (in degrees)
-        lon1: float - longitude of the first point (in degrees)
-        lat2: float - latitude of the second point (in degrees)
-        lon2: float - longitude of the second point (in degrees)
-
-    Returns:
-        float - distance between the two points in kilometers
-    """
-    R = 6371.0  # promień Ziemi [km]
-
-    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-
-    dlat = lat2 - lat1
-    dlon = lon2 - lon1
-
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    return R * c
-
-
-def send_request_to_hub(api_type: str, payload: dict) -> dict:
-    """
-    Send a request to the hub.
-    """
-    url = f"https:///api/{api_type}"
-    response = requests.post(url, json=payload)
-    return response.json()
-
-
-def create_payload(
-    hub_api_key: str,
-    name: str,
-    surname: str,
-    birth_year: int | None = None
-) -> dict:
-    """
-    Create a payload for a request to the hub.
-    """
-    payload = {
-        "apikey": hub_api_key,
-        "name": name,
-        "surname": surname
-    }
-    if birth_year is not None:
-        payload["birthYear"] = birth_year
-    return payload
-
-
-def find_closest_location(
-    person_locations: list[dict],
-    locations: list[dict]
-) -> tuple[dict, float]:
-    """
-    Find the closest location from a list of locations.
-    """
-    closest_location = None
-    closest_distance = float('inf')
-    for location in locations:
-        for person_location in person_locations:
-            distance = haversine(
-                person_location['latitude'],
-                person_location['longitude'],
-                location['latitude'],
-                location['longitude']
-            )
-            if distance < closest_distance:
-                closest_distance = distance
-                closest_location = location
-    return closest_location, closest_distance
+    file_path = Path(__file__).parent / "data" / "findhim_locations.json"
+    with open(file_path, "r") as f:
+        return json.load(f)
 
 
 def create_report(
@@ -137,6 +118,6 @@ def send_report(report: dict) -> None:
     """
     Send a report to the hub.
     """
-    url = "https:///verify"
+    url = HUB_URL + "/verify"
     response = requests.post(url, json=report)
     return response.status_code, response.text

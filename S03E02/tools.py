@@ -2,7 +2,6 @@ import json
 import requests
 import logging
 import time
-import textwrap
 
 from config import (VERIFY_URL, API_KEY, TASK, SHELL_URL)
 
@@ -32,13 +31,11 @@ def run_shell_command(command: str) -> str:
             Waiting {wait_time} seconds.")
             time.sleep(wait_time)
             # Zwracamy LLMowi informację o tym, co się stało.
-            return textwrap.dedent(
-                f"""SYSTEM ERROR:
-                Wykonanie komendy '{command}' zakończyło się banem.
-                Powód: '{reason}'. Odczekałem karę czasową automatycznie.
-                UWAGA: Maszyna wirtualna została przywrócona do stanu początkowego (reboot)!
-                Zacznij od nowa i NIE POWTARZAJ tej samej komendy, która złamała zasady."""
-            ).strip()
+            return (f"""SYSTEM ERROR:
+            Wykonanie komendy '{command}' zakończyło się banem.
+            Powód: '{reason}'. Odczekałem karę czasową automatycznie.
+            UWAGA: Maszyna wirtualna została przywrócona do stanu początkowego (reboot)!
+            Zacznij od nowa i NIE POWTARZAJ tej samej komendy, która złamała zasady.""").strip()
 
         if response.status_code == 200:
             return json.dumps(data)

@@ -2,7 +2,7 @@ from openai import OpenAI
 from tools import TOOLS_DICT
 from config import (
     MAIN_MODEL, MAIN_SYSTEM_PROMPT, TOOLS_SCHEMA,
-    OPENROUTER_API_KEY, BASE_URL
+    OPENROUTER_API_KEY, OPENROUTER_URL
 )
 import json
 from dotenv import load_dotenv
@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 CLIENT: OpenAI = OpenAI(
-    base_url=BASE_URL,
+    base_url=OPENROUTER_URL,
     api_key=OPENROUTER_API_KEY,
 )
 

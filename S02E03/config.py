@@ -7,18 +7,19 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 API_KEY = os.getenv("HUB_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-LOGS_URL = f"https:///data/{API_KEY}/failure.log"
-VERIFY_URL = "https:///verify"
+HUB_URL = os.getenv("HUB_URL")
+LOGS_URL = f"{HUB_URL}/data/{API_KEY}/failure.log"
+VERIFY_URL = HUB_URL + "/verify"
 TASK = "failure"
 
 MAX_TOKENS = 1500
 MAIN_MODEL = os.getenv("STRONG_MODEL_ID")
 COMPRESSOR_MODEL = os.getenv("MINI_MODEL_ID")
 
-LOGS_PATH = Path(__file__).parent / "logs.txt"
+LOGS_PATH = Path(__file__).parent / "logs" / "logs.txt"
 
 # MAIN_SYSTEM_PROMPT = """
 # Jesteś analitykiem awarii systemów. Twoim celem jest wysłanie do Centrali skondensowanej paczki logów (max 1500 tokenów),
@@ -60,7 +61,7 @@ STRATEGIA I KROKI POSTĘPOWANIA:
 4. ITERACJA (KLUCZOWE!):
    - Uważnie przeczytaj feedback z `submit_logs`. Centrala powie Ci precyzyjnie, jakich modułów lub informacji brakuje.
    - Użyj `search_logs(keywords=["brakujący_moduł"])`, aby znaleźć te konkretne informacje.
-   - WAŻNE: Połącz swoje DOTYCHCZASOWE skompresowane logi z NOWO znalezionymi surowymi logami! 
+   - WAŻNE: Połącz swoje DOTYCHCZASOWE skompresowane logi z NOWO znalezionymi surowymi logami!
    - Przekaż ten połączony tekst (stare + nowe) ponownie do `compress_logs`, aby system zunifikował je w jedną chronologiczną i skompresowaną całość.
    - Przelicz tokeny (`count_tokens`) nowej, połączonej paczki.
    - Wyślij uzupełnioną paczkę do `submit_logs`.

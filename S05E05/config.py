@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -25,7 +24,7 @@ class Settings:
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-BACKEND_SYSTEM_PROMPT = textwrap.dedent("""
+BACKEND_SYSTEM_PROMPT = ("""
     Jesteś Nawigatorem Backendowym Maszyny Czasu. Pracujesz z Operatorem Frontendu.
     Twoim jedynym zadaniem jest konfigurowanie daty i parametrów bezpieczeństwa przez API maszyny (/verify).
 
@@ -41,7 +40,7 @@ BACKEND_SYSTEM_PROMPT = textwrap.dedent("""
        - Oczekiwany internalMode (z narzędzia get_jump_requirements).
 """).strip()
 
-FRONTEND_SYSTEM_PROMPT = textwrap.dedent("""
+FRONTEND_SYSTEM_PROMPT = ("""
     Jesteś Operatorem Frontendowym Maszyny Czasu. Pracujesz w zespole z Nawigatorem Backendu.
     Twoim zadaniem jest operowanie suwakami i przyciskami panelu maszyny oraz wykonywanie fizycznych skoków w czasie.
 

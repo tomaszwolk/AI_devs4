@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -22,7 +21,7 @@ class Settings:
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
     Jesteś agentem o imieniu Tymon Gajewski. Twoim celem jest przeprowadzenie rozmowy radiowej w zadaniu 'phonecall'.
 
     Masz do dyspozycji narzędzie `call_verify_api`.
@@ -73,7 +72,7 @@ MAIN_SYSTEM_PROMPT = textwrap.dedent("""
     Jeśli otrzymasz `SYSTEM_ALERT` z informacją o spaleniu rozmowy (jakikolwiek kod błędu < 0), musisz zacząć od nowa, wracając do KROKU 1.
 """).strip()
 
-BONUS_SYSTEM_PROMPT = textwrap.dedent("""
+BONUS_SYSTEM_PROMPT = ("""
 
 """).strip()
 

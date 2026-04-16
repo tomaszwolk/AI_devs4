@@ -3,8 +3,9 @@ import os
 import requests
 
 load_dotenv()
+HUB_URL = os.getenv("HUB_URL")
 HUB_API_KEY = os.getenv("HUB_API_KEY")
-VERIFY_URL = "https:///verify"
+VERIFY_URL = HUB_URL + "/verify"
 TASK = "railway"
 
 

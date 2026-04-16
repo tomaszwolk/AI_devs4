@@ -21,8 +21,8 @@ def main():
 
     if query in ["start", "go", "left", "right"]:
         cmd_answer = {
-                "command": query
-            }
+            "command": query
+        }
         response = call_verify_api(answer_payload=cmd_answer)
         _print_response(response)
         sys.exit(0)

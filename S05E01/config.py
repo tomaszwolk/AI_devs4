@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -22,7 +21,7 @@ class Settings:
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
 Jesteś zaawansowanym agentem wywiadowczym. Twoim zadaniem jest operacja "radiomonitoring".
 Musisz nawiązać komunikację z centralą, analizować nasłuch radiowy i złożyć raport o mieście.
 
@@ -54,7 +53,7 @@ Do narzędzia call_verify_api prześlij dokładnie taki format:
 Zawsze używaj dostępnych narzędzi. Odpowiadaj krótko. Jeśli napotkasz plik binarny i będziesz musiał go przetworzyć samemu, wykorzystaj execute_python_code do jego odczytania.
 """).strip()
 
-BONUS_SYSTEM_PROMPT = textwrap.dedent("""
+BONUS_SYSTEM_PROMPT = ("""
 
 """).strip()
 

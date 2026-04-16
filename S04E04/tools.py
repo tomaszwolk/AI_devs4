@@ -21,10 +21,10 @@ def call_verify_api(**kwargs) -> str:
         answer_payload = kwargs
 
     payload = {
-            "apikey": settings.api_key,
-            "task": settings.task,
-            "answer": answer_payload
-        }
+        "apikey": settings.api_key,
+        "task": settings.task,
+        "answer": answer_payload
+    }
     response = requests.post(settings.verify_url, json=payload)
     data = response.json()
 

@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Agent sterujący robotem w reaktorze (S03E03).")
+    parser = argparse.ArgumentParser(description="Agent sterujący robotem w reaktorze.")
     parser.add_argument(
         "--no-interactive",
         action="store_true",

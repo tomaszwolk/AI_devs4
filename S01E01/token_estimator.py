@@ -22,10 +22,10 @@ def main() -> None:
     model_for_tiktoken = model_id.split("/", 1)[-1]
 
     base_path = Path(__file__).parent
-    people_filtered_path = base_path / "people_filtered.csv"
+    people_filtered_path = base_path / "data" / "people_filtered.csv"
 
     if not people_filtered_path.exists():
-        raise FileNotFoundError(f"Nie znaleziono pliku {people_filtered_path}. Uruchom najpierw S01E01_solution.py, aby go wygenerować.")
+        raise FileNotFoundError(f"Nie znaleziono pliku {people_filtered_path}. Uruchom najpierw main.py, aby go wygenerować.")
 
     df = pd.read_csv(people_filtered_path, sep=";")
 
@@ -54,4 +54,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

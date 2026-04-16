@@ -1,5 +1,4 @@
 import logging
-import textwrap
 import os
 import json
 import sys
@@ -53,8 +52,8 @@ def main():
     current_turn = "backend"
 
     # bonus mission prompt
-    current_message = textwrap.dedent("""
-        ZACZYNAMY MISJĘ BONUSOWĄ (Back to the Future). Twoim zadaniem jest wykonanie 4 skoków w czasie w ścisłej kolejności. 
+    current_message = ("""
+        ZACZYNAMY MISJĘ BONUSOWĄ (Back to the Future). Twoim zadaniem jest wykonanie 4 skoków w czasie w ścisłej kolejności.
         Dla każdego skoku wykonuj twardą procedurę: standby -> konfiguracja API (oblicz syncRatio, pobierz PWR i tryb) -> ui state -> timeTravel.
         Zawsze po udanym skoku wchodź w tryb 'standby' dla kolejnego.
 

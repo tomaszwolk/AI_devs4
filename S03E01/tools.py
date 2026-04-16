@@ -2,17 +2,16 @@ import json
 import requests
 import logging
 import os
-import textwrap
 
 from tenacity import retry, stop_after_attempt, wait_exponential
 from openai import OpenAI
 from config import (
-    VERIFY_URL, API_KEY, TASK, RANGES, BASE_URL, OPENROUTER_API_KEY, MAIN_MODEL
+    VERIFY_URL, API_KEY, TASK, RANGES, OPENROUTER_URL, OPENROUTER_API_KEY, MAIN_MODEL
 )
 
 logger = logging.getLogger(__name__)
 client = OpenAI(
-    base_url=BASE_URL,
+    base_url=OPENROUTER_URL,
     api_key=OPENROUTER_API_KEY,
 )
 
@@ -67,7 +66,7 @@ def process_files(files_dir) -> tuple[set[str], set[str], dict[str, str]]:
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, min=2, max=10))
 def evaluate_fragment_with_llm(fragment: str) -> str:
-    user_prompt = textwrap.dedent("""Jesteś asystentem w elektrowni.
+    user_prompt = ("""Jesteś asystentem w elektrowni.
     Oceń fragment notatki operatora.
     Jeśli wskazuje na normę/brak akcji/poprawne działanie zwróć 'OK'.
     Jeśli wskazuje na awarię, odchylenie, błąd lub problem zwróć 'ERROR'.
@@ -101,7 +100,7 @@ def evaluate_fragment_with_llm(fragment: str) -> str:
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, min=2, max=10))
 def evaluate_full_note_with_llm(full_note: str) -> str:
-    system_prompt = textwrap.dedent("""
+    system_prompt = ("""
         Jesteś głównym audytorem w elektrowni. Twoim zadaniem jest ocena całych notatek operatora.
         Zwróć 'ERROR' TYLKO I WYŁĄCZNIE wtedy, gdy operator wyraźnie zgłasza awarię, niepokojące odchylenie, uszkodzenie czujnika lub prosi o interwencję.
         Zwróć 'OK', jeśli notatka wskazuje na normalne działanie, rutynowy audyt, kontynuację pracy lub brak akcji.

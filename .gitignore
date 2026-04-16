@@ -6,9 +6,8 @@ dist/
 wheels/
 *.egg-info
 *.zip
-a.py
-.bonus.py
-bonus.py
+.ruff_cache/
+.mypy_cache/
 
 # Virtual environments
 .venv
@@ -16,3 +15,7 @@ bonus.py
 # 
 .env
 *.mp3
+a.py
+.bonus.py
+logs/
+temp_files/

@@ -45,7 +45,7 @@
     {
         "role": "tool",
         "tool_call_id": "call_52355779",
-        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)\"}"
+        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)\"}"
     },
     {
         "content": null,
@@ -125,7 +125,7 @@
     {
         "role": "tool",
         "tool_call_id": "call_08874517",
-        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)\"}"
+        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)\"}"
     },
     {
         "content": null,
@@ -165,7 +165,7 @@
     {
         "role": "tool",
         "tool_call_id": "call_23808616",
-        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)\"}"
+        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)\"}"
     },
     {
         "content": null,
@@ -365,7 +365,7 @@
     {
         "role": "tool",
         "tool_call_id": "call_71166970",
-        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)\"}"
+        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)\"}"
     },
     {
         "content": null,
@@ -405,7 +405,7 @@
     {
         "role": "tool",
         "tool_call_id": "call_01227769",
-        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)\"}"
+        "content": "{\"error\": \"Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)\"}"
     },
     {
         "content": null,

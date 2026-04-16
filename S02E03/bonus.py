@@ -1,5 +1,4 @@
 import tiktoken
-from pprint import pprint
 from tools import create_payload, send_payload
 
 enc = tiktoken.encoding_for_model("gpt-5")

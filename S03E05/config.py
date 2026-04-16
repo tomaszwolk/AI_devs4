@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -7,19 +6,20 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 API_KEY = os.getenv("HUB_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-VERIFY_URL = "https:///verify"
+HUB_URL = os.getenv("HUB_URL")
+VERIFY_URL = HUB_URL + "/verify"
 TASK = "savethem"
 LOGS_DIR_PATH = Path(__file__).parent / "logs"
 
 MAIN_MODEL = os.getenv("SONNET_MODEL_ID")
 
-API_BASE_URL = "https:///api/"
-HUB_ORIGIN = "https://"
+API_BASE_URL = f"{HUB_URL}/api/"
+HUB_ORIGIN = HUB_URL
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
     You are an autonomous AI logic and pathfinding agent. Your goal is to find the optimal path to the city of "Skolwin" for our messenger using available vehicles and walking, within strict limits: max 10 food and max 10 fuel.
     ### YOUR TOOLS:
     1. `tool_call(query, tool)` - To query API endpoints (only returns top 3 keywords match).
@@ -48,7 +48,7 @@ MAIN_SYSTEM_PROMPT = textwrap.dedent("""
 
     ### PHASE 3: SUBMISSION
     Once your Python script successfully prints a valid path array (e.g., `["vehicle_name", "right", "dismount", "up", ...]`), pass exactly that array to `verify_answer(answer)`.
-""")
+""").strip()
 
 TOOLS_SCHEMA = [
     {

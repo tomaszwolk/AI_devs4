@@ -1,6 +1,5 @@
 import sys
 import logging
-import textwrap
 import json
 from config import settings
 from agent import MainAgent
@@ -19,8 +18,7 @@ def main():
     with open("data/map.json", "r") as f:
         map_data = json.load(f)
 
-    user_prompt = textwrap.dedent(f"""
-    Rozpocznij wykonanie zadania.
+    user_prompt = (f"""Rozpocznij wykonanie zadania.
     - informacje o dostępnych akcjach i parametrach są opisane w {help_data}.
     - mapa jest opisana w {map_data}.
     """).strip()

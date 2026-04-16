@@ -7,23 +7,25 @@ import json
 
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
-ELECTRICITY_URL = f"https:///data/{HUB_API_KEY}/electricity.png"
-SOLVED_ELECTRICITY_URL = "https:///i/solved_electricity.png"
-MODEL_ID = os.getenv("MODEL_ID")
+HUB_URL = os.getenv("BASE_URL")
+ELECTRICITY_URL = f"{HUB_URL}/data/{HUB_API_KEY}/electricity.png"
+SOLVED_ELECTRICITY_URL = f"{HUB_URL}/i/solved_electricity.png"
+MODEL_ID = os.getenv("VISION_MODEL_ID")
 
 
 def main():
     client = OpenAI(
-        base_url=os.getenv("BASE_URL"),
+        base_url=os.getenv("OPENROUTER_URL"),
         api_key=os.getenv("OPENROUTER_API_KEY"),
     )
 
     image_data_current = get_image(ELECTRICITY_URL)
     image_data_solved = get_image(SOLVED_ELECTRICITY_URL)
 
-    messages = [{
-        "role": "system",
-        "content": SYSTEM_PROMPT
+    messages = [
+        {
+            "role": "system",
+            "content": SYSTEM_PROMPT
         },
         {
             "role": "user",

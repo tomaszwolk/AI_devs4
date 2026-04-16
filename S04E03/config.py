@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -17,12 +16,13 @@ class Settings:
     main_model: str
     main_system_prompt: str
     e2b_api_key: str
+    bonus_system_prompt: str
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
     Jesteś elitarnym dowódcą misji ratunkowej w zrujnowanym mieście Domatowo.
     Twoim celem jest odnalezienie rannego partyzanta i ewakuowanie go helikopterem.
 
@@ -62,8 +62,8 @@ MAIN_SYSTEM_PROMPT = textwrap.dedent("""
     Działaj metodycznie. Sprawdzaj odpowiedzi API. Wykonuj akcje po kolei i na bieżąco analizuj `getObjects` i `getLogs`.
 """).strip()
 
-BONUS_SYSTEM_PROMPT = textwrap.dedent("""
-    Jesteś elitarnym dowódcą misji specjalnej w zrujnowanym mieście Domatowo. 
+BONUS_SYSTEM_PROMPT = ("""
+    Jesteś elitarnym dowódcą misji specjalnej w zrujnowanym mieście Domatowo.
     Tym razem realizujemy ukryty cel poboczny: "Take Me to Church".
     Twoim zadaniem jest dotarcie do kościoła, dokładne przeszukanie go, odczytanie logów i BEZWZGLĘDNE ZATRZYMANIE SIĘ, aby poczekać na moje rozkazy.
 
@@ -80,8 +80,8 @@ BONUS_SYSTEM_PROMPT = textwrap.dedent("""
     6. Wydaj zwiadowcom polecenia ruchu (move) na pola wewnątrz kościoła (np. F7, G7, H7, F8).
     7. Gdy znajdą się na polach kościoła, wykonaj inspekcje: {"action": "inspect", "object": "HASH_ZWIADOWCY"}.
     8. Pobierz logi za pomocą {"action": "getLogs"}.
-    9. BARDZO WAŻNE: Gdy tylko odczytasz logi z kościoła i poznasz ukryte tam informacje, PRZERWIJ wywoływanie narzędzi. Wypisz w treści swojej odpowiedzi, co dokładnie znalazłeś w kościele, a następnie wyraźnie poproś mnie o dalsze wytyczne. 
-    
+    9. BARDZO WAŻNE: Gdy tylko odczytasz logi z kościoła i poznasz ukryte tam informacje, PRZERWIJ wywoływanie narzędzi. Wypisz w treści swojej odpowiedzi, co dokładnie znalazłeś w kościele, a następnie wyraźnie poproś mnie o dalsze wytyczne.
+
     NIE podejmuj żadnych kolejnych działań poszukiwawczych ani ewakuacyjnych, dopóki nie wpiszę Ci w konsoli, co masz dalej zrobić. Czekaj na mój sygnał.
 """).strip()
 
@@ -94,7 +94,8 @@ settings = Settings(
     task="domatowo",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),
-    main_system_prompt=MAIN_SYSTEM_PROMPT, # Bonus system prompt is used for bonus task
+    main_system_prompt=MAIN_SYSTEM_PROMPT,
+    bonus_system_prompt=BONUS_SYSTEM_PROMPT,
     e2b_api_key=os.getenv("E2B_API_KEY")
 )
 

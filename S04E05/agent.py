@@ -2,7 +2,6 @@ import sys
 import json
 import logging
 import os
-import textwrap
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -54,8 +53,7 @@ def _assistant_message_to_dict(msg) -> dict:
     return d
 
 
-DEFAULT_CONTINUATION_HINT = textwrap.dedent("""
-    Kontynuuj działanie używając dostępnych narzędzi,
+DEFAULT_CONTINUATION_HINT = ("""Kontynuuj działanie używając dostępnych narzędzi,
     aż zdobędziesz flagę {FLG:...}.""").strip()
 
 
@@ -145,7 +143,7 @@ class MainAgent:
 
                 # --- LOGIKA POTWIERDZENIA WYKONANIA KODU PYTHON ---
                 if tool_name == "execute_python_code":
-                    print("\n" + "="*50)
+                    print("\n" + "=" * 50)
                     print("⚠️  AGENT CHCE URUCHOMIĆ KOD PYTHON:")
                     print("-" * 50)
                     print(args.get("code", "Brak kodu?"))

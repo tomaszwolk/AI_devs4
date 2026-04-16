@@ -8,7 +8,7 @@
         "content": [
             {
                 "type": "text",
-                "text": "\nOto aktualny stan planszy (pierwszy obraz) oraz docelowy stan rozwiązania (drugi obraz). Porównaj je, opisz różnice dla każdego pola, a następnie wykonaj niezbędne obroty. Link do aktualnego stanu planszy: https:///data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\n"
+                "text": "\nOto aktualny stan planszy (pierwszy obraz) oraz docelowy stan rozwiązania (drugi obraz). Porównaj je, opisz różnice dla każdego pola, a następnie wykonaj niezbędne obroty. Link do aktualnego stanu planszy: https://hub.ag3nts.org/data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\n"
             },
             {
                 "type": "image_url",
@@ -35,7 +35,7 @@
             {
                 "id": "tool_get_image_71e2NEmIQgNpdPCOCyAx",
                 "function": {
-                    "arguments": "{\"url\":\"https:///data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\"}",
+                    "arguments": "{\"url\":\"https://hub.ag3nts.org/data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\"}",
                     "name": "get_image"
                 },
                 "type": "function",
@@ -205,7 +205,7 @@
             {
                 "id": "tool_get_image_eUgFmaCDne5zfhA6RzIT",
                 "function": {
-                    "arguments": "{\"url\":\"https:///data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\"}",
+                    "arguments": "{\"url\":\"https://hub.ag3nts.org/data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\"}",
                     "name": "get_image"
                 },
                 "type": "function",
@@ -477,7 +477,7 @@
             {
                 "id": "tool_get_image_al5z97fTQipbBFcHnqvj",
                 "function": {
-                    "arguments": "{\"url\":\"https:///data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\"}",
+                    "arguments": "{\"url\":\"https://hub.ag3nts.org/data/a19348f4-6f05-4c6a-a477-0e96b9a9446e/electricity.png\"}",
                     "name": "get_image"
                 },
                 "type": "function",

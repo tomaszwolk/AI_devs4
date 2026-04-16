@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -12,16 +11,16 @@ HUB_URL = os.getenv("HUB_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 VERIFY_URL = HUB_URL + "/verify"
-OKO_URL = "https://oko.ag3nts.org/"
+OKO_URL = os.getenv("OKO_URL")
 TASK = "okoeditor"
 LOGS_DIR_PATH = Path(__file__).parent / "logs"
 
 MAIN_MODEL = os.getenv("MODEL_ID")
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
     Jesteś zaawansowanym asystentem AI ds. cyberbezpieczeństwa i operacji w systemie OKO.
     Twoim celem jest wykonanie precyzyjnych aktualizacji bazy danych za pomocą dostępnego narzędzia (API).
-    Naszym nadrzędnym celem jest uratowanie miasta Skolwin przed atakiem, poprzez zmianę klasyfikacji zagrożeń, 
+    Naszym nadrzędnym celem jest uratowanie miasta Skolwin przed atakiem, poprzez zmianę klasyfikacji zagrożeń,
     oraz odwrócenie uwagi operatorów na niezamieszkane miasto Komarowo.
 
     ZASADY KORZYSTANIA Z API (call_oko_editor_api):
@@ -50,29 +49,29 @@ TOOLS_SCHEMA = [
                         "type": "string",
                         "enum": ["update", "done"],
                         "description": "Akcja do wykonania. 'update' aby zaktualizować wpis, 'done' aby sprawdzić flagę."
-                        },
+                    },
                     "page": {
                         "type": "string",
                         "enum": ["incydenty", "notatki", "zadania"],
                         "description": "Tabela, w której dokonujemy zmiany (tylko dla akcji 'update')."
-                        },
+                    },
                     "record_id": {
                         "type": "string",
                         "description": "32-znakowy identyfikator hex wpisu (tylko dla akcji 'update')."
-                        },
+                    },
                     "content": {
                         "type": "string",
                         "description": "Nowa treść wpisu."
-                        },
+                    },
                     "title": {
                         "type": "string",
                         "description": "Nowy tytuł wpisu (jeśli wymagany)."
-                        },
+                    },
                     "is_done": {
                         "type": "string",
                         "enum": ["YES", "NO"],
                         "description": "Oznaczenie zadania jako wykonane (używaj tylko dla page='zadania')."
-                        }
+                    }
                 },
                 "required": ["action"]
             }

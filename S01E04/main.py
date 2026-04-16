@@ -16,9 +16,9 @@ from dotenv import load_dotenv
 from pprint import pprint
 
 load_dotenv()
-
+hub_url = os.getenv("HUB_URL")
 # Get list of urls to visit
-queue = ["https:///dane/doc/index.md"]
+queue = [hub_url + "/dane/doc/index.md"]
 extracted = extract_links_from_text(get_content(queue[0])['data'])
 cleaned_urls = get_clean_urls(extracted)
 queue.extend(cleaned_urls)
@@ -36,7 +36,7 @@ knowledge_base = {
 }
 
 client = OpenAI(
-    base_url=os.getenv("BASE_URL"),
+    base_url=os.getenv("OPENROUTER_URL"),
     api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 

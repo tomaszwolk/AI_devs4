@@ -1,6 +1,6 @@
 2026-03-27 14:27:24,350 - [INFO] Rozpoczynam pracę Agenta...
 2026-03-27 14:27:24,350 - [INFO] Iteration: 1
-2026-03-27 14:27:25,733 - [INFO] HTTP Request: POST https:///chat/completions "HTTP/1.1 404 Not Found"
+2026-03-27 14:27:25,733 - [INFO] HTTP Request: POST https://hub.ag3nts.org/chat/completions "HTTP/1.1 404 Not Found"
 2026-03-27 14:27:25,801 - [ERROR] Error: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html><head>
 <title>404 Not Found</title>
@@ -10,7 +10,7 @@
 </body></html>
 2026-03-27 14:29:41,530 - [INFO] Rozpoczynam pracę Agenta...
 2026-03-27 14:29:41,531 - [INFO] Iteration: 1
-2026-03-27 14:29:42,255 - [INFO] HTTP Request: POST https:///chat/completions "HTTP/1.1 404 Not Found"
+2026-03-27 14:29:42,255 - [INFO] HTTP Request: POST https://hub.ag3nts.org/chat/completions "HTTP/1.1 404 Not Found"
 2026-03-27 14:29:42,257 - [ERROR] Error: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html><head>
 <title>404 Not Found</title>

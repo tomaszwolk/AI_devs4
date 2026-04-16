@@ -1,6 +1,5 @@
 import sys
 import logging
-import textwrap
 from config import MAIN_MODEL, MAIN_SYSTEM_PROMPT
 from agent import MainAgent
 
@@ -10,8 +9,8 @@ logger = logging.getLogger(__name__)
 def main():
     agent = MainAgent(model=MAIN_MODEL, system_prompt=MAIN_SYSTEM_PROMPT)
 
-    user_prompt = textwrap.dedent("""
-        Oto Twoje zadania. Wykonaj je rygorystycznie, używając narzędzia call_oko_editor_api. 
+    user_prompt = ("""
+        Oto Twoje zadania. Wykonaj je rygorystycznie, używając narzędzia call_oko_editor_api.
         TWOJE NAJWAŻNIEJSZE ZADANIE: Musisz użyć DOKŁADNIE takich tekstów (title i content), jakie podałem poniżej. Nie zmieniaj ani jednego słowa, po prostu skopiuj te wartości do wywołania narzędzia. Przekazuj title i content w każdym zapytaniu.
 
         KROK 1: Aktualizacja Incydentu Skolwin

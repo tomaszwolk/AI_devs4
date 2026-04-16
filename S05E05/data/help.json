@@ -37,5 +37,5 @@
         ]
     },
     "note": "PT-A, PT-B and PWR are configured in the web interface, not via this API.",
-    "ui": "https:///timetravel_preview"
+    "ui": "/timetravel_preview"
 }

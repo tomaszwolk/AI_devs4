@@ -24,9 +24,10 @@ def send_command(command: str) -> dict[str, Any]:
     payload = {
         "apikey": API_KEY,
         "task": TASK,
-        "answer": {
+        "answer":
+        {
             "command": command
-            },
+        },
     }
     try:
         response = requests.post(VERIFY_URL, json=payload, timeout=15)

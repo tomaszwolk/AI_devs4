@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 from dataclasses import dataclass
@@ -17,24 +16,25 @@ class Settings:
     main_model: str
     main_system_prompt: str
     e2b_api_key: str
+    bonus_system_prompt: str
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = textwrap.dedent("""
+MAIN_SYSTEM_PROMPT = ("""
     Jesteś analitykiem i inżynierem ds. integracji (Agentem AI), którego celem jest uporządkowanie notatek w wirtualnym systemie plików.
     Dane wejściowe (ogłoszenia, rozmowy, transakcje oraz schemat pomocy API) otrzymałeś w poleceniu.
-    
+
     ### TWOJE ZADANIE:
     Zbuduj strukturę wirtualnego systemu plików poprzez API (za pomocą `call_verify_api`), a następnie zgłoś jej ukończenie akcją "done".
-    
+
     ### ZASADY TWORZENIA SYSTEMU PLIKÓW:
     1. BRAK ROZSZERZEŃ: Nazwy plików nie mogą zawierać kropek ani rozszerzeń (np. żadnego .md, .txt). Plik ma się nazywać po prostu `/miasta/opalino`.
     2. Brak polskich znaków i małe litery: Wszystkie nazwy plików, katalogów oraz klucze w JSON i teksty nie mogą zawierać polskich znaków (ł->l, ó->o) ani wielkich liter. Wyjątkiem są wyświetlane nazwy linków w markdownie (np. `[Domatowo](/miasta/domatowo)`).
     3. Mianownik liczby pojedynczej w towarach (z wyjątkiem słowa "ziemniaki"). Używaj np: "koparka", "lopata", "wolowina", "wiertarka", "chleb", "maka", "ziemniaki".
     4. Pełne imiona i nazwiska: Jeśli notatki wspominają kogoś po imieniu i nazwisku w różnych miejscach (np. Rafał, a potem Kisiel), połącz je jako `rafal_kisiel`.
-    
+
     ### STRUKTURA DO ZBUDOWANIA:
     Utwórz trzy główne katalogi: `/miasta`, `/osoby`, `/towary`.
 
@@ -62,7 +62,7 @@ MAIN_SYSTEM_PROMPT = textwrap.dedent("""
     4. Na koniec wyślij: `{"action": "done"}`.
 """).strip()
 
-BONUS_SYSTEM_PROMPT = textwrap.dedent("""
+BONUS_SYSTEM_PROMPT = ("""
     Jesteś Agentem AI ds. cyberbezpieczeństwa. Twoim zadaniem jest zdobycie ukrytej, bonusowej flagi CTF z wirtualnego systemu plików.
     UWAGA KRYTYCZNA: Pod żadnym pozorem nie używaj akcji "reset"! Główna część zadania znajduje się już na serwerze i musi tam pozostać nietknięta.
 
@@ -74,8 +74,8 @@ BONUS_SYSTEM_PROMPT = textwrap.dedent("""
     Rozmiar każdego pliku (czyli długość wartości "content") musi odpowiadać dokładnie kodowi ASCII odpowiedniej litery.
 
     ### TWOJE ZADANIE KROK PO KROKU:
-    
-    KROK 1: 
+
+    KROK 1:
     Użyj narzędzia `call_verify_api` wysyłając w 'answer_payload' listę akcji (tryb batch_mode).
     Wykonaj w nim następujące czynności:
     1. {"action": "createDirectory", "path": "/flag"}
@@ -83,7 +83,7 @@ BONUS_SYSTEM_PROMPT = textwrap.dedent("""
     3. {"action": "createFile", "path": "/flag/2", "content": "tutaj podaj dokładnie 76 dowolnych znaków"} (Rozmiar 76 to litera L)
     4. {"action": "createFile", "path": "/flag/3", "content": "tutaj podaj dokładnie 65 dowolnych znaków"} (Rozmiar 65 to litera A)
     5. {"action": "createFile", "path": "/flag/4", "content": "tutaj podaj dokładnie 71 dowolnych znaków"} (Rozmiar 71 to litera G)
-    
+
     *Uwaga techniczna do KROKU 1:* Musisz wygenerować fizycznie ciągi X-ów w JSON. Nie używaj mnożenia (np. "X"*70). Jeśli otrzymasz błąd z API "Directory already exists", po prostu wywołaj narzędzie jeszcze raz podając same akcje `createFile` (z pominięciem tworzenia katalogu).
 
     KROK 2:
@@ -101,7 +101,8 @@ settings = Settings(
     task="filesystem",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),
-    main_system_prompt=BONUS_SYSTEM_PROMPT, # Bonus system prompt is used for bonus task
+    main_system_prompt=BONUS_SYSTEM_PROMPT,
+    bonus_system_prompt=BONUS_SYSTEM_PROMPT,
     e2b_api_key=os.getenv("E2B_API_KEY")
 )
 

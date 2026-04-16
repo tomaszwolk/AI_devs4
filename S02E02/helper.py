@@ -7,7 +7,8 @@ from datetime import datetime
 
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
-VERIFY_URL = "https:///verify"
+HUB_URL = os.getenv("HUB_URL")
+VERIFY_URL = HUB_URL + "/verify"
 TASK = "electricity"
 
 

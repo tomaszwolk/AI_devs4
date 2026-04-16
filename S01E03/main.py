@@ -10,7 +10,7 @@ load_dotenv()
 hub_api_key = os.getenv("HUB_API_KEY")
 model_id = os.getenv("MODEL_ID")
 client = OpenAI(
-    base_url=os.getenv("BASE_URL"),
+    base_url=os.getenv("OPENROUTER_URL"),
     api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 app = FastAPI()
@@ -54,7 +54,7 @@ async def handle_proxy(request: Request):
     sessions[session_id].append({"role": "user", "content": user_msg})
     print(f"Session ID: {session_id}. Otrzymano wiadomość: {user_msg}")
     final_response = None
-    
+
     # Logika Function Calling
     for i in range(5):
         print(f"Iteration: {i}")

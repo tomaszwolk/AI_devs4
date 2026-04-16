@@ -1,6 +1,5 @@
 import sys
 import logging
-import textwrap
 import json
 from tools import get_help_data
 from config import settings
@@ -19,8 +18,7 @@ def main():
     with open("data/food4cities.json", "r") as f:
         food4cities_data = json.load(f)
 
-    user_prompt = textwrap.dedent(f"""
-    Rozpocznij wykonanie zadania.
+    user_prompt = (f"""Rozpocznij wykonanie zadania.
     - informacje o dostępnych akcjach i parametrach są opisane w {help_data}.
     - informacje o zamówieniach dla miast są opisane w {food4cities_data}.
     """).strip()

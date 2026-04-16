@@ -12,9 +12,9 @@ def tool_call(query: str, tool: str) -> str:
     Call a tool.
     """
     payload = {
-            "apikey": API_KEY,
-            "query": query,
-        }
+        "apikey": API_KEY,
+        "query": query,
+    }
 
     if tool.startswith("/api"):
         url = HUB_ORIGIN + tool
@@ -30,10 +30,10 @@ def verify_answer(answer: list[str]) -> str:
     Verify the answer.
     """
     payload = {
-            "apikey": API_KEY,
-            "task": TASK,
-            "answer": answer,
-        }
+        "apikey": API_KEY,
+        "task": TASK,
+        "answer": answer,
+    }
     response = requests.post(VERIFY_URL, json=payload)
     return json.dumps(response.json())
 

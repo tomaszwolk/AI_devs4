@@ -1,4 +1,4 @@
-from tools import call_zmail_api, get_help_data
+from tools import get_help_data
 from pprint import pprint
 from agent import MainAgent
 

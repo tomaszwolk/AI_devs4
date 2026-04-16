@@ -5,7 +5,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 from tools import TOOLS_DICT
-from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, BASE_URL, LOGS_DIR_PATH
+from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, OPENROUTER_URL, LOGS_DIR_PATH
 
 os.makedirs(LOGS_DIR_PATH, exist_ok=True)
 
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 CLIENT: OpenAI = OpenAI(
-    base_url=BASE_URL,
+    base_url=OPENROUTER_URL,
     api_key=OPENROUTER_API_KEY,
 )
 

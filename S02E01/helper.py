@@ -5,8 +5,9 @@ import os
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
 TASK = "categorize"
-VERIFY_URL = "https:///verify"
-CATEGORIZE_URL = f"https:///data/{HUB_API_KEY}/categorize.csv"
+HUB_URL = os.getenv("HUB_URL")
+VERIFY_URL = HUB_URL + "/verify"
+CATEGORIZE_URL = f"{HUB_URL}/data/{HUB_API_KEY}/categorize.csv"
 
 
 def get_data() -> str:

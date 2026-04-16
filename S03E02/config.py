@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -7,11 +6,12 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 API_KEY = os.getenv("HUB_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-VERIFY_URL = "https:///verify"
-SHELL_URL = "https:///api/shell"
+HUB_URL = os.getenv("HUB_URL")
+VERIFY_URL = HUB_URL + "/verify"
+SHELL_URL = f"{HUB_URL}/api/shell"
 TASK = "firmware"
 LOGS_DIR_PATH = Path(__file__).parent / "logs"
 
@@ -60,7 +60,7 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "run_shell_command",
-            "description": textwrap.dedent("""
+            "description": ("""
             Wykonuje pojedynczą komendę powłoki w zdalnym systemie
             Linux maszyny wirtualnej. Użyj 'help' na początku, aby
             poznać dostępne komendy, ponieważ system jest niestandardowy.""").strip(),
@@ -81,14 +81,14 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "send_verify_answer",
-            "description": textwrap.dedent("""Narzędzie służące do wysłania końcowej odpowiedzi.
+            "description": ("""Narzędzie służące do wysłania końcowej odpowiedzi.
             Użyj go TYLKO wtedy, gdy zdobędziesz ostateczny kod potwierdzający (w formacie ECCS-...).""").strip(),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "confirmation_code": {
                         "type": "string",
-                        "description": textwrap.dedent("""
+                        "description": ("""
                         Ostateczny kod potwierdzający (w formacie
                         ECCS-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx).""").strip(),
                     },

@@ -1,8 +1,8 @@
 import logging
-import textwrap
 import os
 import json
 import sys
+from urllib.parse import urlparse
 from config import settings
 from agent import SpecializedAgent
 from tools import (
@@ -13,15 +13,41 @@ from tools import (
 logger = logging.getLogger(__name__)
 
 
+def sanitize_help_data(help_data: dict) -> dict:
+    sanitized = dict(help_data)
+    ui = sanitized.get("ui")
+    if isinstance(ui, str) and ui.startswith("http"):
+        parsed = urlparse(ui)
+        if parsed.path:
+            sanitized["ui"] = parsed.path
+    return sanitized
+
+
+def ensure_help_file() -> None:
+    help_file_path = "data/help.json"
+
+    if not os.path.exists(help_file_path):
+        logger.info("Downloading help data...")
+        response = call_verify_api(answer_payload={"action": "help"})
+        help_data = sanitize_help_data(json.loads(response))
+        with open(help_file_path, "w", encoding="utf-8") as f:
+            json.dump(help_data, f, indent=4)
+        return
+
+    with open(help_file_path, "r", encoding="utf-8") as f:
+        help_data = json.load(f)
+
+    sanitized_help_data = sanitize_help_data(help_data)
+    if sanitized_help_data != help_data:
+        with open(help_file_path, "w", encoding="utf-8") as f:
+            json.dump(sanitized_help_data, f, indent=4)
+
+
 def main():
     if not os.path.exists("data/timetravel.md"):
         logger.info("Downloading timetravel data...")
         download_data()
-    if not os.path.exists("data/help.json"):
-        logger.info("Downloading help data...")
-        response = call_verify_api(answer_payload={"action": "help"})
-        with open("data/help.json", "w", encoding="utf-8") as f:
-            json.dump(json.loads(response), f, indent=4)
+    ensure_help_file()
 
     # Odczytanie dokumentacji do zmiennej
     try:
@@ -52,7 +78,7 @@ def main():
     # Orkiestrator zarządza kto zaczyna
     current_turn = "backend"
 
-    current_message = textwrap.dedent("""
+    current_message = ("""
         ZACZYNAMY MISJĘ. Masz 3 skoki do wykonania. Skup się najpierw na SKOKU NR 1.
 
         SKOK 1: Skocz po baterie.

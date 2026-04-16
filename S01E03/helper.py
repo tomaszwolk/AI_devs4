@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 hub_api_key = os.getenv("HUB_API_KEY")
-package_url = "https:///api/packages"
+hub_url = os.getenv("HUB_URL")
+package_url = hub_url + "/api/packages"
 
 
 def check_package(packageid: str) -> dict:

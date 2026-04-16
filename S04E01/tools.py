@@ -59,12 +59,12 @@ def call_verify_api(action: str) -> str:
     Verify the answer.
     """
     payload = {
-            "apikey": API_KEY,
-            "task": TASK,
-            "answer": {
-                "action": action
-            },
-        }
+        "apikey": API_KEY,
+        "task": TASK,
+        "answer": {
+            "action": action
+        },
+    }
     response = requests.post(VERIFY_URL, json=payload)
     return json.dumps(response.json())
 

@@ -9,7 +9,7 @@
 2026-03-25 13:26:40,079 - [INFO] Tool call: send_command with args: {'command': 'right'}
 
 2026-03-25 13:26:40,079 - [INFO] Sending command: right
-2026-03-25 13:26:55,762 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+2026-03-25 13:26:55,762 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)"}
 
 2026-03-25 13:26:55,763 - [INFO] Iteration: 2
 2026-03-25 13:26:57,478 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -23,14 +23,14 @@
 2026-03-25 13:27:08,514 - [INFO] Tool call: send_command with args: {'command': 'wait'}
 
 2026-03-25 13:27:08,514 - [INFO] Sending command: wait
-2026-03-25 13:27:24,879 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+2026-03-25 13:27:24,879 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)"}
 
 2026-03-25 13:27:24,879 - [INFO] Iteration: 4
 2026-03-25 13:27:26,351 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
 2026-03-25 13:27:26,626 - [INFO] Tool call: send_command with args: {'command': 'wait'}
 
 2026-03-25 13:27:26,626 - [INFO] Sending command: wait
-2026-03-25 13:27:42,953 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+2026-03-25 13:27:42,953 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)"}
 
 2026-03-25 13:27:42,953 - [INFO] Iteration: 5
 2026-03-25 13:27:44,297 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -65,14 +65,14 @@
 2026-03-25 13:28:18,422 - [INFO] Tool call: send_command with args: {'command': 'right'}
 
 2026-03-25 13:28:18,424 - [INFO] Sending command: right
-2026-03-25 13:28:34,132 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+2026-03-25 13:28:34,132 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)"}
 
 2026-03-25 13:28:34,134 - [INFO] Iteration: 10
 2026-03-25 13:28:35,619 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
 2026-03-25 13:28:35,794 - [INFO] Tool call: send_command with args: {'command': 'right'}
 
 2026-03-25 13:28:35,794 - [INFO] Sending command: right
-2026-03-25 13:28:51,508 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='', port=443): Read timed out. (read timeout=15)"}
+2026-03-25 13:28:51,508 - [INFO] Tool response: {'error': "Request failed: HTTPSConnectionPool(host='hub.ag3nts.org', port=443): Read timed out. (read timeout=15)"}
 
 2026-03-25 13:28:51,510 - [INFO] Iteration: 11
 2026-03-25 13:28:53,016 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"

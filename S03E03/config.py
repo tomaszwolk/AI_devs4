@@ -1,5 +1,4 @@
 import os
-import textwrap
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -7,11 +6,12 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 API_KEY = os.getenv("HUB_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-VERIFY_URL = "https:///verify"
-REACTOR_URL = "https:///reactor_preview.html"
+HUB_URL = os.getenv("HUB_URL")
+VERIFY_URL = HUB_URL + "/verify"
+REACTOR_URL = f"{HUB_URL}/reactor_preview.html"
 TASK = "reactor"
 LOGS_DIR_PATH = Path(__file__).parent / "logs"
 
@@ -61,13 +61,13 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "send_command",
-            "description": textwrap.dedent("""Narzędzie służące do wysyłania komend do API reaktora""").strip(),
+            "description": ("""Narzędzie służące do wysyłania komend do API reaktora""").strip(),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "command": {
                         "type": "string",
-                        "description": textwrap.dedent("""
+                        "description": ("""
                         Komenda do wysłania do API reaktora. Wartości: {ALLOWED_COMMANDS}.
                         """).strip().format(ALLOWED_COMMANDS=ALLOWED_COMMANDS),
                     },

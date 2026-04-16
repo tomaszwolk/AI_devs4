@@ -6,15 +6,16 @@ ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
 API_KEY = os.getenv("HUB_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 POWER_STATION_ID = "PWR6132PL"
-DRONE_DATA = "https:///dane/drone.html"
-VERIFY_URL = "https:///verify"
+HUB_URL = os.getenv("HUB_URL")
+DRONE_DATA = f"{HUB_URL}/dane/drone.html"
+VERIFY_URL = HUB_URL + "/verify"
 TASK = "drone"
 DRONE_INSTRUCTIONS_PATH = Path(__file__).parent / "data" / "drone_instructions.md"
-POWER_STATION_MAP_URL = f"https:///data/{API_KEY}/drone.png"
+POWER_STATION_MAP_URL = f"{HUB_URL}/data/{API_KEY}/drone.png"
 
 MAIN_MODEL = os.getenv("NANO_MODEL_ID")
 VISION_MODEL = os.getenv("STRONG_MODEL_ID")

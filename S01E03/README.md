@@ -11,7 +11,7 @@ ssh -p 443 -R0:127.0.0.1:8080 qr@free.pinggy.io
 
 ### Send to verify
 
-curl -X POST https:///verify \
+curl -X POST [verify_url] \
  -H "Content-Type: application/json" \
  -d '{
 "apikey": "...",

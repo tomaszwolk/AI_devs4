@@ -1,6 +1,5 @@
 import sys
 import logging
-import textwrap
 from config import settings
 from agent import MainAgent
 
@@ -13,7 +12,7 @@ def main():
         system_prompt=settings.system_prompt
     )
 
-    user_prompt = textwrap.dedent("""
+    user_prompt = ("""
     Rozpocznij wykonanie zadania.
     """).strip()
 

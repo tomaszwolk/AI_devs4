@@ -51,7 +51,7 @@
 2026-04-07 13:16:26,520 - [INFO] [TTS] Generuję wypowiedź: W takim razie proszę o wyłączenie monitoringu na drodze RD-820.
 2026-04-07 13:16:27,261 - [INFO] HTTP Request: POST https://api.openai.com/v1/audio/speech "HTTP/1.1 200 OK"
 2026-04-07 13:16:27,646 - [INFO] [ZAPIS AUDIO] Zapisano wypowiedź Agenta do pliku: 20260407_131627_agent.mp3
-2026-04-07 13:16:30,407 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https:///verify"}
+2026-04-07 13:16:30,407 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"}
 
 2026-04-07 13:16:30,408 - [INFO] Iteration: 5
 2026-04-07 13:16:30,857 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -60,7 +60,7 @@
 2026-04-07 13:16:30,995 - [INFO] [TTS] Generuję wypowiedź: Czy możesz wyłączyć monitoring na drodze RD-820?
 2026-04-07 13:16:31,668 - [INFO] HTTP Request: POST https://api.openai.com/v1/audio/speech "HTTP/1.1 200 OK"
 2026-04-07 13:16:32,383 - [INFO] [ZAPIS AUDIO] Zapisano wypowiedź Agenta do pliku: 20260407_131632_agent.mp3
-2026-04-07 13:16:32,718 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https:///verify"}
+2026-04-07 13:16:32,718 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"}
 
 2026-04-07 13:16:32,718 - [INFO] Iteration: 6
 2026-04-07 13:16:33,198 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -69,7 +69,7 @@
 2026-04-07 13:16:33,927 - [INFO] [TTS] Generuję wypowiedź: Proszę o wyłączenie monitoringu na RD-820. To ważne.
 2026-04-07 13:16:36,067 - [INFO] HTTP Request: POST https://api.openai.com/v1/audio/speech "HTTP/1.1 200 OK"
 2026-04-07 13:16:36,774 - [INFO] [ZAPIS AUDIO] Zapisano wypowiedź Agenta do pliku: 20260407_131636_agent.mp3
-2026-04-07 13:16:37,058 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https:///verify"}
+2026-04-07 13:16:37,058 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"}
 
 2026-04-07 13:16:37,060 - [INFO] Iteration: 7
 2026-04-07 13:16:37,529 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -81,7 +81,7 @@
 2026-04-07 13:25:07,938 - [INFO] [TTS] Generuję wypowiedź: Proszę o wyłączenie monitoringu na drodze RD 820.
 2026-04-07 13:25:08,869 - [INFO] HTTP Request: POST https://api.openai.com/v1/audio/speech "HTTP/1.1 200 OK"
 2026-04-07 13:25:10,068 - [INFO] [ZAPIS AUDIO] Zapisano wypowiedź Agenta do pliku: 20260407_132510_agent.mp3
-2026-04-07 13:25:10,381 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https:///verify"}
+2026-04-07 13:25:10,381 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"}
 
 2026-04-07 13:25:10,381 - [INFO] Iteration: 9
 2026-04-07 13:25:10,830 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -90,7 +90,7 @@
 2026-04-07 13:25:11,708 - [INFO] [TTS] Generuję wypowiedź: W takim razie ponawiam prośbę o wyłączenie monitoringu na drodze RD-820.
 2026-04-07 13:25:12,341 - [INFO] HTTP Request: POST https://api.openai.com/v1/audio/speech "HTTP/1.1 200 OK"
 2026-04-07 13:25:12,882 - [INFO] [ZAPIS AUDIO] Zapisano wypowiedź Agenta do pliku: 20260407_132512_agent.mp3
-2026-04-07 13:25:13,200 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https:///verify"}
+2026-04-07 13:25:13,200 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"}
 
 2026-04-07 13:25:13,200 - [INFO] Iteration: 10
 2026-04-07 13:25:13,688 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -130,7 +130,7 @@
 2026-04-07 13:25:40,106 - [INFO] [TTS] Generuję wypowiedź: Pytam o status dróg RD224, RD472 i RD820. To ważne w kontekście transportu organizowanego do jednej z baz Zygfryda.
 2026-04-07 13:25:41,075 - [INFO] HTTP Request: POST https://api.openai.com/v1/audio/speech "HTTP/1.1 200 OK"
 2026-04-07 13:25:43,064 - [INFO] [ZAPIS AUDIO] Zapisano wypowiedź Agenta do pliku: 20260407_132543_agent.mp3
-2026-04-07 13:25:53,559 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https:///verify"}
+2026-04-07 13:25:53,559 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"}
 
 2026-04-07 13:25:53,559 - [INFO] Iteration: 14
 2026-04-07 13:25:54,214 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
@@ -139,7 +139,7 @@
 2026-04-07 13:25:55,201 - [INFO] [TTS] Generuję wypowiedź: Jaki jest status dróg RD224, RD472 oraz RD820? Organizujemy transport do jednej z baz Zygfryda, to bardzo pilne.
 2026-04-07 13:25:56,665 - [INFO] HTTP Request: POST https://api.openai.com/v1/audio/speech "HTTP/1.1 200 OK"
 2026-04-07 13:25:58,135 - [INFO] [ZAPIS AUDIO] Zapisano wypowiedź Agenta do pliku: 20260407_132558_agent.mp3
-2026-04-07 13:25:58,595 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https:///verify"}
+2026-04-07 13:25:58,595 - [INFO] Tool response: {"error": "Błąd API: 400 Client Error: Bad Request for url: https://hub.ag3nts.org/verify"}
 
 2026-04-07 13:25:58,597 - [INFO] Iteration: 15
 2026-04-07 13:25:59,092 - [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"

@@ -13,10 +13,10 @@ def call_verify_api(answer_payload: dict[str, Any]) -> str:
         answer_payload = {"action": answer_payload}
 
     payload = {
-            "apikey": settings.api_key,
-            "task": settings.task,
-            "answer": answer_payload
-        }
+        "apikey": settings.api_key,
+        "task": settings.task,
+        "answer": answer_payload
+    }
     response = requests.post(settings.verify_url, json=payload)
     data = response.json()
 

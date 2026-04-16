@@ -5,7 +5,7 @@ import logging
 from openai import OpenAI
 
 from config import (
-    VERIFY_URL, API_KEY, TASK, BASE_URL,
+    VERIFY_URL, API_KEY, TASK, OPENROUTER_URL,
     OPENROUTER_API_KEY, VISION_SYSTEM_PROMPT, VISION_MODEL
 )
 
@@ -65,7 +65,7 @@ def analyze_map_for_target(url: str) -> str:
     ]
 
     client = OpenAI(
-        base_url=BASE_URL,
+        base_url=OPENROUTER_URL,
         api_key=OPENROUTER_API_KEY,
     )
 

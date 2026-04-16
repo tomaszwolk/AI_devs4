@@ -33,7 +33,7 @@ def call_verify_api(**kwargs) -> str:
         return json.dumps(
             {"error": "Timeout. Spróbuj ponownie."},
             ensure_ascii=False
-            )
+        )
     except Exception as e:
         return json.dumps(
             {"error": f"Błąd API lub parsowania: {e}"}, ensure_ascii=False

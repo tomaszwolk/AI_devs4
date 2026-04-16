@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 bad_sensors = [
     '0158', '0307', '0516', '0567', '0753', '1053', '1269', '1632', '1678',
@@ -17,14 +17,14 @@ special_sensors = [
     '2137'
 ]
 # Podaj ścieżkę do folderu z wypakowanymi jsonami
-sensors_dir = "./data/sensors"
+sensors_dir = Path(__file__).parent / "data" / "sensors"
 for sensor_id in special_sensors:
     # Doklejamy .json do ID z Twojej listy
     filename = f"{sensor_id}.json"
-    filepath = os.path.join(sensors_dir, filename)
+    filepath = sensors_dir / filename
 
     # Zabezpieczenie na wypadek, gdyby plik nie istniał
-    if not os.path.exists(filepath):
+    if not filepath.exists():
         print(f"Brak pliku: {filepath}")
         continue
 

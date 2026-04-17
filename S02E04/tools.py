@@ -1,9 +1,10 @@
-import requests
-from config import VERIFY_URL, API_KEY, TASK, MAIL_URL
 import json
 import os
-from pathlib import Path
 import time
+from pathlib import Path
+
+import requests
+from config import API_KEY, MAIL_URL, TASK, VERIFY_URL
 
 
 def get_help_data() -> dict:
@@ -20,7 +21,7 @@ def get_help_data() -> dict:
         data = response.json()
         with open(HELP_PATH, "w") as f:
             json.dump(data, f, indent=4)
-        return json.dumps(data)
+        return json.load(f)
     else:
         with open(HELP_PATH, "r") as f:
             help_data = json.load(f)
@@ -42,7 +43,7 @@ def create_payload(
             "password": password,
             "date": date,
             "confirmation_code": confirmation_code,
-        }
+        },
     }
     return payload
 
@@ -52,9 +53,9 @@ def create_mail_payload(
     action: str,
     page: int = 1,
     perPage: int = 5,
-    threadID: int = None,
-    ids: str = None,
-    query: str = None,
+    threadID: int | None = None,
+    ids: str | None = None,
+    query: str | None = None,
 ) -> dict:
     """
     Create a payload.
@@ -99,7 +100,7 @@ def call_zmail_api(**parameters: dict) -> str:
 
     # Create payload and send request
     payload = {"apikey": API_KEY}
-    payload.update(parameters)
+    payload.update(parameters)  # type: ignore
     response = requests.post(MAIL_URL, json=payload)
     time.sleep(1.5)
     return json.dumps(response.json())
@@ -114,7 +115,7 @@ def verify_answer(date: str, password: str, confirmation_code: str) -> str:
         date=date,
         confirmation_code=confirmation_code,
     )
-    response = requests.post(VERIFY_URL, json=payload)
+    response = requests.post(VERIFY_URL, json=payload)  # type: ignore
     return json.dumps(response.json())
 
 

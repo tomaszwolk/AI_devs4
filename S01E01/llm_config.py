@@ -1,7 +1,9 @@
 """
-Konfiguracja LLM: wczytuje prompty i opisy tagów z llm_prompts.md,
-udostępnia schematy JSON (Structured Output) i gotowe wiadomości.
+Konfiguracja LLM: wczytuje prompty i opisy tagów z llm_prompts.md.
+
+Udostępnia schematy JSON (Structured Output) i gotowe wiadomości.
 """
+
 from pathlib import Path
 
 _PROMPTS_PATH = Path(__file__).parent / "llm_prompts.md"
@@ -19,9 +21,8 @@ def _load_sections() -> dict[str, str]:
                 sections[current_key] = "\n".join(current_lines).strip()
             current_key = line[3:].strip().lower()
             current_lines = []
-        else:
-            if current_key is not None:
-                current_lines.append(line)
+        elif current_key is not None:
+            current_lines.append(line)
 
     if current_key is not None:
         sections[current_key] = "\n".join(current_lines).strip()
@@ -31,10 +32,10 @@ def _load_sections() -> dict[str, str]:
 def _parse_tag_descriptions(content: str) -> dict[str, str]:
     out: dict[str, str] = {}
     for line in content.splitlines():
-        line = line.strip()
-        if not line or ":" not in line:
+        line_stripped = line.strip()
+        if not line_stripped or ":" not in line_stripped:
             continue
-        key, _, val = line.partition(":")
+        key, _, val = line_stripped.partition(":")
         key, val = key.strip(), val.strip()
         # pomiń linie opisowe (np. "Opisy tagów..." lub "Format: ...")
         if not key or key.startswith("Opisy") or "." in key or "Format" in key:
@@ -46,10 +47,10 @@ def _parse_tag_descriptions(content: str) -> dict[str, str]:
 def _parse_tags_list(content: str) -> list[str]:
     tags: list[str] = []
     for line in content.splitlines():
-        line = line.strip()
-        if not line or line.startswith("Kolejność") or line.startswith("Używane"):
+        line_stripped = line.strip()
+        if not line_stripped or line_stripped.startswith(("Kolejność", "Używane")):
             continue
-        tags.append(line)
+        tags.append(line_stripped)
     return tags
 
 
@@ -70,11 +71,25 @@ def load_prompts() -> tuple[dict[str, str], list[str], str, str, str, str]:
     user_single = sections.get("user prompt (single)", "")
     user_batch = sections.get("user prompt (batch)", "")
 
-    return tag_descriptions, tags_list, system_prompt, system_prompt_batch, user_single, user_batch
+    return (
+        tag_descriptions,
+        tags_list,
+        system_prompt,
+        system_prompt_batch,
+        user_single,
+        user_batch,
+    )
 
 
 # Ładowanie przy imporcie
-TAG_DESCRIPTIONS, TAGS, SYSTEM_PROMPT, SYSTEM_PROMPT_BATCH, USER_PROMPT_SINGLE, USER_PROMPT_BATCH = load_prompts()
+(
+    TAG_DESCRIPTIONS,
+    TAGS,
+    SYSTEM_PROMPT,
+    SYSTEM_PROMPT_BATCH,
+    USER_PROMPT_SINGLE,
+    USER_PROMPT_BATCH,
+) = load_prompts()
 
 
 def get_schema_single_job(tags: list[str]) -> dict:
@@ -121,7 +136,7 @@ def build_tag_descriptions_text(tags: list[str]) -> str:
     return "\n".join(f"- {tag}: {TAG_DESCRIPTIONS.get(tag, '')}" for tag in tags)
 
 
-def get_system_content(tags: list[str], batch: bool = False) -> str:
+def get_system_content(tags: list[str], *, batch: bool = False) -> str:
     template = SYSTEM_PROMPT_BATCH if batch else SYSTEM_PROMPT
     return template.format(tag_descriptions_text=build_tag_descriptions_text(tags))
 

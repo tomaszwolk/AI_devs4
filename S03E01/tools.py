@@ -1,13 +1,19 @@
 import json
-import requests
 import logging
 import os
 
-from tenacity import retry, stop_after_attempt, wait_exponential
-from openai import OpenAI
+import requests
 from config import (
-    VERIFY_URL, API_KEY, TASK, RANGES, OPENROUTER_URL, OPENROUTER_API_KEY, MAIN_MODEL
+    API_KEY,
+    MAIN_MODEL,
+    OPENROUTER_API_KEY,
+    OPENROUTER_URL,
+    RANGES,
+    TASK,
+    VERIFY_URL,
 )
+from openai import OpenAI
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 logger = logging.getLogger(__name__)
 client = OpenAI(
@@ -31,10 +37,10 @@ def process_files(files_dir) -> tuple[set[str], set[str], dict[str, str]]:
     for filename in os.listdir(files_dir):
         with open(os.path.join(files_dir, filename)) as f:
             data = json.load(f)
-            file_id = filename.replace('.json', '')
+            file_id = filename.replace(".json", "")
 
             # Pobieramy aktywne czujniki
-            active_sensors = data["sensor_type"].split('/')
+            active_sensors = data["sensor_type"].split("/")
             is_data_bad = False
 
             for sensor_name, (key, min_val, max_val) in RANGES.items():
@@ -66,12 +72,14 @@ def process_files(files_dir) -> tuple[set[str], set[str], dict[str, str]]:
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, min=2, max=10))
 def evaluate_fragment_with_llm(fragment: str) -> str:
-    user_prompt = ("""Jesteś asystentem w elektrowni.
+    user_prompt = (
+        """Jesteś asystentem w elektrowni.
     Oceń fragment notatki operatora.
     Jeśli wskazuje na normę/brak akcji/poprawne działanie zwróć 'OK'.
     Jeśli wskazuje na awarię, odchylenie, błąd lub problem zwróć 'ERROR'.
     Zwróć tylko 'OK' lub 'ERROR', bez żadnej interpunkcji.
-    """).strip()
+    """
+    ).strip()
 
     messages = [
         {
@@ -79,20 +87,23 @@ def evaluate_fragment_with_llm(fragment: str) -> str:
             "content": [
                 {"type": "text", "text": user_prompt},
                 {"type": "text", "text": f"Fragment: {fragment}"},
-            ]
+            ],
         }
     ]
-
+    if not MAIN_MODEL:
+        raise ValueError("MAIN_MODEL is not set")
     try:
         response = client.chat.completions.create(
             model=MAIN_MODEL,
-            messages=messages,
+            messages=messages,  # type: ignore
             temperature=0.0,
-            max_tokens=16
+            max_tokens=16,
         )
-        result = response.choices[0].message.content.strip()
-        logger.info(f"Result from main model {MAIN_MODEL} \
-            for fragment: {fragment} is: {result}")
+        result = response.choices[0].message.content.strip()  # type: ignore
+        logger.info(
+            f"Result from main model {MAIN_MODEL} \
+            for fragment: {fragment} is: {result}"
+        )
         return result
     except Exception as e:
         raise RuntimeError(f"Error evaluating fragment with LLM: {e}") from e
@@ -100,36 +111,51 @@ def evaluate_fragment_with_llm(fragment: str) -> str:
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, min=2, max=10))
 def evaluate_full_note_with_llm(full_note: str) -> str:
-    system_prompt = ("""
+    system_prompt = (
+        """
         Jesteś głównym audytorem w elektrowni. Twoim zadaniem jest ocena całych notatek operatora.
         Zwróć 'ERROR' TYLKO I WYŁĄCZNIE wtedy, gdy operator wyraźnie zgłasza awarię, niepokojące odchylenie, uszkodzenie czujnika lub prosi o interwencję.
         Zwróć 'OK', jeśli notatka wskazuje na normalne działanie, rutynowy audyt, kontynuację pracy lub brak akcji.
         Zwróć TYLKO jedno słowo: OK lub ERROR.
-    """).strip()
+    """
+    ).strip()
 
     messages = [
         {"role": "system", "content": system_prompt},
         # Dodajemy przykłady (Few-Shot), żeby nakierować mały model Nano:
-        {"role": "user", "content": "Notatka: so the shift can proceed as planned for this capture moment."},
+        {
+            "role": "user",
+            "content": "Notatka: so the shift can proceed as planned for this capture moment.",
+        },
         {"role": "assistant", "content": "OK"},
-        {"role": "user", "content": "Notatka: so I logged it as routine for this routine audit."},
+        {
+            "role": "user",
+            "content": "Notatka: so I logged it as routine for this routine audit.",
+        },
         {"role": "assistant", "content": "OK"},
-        {"role": "user", "content": "Notatka: Temperature is exceeding the maximum threshold, needs immediate check."},
+        {
+            "role": "user",
+            "content": "Notatka: Temperature is exceeding the maximum threshold, needs immediate check.",
+        },
         {"role": "assistant", "content": "ERROR"},
-        {"role": "user", "content": "Notatka: Everything is fine, but voltage dropped to 0."},
+        {
+            "role": "user",
+            "content": "Notatka: Everything is fine, but voltage dropped to 0.",
+        },
         {"role": "assistant", "content": "ERROR"},
         # Właściwe zapytanie
-        {"role": "user", "content": f"Notatka: {full_note}"}
+        {"role": "user", "content": f"Notatka: {full_note}"},
     ]
-
+    if not MAIN_MODEL:
+        raise ValueError("MAIN_MODEL is not set")
     try:
         response = client.chat.completions.create(
             model=MAIN_MODEL,
-            messages=messages,
+            messages=messages,  # type: ignore
             temperature=0.0,
-            max_tokens=16
+            max_tokens=16,
         )
-        result = response.choices[0].message.content.strip()
+        result = response.choices[0].message.content.strip()  # type: ignore
         logger.info(f"Full note evaluation: [{result}] for note: {full_note}")
         return result
     except Exception as e:
@@ -145,8 +171,10 @@ def send_verify_answer(recheck: list[str]) -> str:
         "task": TASK,
         "answer": {
             "recheck": recheck,
-        }
+        },
     }
+    if not VERIFY_URL:
+        raise ValueError("VERIFY_URL is not set")
     try:
         response = requests.post(VERIFY_URL, json=payload, timeout=15)
         if response.status_code == 200:

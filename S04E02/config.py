@@ -6,21 +6,22 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Settings:
-    api_key: str
-    openrouter_url: str
-    hub_url: str
-    openrouter_api_key: str
-    verify_url: str
+    api_key: str | None
+    openrouter_url: str | None
+    hub_url: str | None
+    openrouter_api_key: str | None
+    verify_url: str | None
     task: str
     logs_dir_path: Path
-    main_model: str
+    main_model: str | None
     main_system_prompt: str
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = ("""Jesteś agentem AI. Ratujesz elektrownię konfigurując turbinę wiatrową.
+MAIN_SYSTEM_PROMPT = (
+    """Jesteś agentem AI. Ratujesz elektrownię konfigurując turbinę wiatrową.
     MASZ KRYTYCZNY LIMIT CZASU: 40 SEKUND! Odpowiadaj BŁYSKAWICZNIE. Zero tekstu opisowego. Zawsze używaj Parallel Tool Calling.
 
     === KRYTYCZNE ZASADY ===
@@ -47,18 +48,21 @@ MAIN_SYSTEM_PROMPT = ("""Jesteś agentem AI. Ratujesz elektrownię konfigurując
     KROK 6: Wywołaj RÓWNOLEGLE 2 narzędzia (muszą być w tej kolejności w JSONie tool_calls):
             - `getResult` (aby odebrać wynik testu)
             - `done` (aby zakończyć i odebrać flagę)
-""").strip()
+"""
+).strip()
 
 settings = Settings(
     api_key=os.getenv("HUB_API_KEY"),
     openrouter_url=os.getenv("OPENROUTER_URL"),
     hub_url=os.getenv("HUB_URL"),
     openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
-    verify_url=os.getenv("HUB_URL") + "/verify",
+    verify_url=(
+        f"{hub_url}/verify" if (hub_url := os.getenv("HUB_URL")) is not None else None
+    ),
     task="windpower",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("SONNET_MODEL_ID"),
-    main_system_prompt=MAIN_SYSTEM_PROMPT
+    main_system_prompt=MAIN_SYSTEM_PROMPT,
 )
 
 

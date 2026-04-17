@@ -1,9 +1,9 @@
 import json
-import requests
 import logging
 import time
 
-from config import (VERIFY_URL, API_KEY, TASK, SHELL_URL)
+import requests
+from config import API_KEY, SHELL_URL, TASK, VERIFY_URL
 
 logger = logging.getLogger(__name__)
 
@@ -23,19 +23,24 @@ def run_shell_command(command: str) -> str:
         data = response.json()
         if "ban" in data:
             ban_info = data["ban"]
-            wait_time = ban_info.get(
-                "ttl_seconds", ban_info.get("seconds_left", 20)) + 1
+            wait_time = (
+                ban_info.get("ttl_seconds", ban_info.get("seconds_left", 20)) + 1
+            )
             reason = ban_info.get("reason", "Nieznany powód")
 
-            logger.warning(f"Shell command blocked: {reason}. \
-            Waiting {wait_time} seconds.")
+            logger.warning(
+                f"Shell command blocked: {reason}. \
+            Waiting {wait_time} seconds."
+            )
             time.sleep(wait_time)
             # Zwracamy LLMowi informację o tym, co się stało.
-            return (f"""SYSTEM ERROR:
+            return (
+                f"""SYSTEM ERROR:
             Wykonanie komendy '{command}' zakończyło się banem.
             Powód: '{reason}'. Odczekałem karę czasową automatycznie.
             UWAGA: Maszyna wirtualna została przywrócona do stanu początkowego (reboot)!
-            Zacznij od nowa i NIE POWTARZAJ tej samej komendy, która złamała zasady.""").strip()
+            Zacznij od nowa i NIE POWTARZAJ tej samej komendy, która złamała zasady."""
+            ).strip()
 
         if response.status_code == 200:
             return json.dumps(data)
@@ -55,8 +60,10 @@ def send_verify_answer(confirmation_code: str) -> str:
         "task": TASK,
         "answer": {
             "confirmation": confirmation_code,
-        }
+        },
     }
+    if not VERIFY_URL:
+        raise ValueError("VERIFY_URL is not set")
     try:
         response = requests.post(VERIFY_URL, json=payload, timeout=15)
         data = response.json()

@@ -1,22 +1,21 @@
-from dotenv import load_dotenv
+import datetime
 import json
 import os
-import pandas as pd
-import chardet
-import datetime
 from pathlib import Path
 
+import chardet
+import pandas as pd
 import requests
-from openai import OpenAI
-
+from dotenv import load_dotenv
 from llm_config import (
     TAGS,
-    get_schema_single_job,
     get_schema_batch_jobs,
+    get_schema_single_job,
     get_system_content,
-    get_user_content_single,
     get_user_content_batch,
+    get_user_content_single,
 )
+from openai import OpenAI
 
 # 1. Pobierz dane z hubu - plik people.csv.
 # 2. Przefiltruj dane, zostaw osoby spełniające kryteria:
@@ -27,6 +26,7 @@ from llm_config import (
 
 def filter_data(
     in_path: Path,
+    out_path: Path,
     gender: str,
     birth_date: list[int],
     birth_place: str,
@@ -50,7 +50,10 @@ def filter_data(
         & (df["birthDate"].between(birth_start, birth_end))
         & (df["birthPlace"].str.lower() == birth_place.lower())
     )
-    return df.loc[mask, ["name", "surname", "gender", "birthDate", "birthPlace", "birthCountry", "job"]]
+    return df.loc[
+        mask,
+        ["name", "surname", "gender", "birthDate", "birthPlace", "birthCountry", "job"],
+    ]
 
 
 # 3. Otaguj zawody (prompty i schematy w llm_prompts.md / llm_config.py)
@@ -180,13 +183,9 @@ def tag_jobs_in_dataframe(
     all_tags: list[list[str]] = [[] for _ in range(len(jobs))]
 
     for start in range(0, len(jobs), batch_size):
-        batch_jobs = jobs[start: start + batch_size]
+        batch_jobs = jobs[start : start + batch_size]
         batch_result = tag_jobs_batch_with_llm(
-            batch_jobs,
-            tags=tags,
-            model_id=model_id,
-            client=client,
-            start_index=start
+            batch_jobs, tags=tags, model_id=model_id, client=client, start_index=start
         )
         for idx, tlist in batch_result.items():
             if 0 <= idx < len(all_tags):

@@ -1,10 +1,10 @@
-import requests
-import json
-import io
 import contextlib
+import io
+import json
 import traceback
 
-from config import API_KEY, TASK, VERIFY_URL, API_BASE_URL, HUB_ORIGIN
+import requests
+from config import API_BASE_URL, API_KEY, HUB_ORIGIN, TASK, VERIFY_URL
 
 
 def tool_call(query: str, tool: str) -> str:
@@ -17,7 +17,7 @@ def tool_call(query: str, tool: str) -> str:
     }
 
     if tool.startswith("/api"):
-        url = HUB_ORIGIN + tool
+        url = f"{HUB_ORIGIN}{tool}"
     else:
         url = API_BASE_URL + tool.lstrip("/")
 
@@ -34,6 +34,8 @@ def verify_answer(answer: list[str]) -> str:
         "task": TASK,
         "answer": answer,
     }
+    if not VERIFY_URL:
+        raise ValueError("VERIFY_URL is not set")
     response = requests.post(VERIFY_URL, json=payload)
     return json.dumps(response.json())
 

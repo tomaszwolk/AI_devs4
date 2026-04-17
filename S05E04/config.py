@@ -6,22 +6,23 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Settings:
-    api_key: str
-    openrouter_url: str
-    hub_url: str
-    openrouter_api_key: str
-    verify_url: str
+    api_key: str | None
+    openrouter_url: str | None
+    hub_url: str | None
+    openrouter_api_key: str | None
+    verify_url: str | None
     task: str
     logs_dir_path: Path
-    main_model: str
+    main_model: str | None
     system_prompt: str
-    e2b_api_key: str
+    e2b_api_key: str | None
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = ("""
+MAIN_SYSTEM_PROMPT = (
+    """
     Jesteś systemem nawigacyjnym rakiety. Twoim celem jest dotarcie do bazy w Grudziądzu (kolumna 12).
     Poruszasz się po siatce: 3 wiersze (1 - góra, 2 - środek, 3 - dół) x 12 kolumn.
     Startujesz zawsze w wierszu 2, kolumnie 1.
@@ -59,18 +60,23 @@ MAIN_SYSTEM_PROMPT = ("""
     - API celowo może rzucać losowymi błędami. Jeśli otrzymasz błąd z jakiegoś narzędzia, nie poddawaj się, po prostu wywołaj je ponownie.
     - Ograniczaj swoje wypowiedzi tekstowe do minimum, używaj narzędzi sekwencyjnie.
     - Twoja pierwsza akcja to zawsze call_verify_api({"command": "start"}).
-""").strip()
+"""
+).strip()
 
-BONUS_SYSTEM_PROMPT = ("""
+BONUS_SYSTEM_PROMPT = (
+    """
 
-""").strip()
+"""
+).strip()
 
 settings = Settings(
     api_key=os.getenv("HUB_API_KEY"),
     openrouter_url=os.getenv("OPENROUTER_URL"),
     hub_url=os.getenv("HUB_URL"),
     openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
-    verify_url=os.getenv("HUB_URL") + "/verify",
+    verify_url=(
+        f"{hub_url}/verify" if (hub_url := os.getenv("HUB_URL")) is not None else None
+    ),
     task="goingthere",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),
@@ -94,10 +100,10 @@ TOOLS_SCHEMA = [
                         "properties": {
                             "command": {
                                 "type": "string",
-                                "enum": ["start", "go", "left", "right"]
+                                "enum": ["start", "go", "left", "right"],
                             }
                         },
-                        "required": ["command"]
+                        "required": ["command"],
                     }
                 },
                 "required": ["answer_payload"],
@@ -136,12 +142,12 @@ TOOLS_SCHEMA = [
                 "properties": {
                     "frequency": {
                         "type": "integer",
-                        "description": "Częstotliwość odczytana ze skanera."
+                        "description": "Częstotliwość odczytana ze skanera.",
                     },
                     "detectionCode": {
                         "type": "string",
-                        "description": "Ciąg znaków detectionCode odczytany ze skanera."
-                    }
+                        "description": "Ciąg znaków detectionCode odczytany ze skanera.",
+                    },
                 },
                 "required": ["frequency", "detectionCode"],
             },

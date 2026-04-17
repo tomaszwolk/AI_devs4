@@ -1,15 +1,19 @@
-import sys
 import logging
-from config import MAIN_MODEL, MAIN_SYSTEM_PROMPT
+import sys
+
 from agent import MainAgent
+from config import MAIN_MODEL, MAIN_SYSTEM_PROMPT
 
 logger = logging.getLogger(__name__)
 
 
 def main():
+    if not MAIN_MODEL:
+        raise ValueError("MAIN_MODEL is not set")
     agent = MainAgent(model=MAIN_MODEL, system_prompt=MAIN_SYSTEM_PROMPT)
 
-    user_prompt = ("""
+    user_prompt = (
+        """
         Oto Twoje zadania. Wykonaj je rygorystycznie, używając narzędzia call_oko_editor_api.
         TWOJE NAJWAŻNIEJSZE ZADANIE: Musisz użyć DOKŁADNIE takich tekstów (title i content), jakie podałem poniżej. Nie zmieniaj ani jednego słowa, po prostu skopiuj te wartości do wywołania narzędzia. Przekazuj title i content w każdym zapytaniu.
 
@@ -37,7 +41,8 @@ def main():
 
         KROK 4: Weryfikacja
         - Po wykonaniu kroków 1-3 zadzwoń do API z action="done". Zwróci Ci to flagę.
-    """).strip()
+    """
+    ).strip()
 
     try:
         agent.run(user_prompt)

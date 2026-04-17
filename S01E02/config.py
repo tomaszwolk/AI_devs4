@@ -21,10 +21,11 @@ TOOLS = [
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "surname": {"type": "string"}},
-                "required": ["name", "surname"]
-            }
-        }
+                    "surname": {"type": "string"},
+                },
+                "required": ["name", "surname"],
+            },
+        },
     },
     {
         "type": "function",
@@ -35,10 +36,11 @@ TOOLS = [
                 "properties": {
                     "name": {"type": "string"},
                     "surname": {"type": "string"},
-                    "birthYear": {"type": "integer"}},
+                    "birthYear": {"type": "integer"},
+                },
                 "required": ["name", "surname", "birthYear"],
-            }
-        }
+            },
+        },
     },
     {
         "type": "function",
@@ -46,7 +48,8 @@ TOOLS = [
             "name": "get_closest_power_plant",
             "description": (
                 "Oblicza najbliższą elektrownię dla danych lokalizacji osoby."
-                "Returns: Słownik zawierający 'closest_plant' (obiekt z nazwą i kodem) oraz 'distance' (float w km)."),
+                "Returns: Słownik zawierający 'closest_plant' (obiekt z nazwą i kodem) oraz 'distance' (float w km)."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -61,9 +64,9 @@ TOOLS = [
                         "description": "Lista elektrowni, każda z 'name', 'latitude', 'longitude', 'code'.",
                     },
                 },
-                "required": ["person_locations", "power_plants_list"]
-            }
-        }
+                "required": ["person_locations", "power_plants_list"],
+            },
+        },
     },
     {
         "type": "function",
@@ -71,12 +74,9 @@ TOOLS = [
             "name": "get_power_plants_data",
             "description": (
                 "Zwraca listę elektrowni z koordynatami."
-                "Returns: Słownik zawierający 'power_plants' (obiekt z nazwami elektrowni, informacją czy są czynne, mocą i kodem)."),
-            "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": []
-            }
-        }
-    }
+                "Returns: Słownik zawierający 'power_plants' (obiekt z nazwami elektrowni, informacją czy są czynne, mocą i kodem)."
+            ),
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
+    },
 ]

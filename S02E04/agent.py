@@ -1,12 +1,16 @@
+import json
+import logging
+
+from config import (
+    MAIN_MODEL,
+    MAIN_SYSTEM_PROMPT,
+    OPENROUTER_API_KEY,
+    OPENROUTER_URL,
+    TOOLS_SCHEMA,
+)
+from dotenv import load_dotenv
 from openai import OpenAI
 from tools import TOOLS_DICT
-from config import (
-    MAIN_MODEL, MAIN_SYSTEM_PROMPT, TOOLS_SCHEMA,
-    OPENROUTER_API_KEY, OPENROUTER_URL
-)
-import json
-from dotenv import load_dotenv
-import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,24 +42,26 @@ class MainAgent:
             # 1. Wywołaj model OpenAI (MAIN_MODEL)
             # z obecną listą self.messages i TOOLS_SCHEMA
             response = CLIENT.chat.completions.create(
-                model=MAIN_MODEL,
-                messages=self.messages,
-                tools=TOOLS_SCHEMA,
-                tool_choice="auto"
+                model=MAIN_MODEL,  # type: ignore
+                messages=self.messages,  # type: ignore
+                tools=TOOLS_SCHEMA,  # type: ignore
+                tool_choice="auto",
             )
 
             # 2. Zapisz odpowiedź asystenta do historii
             msg = response.choices[0].message
-            self.messages.append(msg)
+            self.messages.append(msg)  # type: ignore
 
             if not msg.tool_calls:
                 logger.info(f"Response: {msg.content}")
                 # Żeby uniknąć nieskończoną pętlę
-                self.messages.append({
-                    "role": "user",
-                    "content": "Kontynuuj wyszukiwanie używając dostępnych \
-                    narzędzi, aż zdobędziesz flagę."
-                })
+                self.messages.append(
+                    {
+                        "role": "user",
+                        "content": "Kontynuuj wyszukiwanie używając dostępnych \
+                    narzędzi, aż zdobędziesz flagę.",
+                    }
+                )
                 continue
 
             # 3. Jeśli asystent chce wywołać narzędzie (Tool Call):
@@ -63,9 +69,10 @@ class MainAgent:
             #   - Wykonaj ją w Pythonie, przekazując argumenty z LLM
             #   - Dodaj wynik działania funkcji jako nową wiadomość
             #   - Kontynuuj pętlę (continue)
+            res = None
             for tool_call in msg.tool_calls:
-                tool_name = tool_call.function.name
-                args = json.loads(tool_call.function.arguments)
+                tool_name = tool_call.function.name  # type: ignore
+                args = json.loads(tool_call.function.arguments)  # type: ignore
 
                 logger.info(f"Tool call: {tool_name} with args: {args}\n")
                 try:

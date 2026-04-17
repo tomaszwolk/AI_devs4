@@ -1,13 +1,20 @@
-import sys
 import logging
-from config import settings
+import sys
+
 from agent import MainAgent
+from config import settings
 
 logger = logging.getLogger(__name__)
 
 
 def main():
-    agent = MainAgent(model=settings.main_model, system_prompt=settings.system_prompt, max_iterations=100)
+    if not settings.main_model:
+        raise ValueError("MAIN_MODEL is not set")
+    agent = MainAgent(
+        model=settings.main_model,
+        system_prompt=settings.system_prompt,
+        max_iterations=100,
+    )
 
     user_prompt = ("""Rozpocznij wykonanie zadania.""").strip()
 

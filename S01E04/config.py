@@ -51,8 +51,8 @@ TOOLS = [
                 "properties": {
                     "packageid": {"type": "string", "description": ""},
                 },
-                "required": [""]
-            }
-        }
+                "required": [""],
+            },
+        },
     },
 ]

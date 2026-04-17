@@ -6,23 +6,24 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Settings:
-    api_key: str
-    openrouter_url: str
-    hub_url: str
-    openrouter_api_key: str
-    verify_url: str
+    api_key: str | None
+    openrouter_url: str | None
+    hub_url: str | None
+    openrouter_api_key: str | None
+    verify_url: str | None
     task: str
     logs_dir_path: Path
-    main_model: str
+    main_model: str | None
     main_system_prompt: str
-    e2b_api_key: str
+    e2b_api_key: str | None
     bonus_system_prompt: str
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = ("""
+MAIN_SYSTEM_PROMPT = (
+    """
     Jesteś analitykiem i inżynierem ds. integracji (Agentem AI), którego celem jest uporządkowanie notatek w wirtualnym systemie plików.
     Dane wejściowe (ogłoszenia, rozmowy, transakcje oraz schemat pomocy API) otrzymałeś w poleceniu.
 
@@ -60,9 +61,11 @@ MAIN_SYSTEM_PROMPT = ("""
        `[{"action":"reset"}, {"action":"createDirectory","path":"/miasta"}, {"action":"createFile","path":"/miasta/opalino","content":"{\\"chleb\\":45}"}]`
     3. Jeśli napotkasz błąd z API, analizuj go i napraw. Jeśli API mówi, że plik nie dotyczy towaru sprzedawanego, USUŃ TEN PLIK akcją `deleteFile`.
     4. Na koniec wyślij: `{"action": "done"}`.
-""").strip()
+"""
+).strip()
 
-BONUS_SYSTEM_PROMPT = ("""
+BONUS_SYSTEM_PROMPT = (
+    """
     Jesteś Agentem AI ds. cyberbezpieczeństwa. Twoim zadaniem jest zdobycie ukrytej, bonusowej flagi CTF z wirtualnego systemu plików.
     UWAGA KRYTYCZNA: Pod żadnym pozorem nie używaj akcji "reset"! Główna część zadania znajduje się już na serwerze i musi tam pozostać nietknięta.
 
@@ -90,20 +93,23 @@ BONUS_SYSTEM_PROMPT = ("""
     Sprawdź zawartość katalogu /flag/ za pomocą `call_verify_api` wysyłając w 'answer_payload' akcję `listFiles` z parametrem 'path': "/flag/".
     Poczekaj na decyzję użytkownika.
 
-""").strip()
+"""
+).strip()
 
 settings = Settings(
     api_key=os.getenv("HUB_API_KEY"),
     openrouter_url=os.getenv("OPENROUTER_URL"),
     hub_url=os.getenv("HUB_URL"),
     openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
-    verify_url=os.getenv("HUB_URL") + "/verify",
+    verify_url=(
+        f"{hub_url}/verify" if (hub_url := os.getenv("HUB_URL")) is not None else None
+    ),
     task="filesystem",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),
     main_system_prompt=BONUS_SYSTEM_PROMPT,
     bonus_system_prompt=BONUS_SYSTEM_PROMPT,
-    e2b_api_key=os.getenv("E2B_API_KEY")
+    e2b_api_key=os.getenv("E2B_API_KEY"),
 )
 
 

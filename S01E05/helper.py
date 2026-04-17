@@ -1,18 +1,17 @@
-from dotenv import load_dotenv
 import os
+
 import requests
+from dotenv import load_dotenv
 
 load_dotenv()
 HUB_URL = os.getenv("HUB_URL")
 HUB_API_KEY = os.getenv("HUB_API_KEY")
-VERIFY_URL = HUB_URL + "/verify"
+VERIFY_URL = f"{HUB_URL}/verify"
 TASK = "railway"
 
 
 def create_payload(
-    action: str,
-    route: str | None = None,
-    value: str | None = None
+    action: str, route: str | None = None, value: str | None = None
 ) -> dict:
     """
     Create a payload.
@@ -24,7 +23,7 @@ def create_payload(
             "action": action,
             "route": route,
             "value": value,
-        }
+        },
     }
     return payload
 

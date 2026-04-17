@@ -1,10 +1,10 @@
 import json
 import logging
-from openai import OpenAI
-from dotenv import load_dotenv
 
+from config import OPENROUTER_API_KEY, OPENROUTER_URL, TOOLS_SCHEMA
+from dotenv import load_dotenv
+from openai import OpenAI
 from tools import TOOLS_DICT
-from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, OPENROUTER_URL
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class MainAgent:
         self.messages = [{"role": "system", "content": system_prompt}]
         self.model = model
 
-    def run(self, user_prompt: str, additional_messages: list[dict] = None):
+    def run(self, user_prompt: str, additional_messages: list[dict] | None = None):
         """Uruchamia główną pętlę agenta."""
         logger.info("Rozpoczynam pracę Agenta...")
         self.messages.append({"role": "user", "content": user_prompt})
@@ -37,14 +37,14 @@ class MainAgent:
             # 1. Wywołaj model OpenAI
             response = CLIENT.chat.completions.create(
                 model=self.model,
-                messages=self.messages,
-                tools=TOOLS_SCHEMA,
+                messages=self.messages,  # type: ignore
+                tools=TOOLS_SCHEMA,  # type: ignore
                 tool_choice="auto",
             )
 
             # 2. Zapisz odpowiedź asystenta do historii
             msg = response.choices[0].message
-            self.messages.append(msg)
+            self.messages.append(msg)  # type: ignore
 
             if not msg.tool_calls:
                 logger.info(f"Odpowiedź asystenta: {msg.content}")
@@ -58,9 +58,10 @@ class MainAgent:
                 continue
 
             # 3. Wykonywanie narzędzi
+            res = None
             for tool_call in msg.tool_calls:
-                tool_name = tool_call.function.name
-                args = json.loads(tool_call.function.arguments)
+                tool_name = tool_call.function.name  # type: ignore
+                args = json.loads(tool_call.function.arguments)  # type: ignore
 
                 logger.info(f"Tool call: {tool_name} with args: {args}\n")
                 try:

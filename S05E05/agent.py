@@ -1,10 +1,13 @@
-import sys
 import json
 import logging
 import os
-from openai import OpenAI
-from dotenv import load_dotenv
+import sys
+from typing import cast
+
 from config import settings
+from dotenv import load_dotenv
+from openai import OpenAI
+from openai.types.chat import ChatCompletionMessageParam
 
 os.makedirs(settings.logs_dir_path, exist_ok=True)
 
@@ -29,7 +32,7 @@ CLIENT: OpenAI = OpenAI(
 )
 
 
-def _assistant_message_to_dict(msg) -> dict:
+def _assistant_message_to_dict(msg) -> ChatCompletionMessageParam:
     """ChatCompletionMessage nie jest serializowalny przez json.dump
     konwersja do dict."""
     if hasattr(msg, "model_dump"):
@@ -37,22 +40,29 @@ def _assistant_message_to_dict(msg) -> dict:
     # Starsze wersje SDK / obiekty bez model_dump
     d: dict = {"role": "assistant", "content": msg.content}
     if getattr(msg, "tool_calls", None):
-        d["tool_calls"] = [
-            {
-                "id": tc.id,
-                "type": getattr(tc, "type", "function") or "function",
-                "function": {
-                    "name": tc.function.name,
-                    "arguments": tc.function.arguments,
-                },
-            }
-            for tc in msg.tool_calls
-        ]
-    return d
+        tool_calls: list[dict] = []
+        for tc in msg.tool_calls:
+            tc_function = getattr(tc, "function", None)
+            if tc_function is None:
+                continue
+            tool_calls.append(
+                {
+                    "id": tc.id,
+                    "type": getattr(tc, "type", "function") or "function",
+                    "function": {
+                        "name": tc_function.name,
+                        "arguments": tc_function.arguments,
+                    },
+                }
+            )
+        d["tool_calls"] = tool_calls
+    return cast(ChatCompletionMessageParam, d)
 
 
-DEFAULT_CONTINUATION_HINT = ("""Kontynuuj działanie używając dostępnych narzędzi,
-    aż zdobędziesz flagę {FLG:...}.""").strip()
+DEFAULT_CONTINUATION_HINT = (
+    """Kontynuuj działanie używając dostępnych narzędzi,
+    aż zdobędziesz flagę {FLG:...}."""
+).strip()
 
 
 class MainAgent:
@@ -64,7 +74,11 @@ class MainAgent:
         tools_dict: dict,
         max_iterations: int = 40,
     ):
-        self.messages = [{"role": "system", "content": system_prompt}]
+        self.messages: list[ChatCompletionMessageParam] = [
+            cast(
+                ChatCompletionMessageParam, {"role": "system", "content": system_prompt}
+            )
+        ]
         self.model = model
         self.tools_schema = tools_schema
         self.tools_dict = tools_dict
@@ -80,7 +94,7 @@ class MainAgent:
     def run(
         self,
         user_prompt: str,
-        additional_messages: list[dict] | None = None,
+        additional_messages: list[ChatCompletionMessageParam] | None = None,
         interactive: bool = True,
         continuation_hint: str | None = None,
     ):
@@ -91,7 +105,9 @@ class MainAgent:
             else DEFAULT_CONTINUATION_HINT
         )
         logger.info("Rozpoczynam pracę Agenta...")
-        self.messages.append({"role": "user", "content": user_prompt})
+        self.messages.append(
+            cast(ChatCompletionMessageParam, {"role": "user", "content": user_prompt})
+        )
         if additional_messages:
             self.messages.extend(additional_messages)
 
@@ -129,26 +145,41 @@ class MainAgent:
                     reply_stripped = user_reply.strip()
                     if reply_stripped:
                         self.messages.append(
-                            {"role": "user", "content": reply_stripped}
+                            cast(
+                                ChatCompletionMessageParam,
+                                {"role": "user", "content": reply_stripped},
+                            )
                         )
                     else:
-                        self.messages.append({"role": "user", "content": hint})
+                        self.messages.append(
+                            cast(
+                                ChatCompletionMessageParam,
+                                {"role": "user", "content": hint},
+                            )
+                        )
                 else:
-                    self.messages.append({"role": "user", "content": hint})
+                    self.messages.append(
+                        cast(
+                            ChatCompletionMessageParam,
+                            {"role": "user", "content": hint},
+                        )
+                    )
                 continue
 
             # 3. Wykonywanie narzędzi
+            res = None
             for tool_call in msg.tool_calls:
-                tool_name = tool_call.function.name
+                tool_call_function = getattr(tool_call, "function", None)
+                if tool_call_function is None:
+                    continue
+                tool_name = tool_call_function.name
 
                 # Bezpieczne ładowanie argumentów
                 # zabezpieczenie przed halucynacjami formatu JSON
                 try:
-                    args = json.loads(tool_call.function.arguments)
+                    args = json.loads(tool_call_function.arguments)
                 except json.JSONDecodeError as e:
-                    logger.error(
-                        f"Błąd parsowania JSON dla narzędzia {tool_name}: {e}"
-                    )
+                    logger.error(f"Błąd parsowania JSON dla narzędzia {tool_name}: {e}")
                     self.messages.append(
                         {
                             "role": "tool",
@@ -213,6 +244,8 @@ class MainAgent:
                 )
 
             # 4. Sprawdzenie flagi
+            if res is None:
+                continue
             res_for_flag = (
                 json.dumps(res, ensure_ascii=False)
                 if isinstance(res, (dict, list))
@@ -240,14 +273,23 @@ class SpecializedAgent:
     ):
         self.model = model
         self.name = name
-        self.messages = [{"role": "system", "content": system_prompt}]
+        self.messages: list[ChatCompletionMessageParam] = [
+            cast(
+                ChatCompletionMessageParam, {"role": "system", "content": system_prompt}
+            )
+        ]
         self.tools_schema = tools_schema
         self.tools_dict = tools_dict
 
     def run_turn(self, incoming_message: str):
         """Uruchamia agenta i zwraca (status, next_agent, response_message)"""
         logger.info(f"--- RUCH AGENTA: {self.name.upper()} ---")
-        self.messages.append({"role": "user", "content": incoming_message})
+        self.messages.append(
+            cast(
+                ChatCompletionMessageParam,
+                {"role": "user", "content": incoming_message},
+            )
+        )
 
         for _ in range(15):  # Zabezpieczenie przed pętlą dla pojedynczej rundy
             response = CLIENT.chat.completions.create(
@@ -270,9 +312,12 @@ class SpecializedAgent:
                 # wymuszamy kontynuację w kodzie głónym
 
             for tool_call in msg.tool_calls:
-                tool_name = tool_call.function.name
+                tool_call_function = getattr(tool_call, "function", None)
+                if tool_call_function is None:
+                    continue
+                tool_name = tool_call_function.name
                 try:
-                    args = json.loads(tool_call.function.arguments)
+                    args = json.loads(tool_call_function.arguments)
                 except Exception:
                     self.messages.append(
                         {

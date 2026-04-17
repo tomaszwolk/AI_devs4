@@ -1,8 +1,9 @@
-import requests
 import json
-from config import settings
-from typing import Any
 import time
+from typing import Any
+
+import requests
+from config import settings
 
 
 def call_verify_api(answer_payload: dict[str, Any]) -> str:
@@ -15,8 +16,10 @@ def call_verify_api(answer_payload: dict[str, Any]) -> str:
     payload = {
         "apikey": settings.api_key,
         "task": settings.task,
-        "answer": answer_payload
+        "answer": answer_payload,
     }
+    if not settings.verify_url:
+        raise ValueError("VERIFY_URL is not set")
     response = requests.post(settings.verify_url, json=payload)
     data = response.json()
 

@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
@@ -12,12 +12,16 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 HUB_URL = os.getenv("HUB_URL")
 LOGS_URL = f"{HUB_URL}/data/{API_KEY}/failure.log"
-VERIFY_URL = HUB_URL + "/verify"
+VERIFY_URL = f"{HUB_URL}/verify" if HUB_URL else None
 TASK = "failure"
 
 MAX_TOKENS = 1500
 MAIN_MODEL = os.getenv("STRONG_MODEL_ID")
+if not MAIN_MODEL:
+    raise ValueError("STRONG_MODEL_ID is not set")
 COMPRESSOR_MODEL = os.getenv("MINI_MODEL_ID")
+if not COMPRESSOR_MODEL:
+    raise ValueError("MINI_MODEL_ID is not set")
 
 LOGS_PATH = Path(__file__).parent / "logs" / "logs.txt"
 
@@ -93,12 +97,8 @@ TOOLS_SCHEMA = [
         "function": {
             "name": "download_logs",
             "description": "Pobiera plik logów z serwera i zapisuje lokalnie jako 'logs.txt'.",
-            "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": []
-            }
-        }
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
         "type": "function",
@@ -109,10 +109,10 @@ TOOLS_SCHEMA = [
                 "type": "object",
                 "properties": {
                     "keywords": {"type": "array", "items": {"type": "string"}},
-                    "levels": {"type": "array", "items": {"type": "string"}}
-                }
-            }
-        }
+                    "levels": {"type": "array", "items": {"type": "string"}},
+                },
+            },
+        },
     },
     {
         "type": "function",
@@ -121,12 +121,10 @@ TOOLS_SCHEMA = [
             "description": "Skompresuje logi do formatu YYYY-MM-DD HH:MM CRIT ID KOMPONENTU OPIS.",
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "raw_logs": {"type": "string"}
-                },
-                "required": ["raw_logs"]
-            }
-        }
+                "properties": {"raw_logs": {"type": "string"}},
+                "required": ["raw_logs"],
+            },
+        },
     },
     {
         "type": "function",
@@ -135,12 +133,10 @@ TOOLS_SCHEMA = [
             "description": "Zlicza liczbę tokenów w tekście.",
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "text": {"type": "string"}
-                },
-                "required": ["text"]
-            }
-        }
+                "properties": {"text": {"type": "string"}},
+                "required": ["text"],
+            },
+        },
     },
     {
         "type": "function",
@@ -149,11 +145,9 @@ TOOLS_SCHEMA = [
             "description": "Wysyła skompresowane logi do Centrali w celu weryfikacji.",
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "logs": {"type": "string"}
-                },
-                "required": ["logs"]
-            }
-        }
+                "properties": {"logs": {"type": "string"}},
+                "required": ["logs"],
+            },
+        },
     },
 ]

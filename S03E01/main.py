@@ -1,8 +1,10 @@
 import logging
 from config import DATA_PATH
 from tools import (
-    process_files, evaluate_fragment_with_llm,
-    send_verify_answer, evaluate_full_note_with_llm
+    process_files,
+    evaluate_fragment_with_llm,
+    send_verify_answer,
+    evaluate_full_note_with_llm,
 )
 
 logger = logging.getLogger(__name__)
@@ -18,7 +20,7 @@ def main():
 
     for note in unique_notes:
         # Rozbijamy notatkę na fragmenty i usuwamy spacje z brzegów
-        fragments = [f.strip() for f in note.split(',')]
+        fragments = [f.strip() for f in note.split(",")]
 
         is_note_bad = False
 
@@ -36,9 +38,7 @@ def main():
         if is_note_bad:
             bad_notes_set.add(note)
 
-    logger.info(
-        f"Wygenerowano cache dla {len(fragment_cache)} unikalnych fragmentów."
-    )
+    logger.info(f"Wygenerowano cache dla {len(fragment_cache)} unikalnych fragmentów.")
     logger.info(f"Znaleziono {len(bad_notes_set)} notatek zgłaszających błąd.")
 
     # Etap 2: Ocena całej notatki
@@ -48,8 +48,10 @@ def main():
         if full_note_result == "ERROR":
             confirmed_bad_notes.add(note)
 
-    logger.info(f"Zakończono etap 2. \
-        Znaleziono {len(confirmed_bad_notes)} notatek zgłaszających błąd.")
+    logger.info(
+        f"Zakończono etap 2. \
+        Znaleziono {len(confirmed_bad_notes)} notatek zgłaszających błąd."
+    )
 
     # Łączymy wyniki
     for file_id, note in file_notes_mapping.items():

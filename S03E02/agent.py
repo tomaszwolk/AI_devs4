@@ -1,11 +1,11 @@
 import json
 import logging
 import os
-from openai import OpenAI
-from dotenv import load_dotenv
 
+from config import LOGS_DIR_PATH, OPENROUTER_API_KEY, OPENROUTER_URL, TOOLS_SCHEMA
+from dotenv import load_dotenv
+from openai import OpenAI
 from tools import TOOLS_DICT
-from config import TOOLS_SCHEMA, OPENROUTER_API_KEY, OPENROUTER_URL, LOGS_DIR_PATH
 
 os.makedirs(LOGS_DIR_PATH, exist_ok=True)
 
@@ -60,7 +60,7 @@ class MainAgent:
             json.dump(self.messages, f, indent=4, ensure_ascii=False)
         logger.info(f"Historia konwersacji zapisana do {filename}")
 
-    def run(self, user_prompt: str, additional_messages: list[dict] = None):
+    def run(self, user_prompt: str, additional_messages: list[dict] | None = None):
         """Uruchamia główną pętlę agenta."""
         logger.info("Rozpoczynam pracę Agenta...")
         self.messages.append({"role": "user", "content": user_prompt})
@@ -75,8 +75,8 @@ class MainAgent:
             # 1. Wywołaj model OpenAI
             response = CLIENT.chat.completions.create(
                 model=self.model,
-                messages=self.messages,
-                tools=TOOLS_SCHEMA,
+                messages=self.messages,  # type: ignore
+                tools=TOOLS_SCHEMA,  # type: ignore
                 tool_choice="auto",
             )
 
@@ -96,9 +96,10 @@ class MainAgent:
                 continue
 
             # 3. Wykonywanie narzędzi
+            res = None
             for tool_call in msg.tool_calls:
-                tool_name = tool_call.function.name
-                args = json.loads(tool_call.function.arguments)
+                tool_name = tool_call.function.name  # type: ignore
+                args = json.loads(tool_call.function.arguments)  # type: ignore
 
                 logger.info(f"Tool call: {tool_name} with args: {args}\n")
                 try:

@@ -1,12 +1,13 @@
+import os
+
 import requests
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
 TASK = "categorize"
 HUB_URL = os.getenv("HUB_URL")
-VERIFY_URL = HUB_URL + "/verify"
+VERIFY_URL = f"{HUB_URL}/verify"
 CATEGORIZE_URL = f"{HUB_URL}/data/{HUB_API_KEY}/categorize.csv"
 
 
@@ -22,13 +23,7 @@ def create_payload(prompt: str) -> dict:
     """
     Create payload for hub.
     """
-    payload = {
-        "apikey": HUB_API_KEY,
-        "task": TASK,
-        "answer": {
-            "prompt": prompt
-        }
-    }
+    payload = {"apikey": HUB_API_KEY, "task": TASK, "answer": {"prompt": prompt}}
 
     return payload
 

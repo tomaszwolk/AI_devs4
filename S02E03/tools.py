@@ -1,13 +1,19 @@
+import json
+import os
+import re
+
 import requests
 import tiktoken
 from config import (
-    LOGS_URL, VERIFY_URL, API_KEY, TASK, COMPRESSOR_MODEL,
-    LOGS_PATH, COMPRESSOR_SYSTEM_PROMPT
+    API_KEY,
+    COMPRESSOR_MODEL,
+    COMPRESSOR_SYSTEM_PROMPT,
+    LOGS_PATH,
+    LOGS_URL,
+    TASK,
+    VERIFY_URL,
 )
 from openai import OpenAI
-import os
-import json
-import re
 
 
 def download_logs() -> str:
@@ -25,10 +31,12 @@ def download_logs() -> str:
     return f"Logi pobrane pomyślnie. Zapisano {lines} linii do {LOGS_PATH}"
 
 
-def search_logs(keywords: list[str] = None, levels: list[str] = None) -> str:
+def search_logs(
+    keywords: list[str] | None = None, levels: list[str] | None = None
+) -> str:
     """
     Przeszukuje lokalny plik 'logs.txt'.
-    Przyjmuje listę słów kluczowych (np. ['PWR01', 'VALVE']) 
+    Przyjmuje listę słów kluczowych (np. ['PWR01', 'VALVE'])
     oraz/lub poziomów (np.['CRIT', 'WARN']).
     Zwraca surowe linie logów pasujące do kryteriów.
     """
@@ -48,7 +56,9 @@ def search_logs(keywords: list[str] = None, levels: list[str] = None) -> str:
     #    - Dodaj do listy znalezionych wyników
     results = []
     for line in lines:
-        if any(level in line for level in levels) or any(keyword in line for keyword in keywords):
+        if any(level in line for level in levels) or any(
+            keyword in line for keyword in keywords
+        ):
             results.append(line.strip())
 
     # 3. Złączenie wstępnych wyników i użycie filtra
@@ -59,7 +69,7 @@ def search_logs(keywords: list[str] = None, levels: list[str] = None) -> str:
     return filtered_logs
 
 
-def compress_logs(raw_logs: str) -> str:
+def compress_logs(raw_logs: str) -> str | None:
     """
     Narzędzie do kompresji. Przyjmuje surowe logi i używa tańszego modelu LLM,
     aby skrócić je do niezbędnego formatu (Data Czas Poziom Komponent - krótki opis).
@@ -72,19 +82,18 @@ def compress_logs(raw_logs: str) -> str:
     #    - "Zachowaj format jedno zdarzenie = jedna linia."
     # 2. Wyślij zapytanie do OpenAI.
     client = OpenAI(
-        base_url=os.getenv("BASE_URL"),
-        api_key=os.getenv("OPENROUTER_API_KEY")
+        base_url=os.getenv("BASE_URL"), api_key=os.getenv("OPENROUTER_API_KEY")
     )
 
     messages = [
         {"role": "system", "content": COMPRESSOR_SYSTEM_PROMPT},
-        {"role": "user", "content": filtered_logs}
+        {"role": "user", "content": filtered_logs},
     ]
 
     response = client.chat.completions.create(
-        model=COMPRESSOR_MODEL,
-        messages=messages,
-        temperature=0.1
+        model=COMPRESSOR_MODEL,  # type: ignore
+        messages=messages,  # type: ignore
+        temperature=0.1,
     )
     # 3. Zwróć wygenerowany, skompresowany tekst.
     return response.choices[0].message.content
@@ -111,7 +120,7 @@ def create_payload(logs: str) -> dict:
         "task": TASK,
         "answer": {
             "logs": logs,
-        }
+        },
     }
     return payload
 
@@ -120,7 +129,7 @@ def send_payload(payload: dict) -> tuple[int, dict]:
     """
     Send a payload to the hub.
     """
-    response = requests.post(VERIFY_URL, json=payload)
+    response = requests.post(VERIFY_URL, json=payload)  # type: ignore
     return response.status_code, response.json()
 
 
@@ -143,7 +152,7 @@ def filter_unique_logs(logs: str) -> str:
     unique_logs = []
     # Regex: [data] [level] reszta_komunikatu
     # Grupa (.*) wyłapie wszystko po "[LEVEL] "
-    log_pattern = re.compile(r'\[.*?\] \[(?:.*?)\] (.*)')
+    log_pattern = re.compile(r"\[.*?\] \[(?:.*?)\] (.*)")
 
     for line in logs.splitlines():
         match = log_pattern.search(line)

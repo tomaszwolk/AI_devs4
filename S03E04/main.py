@@ -3,21 +3,20 @@ import logging
 from contextlib import asynccontextmanager
 
 import httpx
-from fastapi import FastAPI, Request
-from openai import AsyncOpenAI
-from pydantic import BaseModel
-
 from config import (
     API_KEY,
-    OPENROUTER_URL,
     LOGS_DIR_PATH,
     MAIN_MODEL,
     MAIN_SYSTEM_PROMPT,
     MY_TOOL_URL,
     OPENROUTER_API_KEY,
+    OPENROUTER_URL,
     TASK,
     VERIFY_URL,
 )
+from fastapi import FastAPI, Request
+from openai import AsyncOpenAI
+from pydantic import BaseModel
 from tools import load_database
 
 logger = logging.getLogger(__name__)
@@ -64,6 +63,8 @@ async def verify_loop() -> None:
                 ]
             },
         }
+        if not VERIFY_URL:
+            raise ValueError("VERIFY_URL is not set")
         resp = await client.post(VERIFY_URL, json=payload)
         logger.info(
             "Rejestracja — status=%s body=%s",
@@ -129,7 +130,7 @@ async def search_cities(req: ToolRequest, request: Request):
     logger.info("\n📥 Agent pyta o: %s", req.params)
 
     response = await ACLIENT.chat.completions.create(
-        model=MAIN_MODEL,
+        model=MAIN_MODEL,  # type: ignore
         messages=[
             {"role": "system", "content": main_system_prompt},
             {"role": "user", "content": req.params},
@@ -137,7 +138,7 @@ async def search_cities(req: ToolRequest, request: Request):
         temperature=0.0,
     )
 
-    exact_item_name = response.choices[0].message.content.strip()
+    exact_item_name = response.choices[0].message.content.strip()  # type: ignore
     logger.info("🤖 LLM wywnioskował, że to: %s", exact_item_name)
 
     cities = db.get(exact_item_name, [])

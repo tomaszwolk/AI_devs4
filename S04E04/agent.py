@@ -1,12 +1,12 @@
-import sys
 import json
 import logging
 import os
-from openai import OpenAI
-from dotenv import load_dotenv
+import sys
 
-from tools import TOOLS_DICT
 from config import TOOLS_SCHEMA, settings
+from dotenv import load_dotenv
+from openai import OpenAI
+from tools import TOOLS_DICT
 
 os.makedirs(settings.logs_dir_path, exist_ok=True)
 
@@ -53,8 +53,10 @@ def _assistant_message_to_dict(msg) -> dict:
     return d
 
 
-DEFAULT_CONTINUATION_HINT = ("""Kontynuuj działanie używając dostępnych narzędzi,
-    aż zdobędziesz flagę {FLG:...}.""").strip()
+DEFAULT_CONTINUATION_HINT = (
+    """Kontynuuj działanie używając dostępnych narzędzi,
+    aż zdobędziesz flagę {FLG:...}."""
+).strip()
 
 
 class MainAgent:
@@ -78,7 +80,9 @@ class MainAgent:
     ):
         """Uruchamia główną pętlę agenta."""
         hint = (
-            continuation_hint if continuation_hint is not None else DEFAULT_CONTINUATION_HINT
+            continuation_hint
+            if continuation_hint is not None
+            else DEFAULT_CONTINUATION_HINT
         )
         logger.info("Rozpoczynam pracę Agenta...")
         self.messages.append({"role": "user", "content": user_prompt})
@@ -93,8 +97,8 @@ class MainAgent:
             # 1. Wywołaj model OpenAI
             response = CLIENT.chat.completions.create(
                 model=self.model,
-                messages=self.messages,
-                tools=TOOLS_SCHEMA,
+                messages=self.messages,  # type: ignore
+                tools=TOOLS_SCHEMA,  # type: ignore
                 tool_choice="auto",
             )
 
@@ -118,7 +122,9 @@ class MainAgent:
                         user_reply = ""
                     reply_stripped = user_reply.strip()
                     if reply_stripped:
-                        self.messages.append({"role": "user", "content": reply_stripped})
+                        self.messages.append(
+                            {"role": "user", "content": reply_stripped}
+                        )
                     else:
                         self.messages.append({"role": "user", "content": hint})
                 else:
@@ -126,19 +132,22 @@ class MainAgent:
                 continue
 
             # 3. Wykonywanie narzędzi
+            res = None
             for tool_call in msg.tool_calls:
-                tool_name = tool_call.function.name
+                tool_name = tool_call.function.name  # type: ignore
 
                 # Bezpieczne ładowanie argumentów - zabezpieczenie przed halucynacjami formatu JSON
                 try:
-                    args = json.loads(tool_call.function.arguments)
+                    args = json.loads(tool_call.function.arguments)  # type: ignore
                 except json.JSONDecodeError as e:
                     logger.error(f"Błąd parsowania JSON dla narzędzia {tool_name}: {e}")
-                    self.messages.append({
-                        "role": "tool",
-                        "tool_call_id": tool_call.id,
-                        "content": f"Błąd parsowania JSON dla narzędzia {tool_name}: {str(e)}. Proszę, popraw formatowanie JSON."
-                    })
+                    self.messages.append(
+                        {
+                            "role": "tool",
+                            "tool_call_id": tool_call.id,
+                            "content": f"Błąd parsowania JSON dla narzędzia {tool_name}: {str(e)}. Proszę, popraw formatowanie JSON.",
+                        }
+                    )
                     continue
 
                 # --- LOGIKA POTWIERDZENIA WYKONANIA KODU PYTHON ---
@@ -149,13 +158,19 @@ class MainAgent:
                     print(args.get("code", "Brak kodu?"))
                     print("-" * 50)
 
-                    user_confirm = input("Czy chcesz wykonać ten kod? (y/n/edycja): ").strip().lower()
+                    user_confirm = (
+                        input("Czy chcesz wykonać ten kod? (y/n/edycja): ")
+                        .strip()
+                        .lower()
+                    )
 
-                    if user_confirm == 'n':
+                    if user_confirm == "n":
                         res = "Error: Execution cancelled by user."
                         logger.warning("Użytkownik odrzucił wykonanie kodu.")
-                    elif user_confirm == 'edycja':
-                        print("Tryb edycji: Wklej poprawiony kod i naciśnij Ctrl+D (Linux/Mac) lub Ctrl+Z (Win) + Enter:")
+                    elif user_confirm == "edycja":
+                        print(
+                            "Tryb edycji: Wklej poprawiony kod i naciśnij Ctrl+D (Linux/Mac) lub Ctrl+Z (Win) + Enter:"
+                        )
                         new_code = sys.stdin.read()
                         args["code"] = new_code
                         logger.info("Użytkownik ręcznie wyedytował kod.")

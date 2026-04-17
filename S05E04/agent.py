@@ -1,12 +1,17 @@
-import sys
 import json
 import logging
 import os
-from openai import OpenAI
-from dotenv import load_dotenv
+import sys
+from typing import cast
 
-from tools import TOOLS_DICT
 from config import TOOLS_SCHEMA, settings
+from dotenv import load_dotenv
+from openai import OpenAI
+from openai.types.chat import (
+    ChatCompletionMessageParam,
+    ChatCompletionToolUnionParam,
+)
+from tools import TOOLS_DICT
 
 os.makedirs(settings.logs_dir_path, exist_ok=True)
 
@@ -31,7 +36,7 @@ CLIENT: OpenAI = OpenAI(
 )
 
 
-def _assistant_message_to_dict(msg) -> dict:
+def _assistant_message_to_dict(msg) -> ChatCompletionMessageParam:
     """ChatCompletionMessage nie jest serializowalny przez json.dump
     konwersja do dict."""
     if hasattr(msg, "model_dump"):
@@ -39,26 +44,37 @@ def _assistant_message_to_dict(msg) -> dict:
     # Starsze wersje SDK / obiekty bez model_dump
     d: dict = {"role": "assistant", "content": msg.content}
     if getattr(msg, "tool_calls", None):
-        d["tool_calls"] = [
-            {
-                "id": tc.id,
-                "type": getattr(tc, "type", "function") or "function",
-                "function": {
-                    "name": tc.function.name,
-                    "arguments": tc.function.arguments,
-                },
-            }
-            for tc in msg.tool_calls
-        ]
-    return d
+        tool_calls: list[dict] = []
+        for tc in msg.tool_calls:
+            tc_function = getattr(tc, "function", None)
+            if tc_function is None:
+                continue
+            tool_calls.append(
+                {
+                    "id": tc.id,
+                    "type": getattr(tc, "type", "function") or "function",
+                    "function": {
+                        "name": tc_function.name,
+                        "arguments": tc_function.arguments,
+                    },
+                }
+            )
+        d["tool_calls"] = tool_calls
+    return cast(ChatCompletionMessageParam, d)
 
 
-DEFAULT_CONTINUATION_HINT = ("""Kontynuuj działanie używając dostępnych narzędzi, aż zdobędziesz flagę {FLG:...}.""").strip()
+DEFAULT_CONTINUATION_HINT = (
+    """Kontynuuj działanie używając dostępnych narzędzi, aż zdobędziesz flagę {FLG:...}."""
+).strip()
 
 
 class MainAgent:
     def __init__(self, model: str, system_prompt: str, max_iterations: int = 40):
-        self.messages = [{"role": "system", "content": system_prompt}]
+        self.messages: list[ChatCompletionMessageParam] = [
+            cast(
+                ChatCompletionMessageParam, {"role": "system", "content": system_prompt}
+            )
+        ]
         self.model = model
         self.max_iterations = max_iterations
 
@@ -72,7 +88,7 @@ class MainAgent:
     def run(
         self,
         user_prompt: str,
-        additional_messages: list[dict] | None = None,
+        additional_messages: list[ChatCompletionMessageParam] | None = None,
         interactive: bool = True,
         continuation_hint: str | None = None,
     ):
@@ -83,7 +99,12 @@ class MainAgent:
             else DEFAULT_CONTINUATION_HINT
         )
         logger.info("Rozpoczynam pracę Agenta...")
-        self.messages.append({"role": "user", "content": user_prompt})
+        self.messages.append(
+            cast(
+                ChatCompletionMessageParam,
+                {"role": "user", "content": user_prompt},
+            )
+        )
         if additional_messages:
             self.messages.extend(additional_messages)
 
@@ -96,7 +117,7 @@ class MainAgent:
             response = CLIENT.chat.completions.create(
                 model=self.model,
                 messages=self.messages,
-                tools=TOOLS_SCHEMA,
+                tools=cast(list[ChatCompletionToolUnionParam], TOOLS_SCHEMA),
                 tool_choice="auto",
             )
 
@@ -130,12 +151,16 @@ class MainAgent:
                 continue
 
             # 3. Wykonywanie narzędzi
+            res = None
             for tool_call in msg.tool_calls:
-                tool_name = tool_call.function.name
+                tool_call_function = getattr(tool_call, "function", None)
+                if tool_call_function is None:
+                    continue
+                tool_name = tool_call_function.name
 
                 # Bezpieczne ładowanie argumentów - zabezpieczenie przed halucynacjami formatu JSON
                 try:
-                    args = json.loads(tool_call.function.arguments)
+                    args = json.loads(tool_call_function.arguments)
                 except json.JSONDecodeError as e:
                     logger.error(f"Błąd parsowania JSON dla narzędzia {tool_name}: {e}")
                     self.messages.append(
@@ -199,6 +224,8 @@ class MainAgent:
                 )
 
             # 4. Sprawdzenie flagi
+            if res is None:
+                continue
             res_for_flag = (
                 json.dumps(res, ensure_ascii=False)
                 if isinstance(res, (dict, list))

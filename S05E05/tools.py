@@ -10,7 +10,9 @@ logger = logging.getLogger(__name__)
 
 
 def download_data() -> str:
-    url = settings.hub_url + "/dane/timetravel.md"
+    url = f"{settings.hub_url}/dane/timetravel.md" if settings.hub_url else None
+    if url is None:
+        return "Hub URL is not set"
     response = requests.get(url)
 
     os.makedirs("data", exist_ok=True)
@@ -20,9 +22,7 @@ def download_data() -> str:
 
 
 def call_verify_api(**kwargs) -> str:
-    answer_payload = (
-        kwargs.get("answer_payload") or kwargs.get("answer") or kwargs
-    )
+    answer_payload = kwargs.get("answer_payload") or kwargs.get("answer") or kwargs
 
     payload = {
         "apikey": settings.api_key,
@@ -31,13 +31,12 @@ def call_verify_api(**kwargs) -> str:
     }
 
     try:
-        response = requests.post(settings.verify_url, json=payload, timeout=30)
+        response = requests.post(
+            settings.verify_url if settings.verify_url else "", json=payload, timeout=30
+        )
         data = response.json()
     except requests.exceptions.Timeout:
-        return json.dumps(
-            {"error": "Timeout. Spróbuj ponownie."},
-            ensure_ascii=False
-            )
+        return json.dumps({"error": "Timeout. Spróbuj ponownie."}, ensure_ascii=False)
     except Exception as e:
         return json.dumps(
             {"error": f"Błąd API lub parsowania: {e}"}, ensure_ascii=False
@@ -45,9 +44,7 @@ def call_verify_api(**kwargs) -> str:
 
     # Jeśli kod odpowiedzi jest ujemny, to znaczy, że należy zmienić zapytanie
     if data.get("code", 0) < 0:
-        logger.warning(
-            f"Otrzymano kod błędu {data.get('code')}: {data.get('message')}"
-        )
+        logger.warning(f"Otrzymano kod błędu {data.get('code')}: {data.get('message')}")
 
     return json.dumps(data, ensure_ascii=False, indent=4)
 
@@ -81,7 +78,9 @@ def update_ui_state(**kwargs) -> str:
     full_payload["apikey"] = settings.api_key
 
     # Endpoint interfejsu
-    url = settings.hub_url + "/timetravel_backend"
+    url = f"{settings.hub_url}/timetravel_backend" if settings.hub_url else None
+    if url is None:
+        return "Hub URL is not set"
 
     try:
         response = requests.post(url, json=full_payload, timeout=10)
@@ -97,31 +96,31 @@ def update_ui_state(**kwargs) -> str:
             {"error": "Timeout UI. Spróbuj ponownie."}, ensure_ascii=False
         )
     except Exception as e:
-        return json.dumps(
-            {"error": f"Błąd komunikacji z UI: {e}"}, ensure_ascii=False
-        )
+        return json.dumps({"error": f"Błąd komunikacji z UI: {e}"}, ensure_ascii=False)
 
 
 def wait_and_click_sphere(expected_internal_mode: int) -> str:
     """Narzędzie, które nasłuchuje na UI aż stan będzie idealny do skoku."""
-    url = settings.hub_url + "/timetravel_backend"
+    url = f"{settings.hub_url}/timetravel_backend" if settings.hub_url else None
+    if url is None:
+        return "Hub URL is not set"
 
     # 1. Zapewniamy, że interfejs wchodzi w stan active
     requests.post(
-        url,
-        json={"apikey": settings.api_key, "mode": "active"},
-        timeout=10
+        url, json={"apikey": settings.api_key, "mode": "active"}, timeout=10
     ).json()
 
-    logger.info(f"Oczekiwanie na perfect timing dla skoku...\
-        (target mode: {expected_internal_mode})")
+    logger.info(
+        f"Oczekiwanie na perfect timing dla skoku...\
+        (target mode: {expected_internal_mode})"
+    )
     # Waiting up to 45 seconds for the machine to be in the perfect timing
+    current_mode = None
+    flux = None
     for _ in range(45):
         try:
             response = requests.post(
-                url,
-                json={"apikey": settings.api_key},
-                timeout=10
+                url, json={"apikey": settings.api_key}, timeout=10
             ).json()
         except Exception as e:
             logger.warning(f"Błąd odczytu stanu maszyny: {e}")
@@ -143,13 +142,13 @@ def wait_and_click_sphere(expected_internal_mode: int) -> str:
             jump_payload = {
                 "apikey": settings.api_key,
                 "task": settings.task,
-                "answer": {"action": "timeTravel"}
+                "answer": {"action": "timeTravel"},
             }
             try:
                 jump_response = requests.post(
-                    settings.verify_url,
+                    settings.verify_url if settings.verify_url else "",
                     json=jump_payload,
-                    timeout=10
+                    timeout=10,
                 ).json()
                 if jump_response.get("code", 0) < 0:
                     error_msg = f"❌ SKOK ODRZUCONY PRZEZ MASZYNĘ! Centrala zwróciła błąd: {jump_response}. Powiedz Backendowi, by naprawił konfigurację!"
@@ -160,12 +159,14 @@ def wait_and_click_sphere(expected_internal_mode: int) -> str:
                     logger.info(success_msg)
                     return success_msg
             except Exception as e:
-                return json.dumps({"error": f"Błąd podczas aktywacji skoku: {e}"}, ensure_ascii=False)
+                return json.dumps(
+                    {"error": f"Błąd podczas aktywacji skoku: {e}"}, ensure_ascii=False
+                )
 
         time.sleep(1)
 
     return f"""Timeout operacji.
-        InternalMode: {current_mode} FluxDensity: {flux}
+        InternalMode: {current_mode if current_mode else "N/A"} FluxDensity: {flux if flux else "N/A"}
         Oczekiwany internalMode lub fluxDensity 100% nie wystąpiły na czas."""
 
 
@@ -194,10 +195,7 @@ def get_jump_requirements(year: int) -> str:
     except Exception as e:
         logger.error(f"Error parsing PWR: {e}")
 
-    return json.dumps({
-        "required_pwr": pwr,
-        "required_internal_mode": internal_mode
-    })
+    return json.dumps({"required_pwr": pwr, "required_internal_mode": internal_mode})
 
 
 def pass_control(target_agent: str, message: str) -> dict:
@@ -210,13 +208,13 @@ BACKEND_TOOLS_DICT = {
     "call_verify_api": call_verify_api,
     "calculate_sync_ratio": calculate_sync_ratio,
     "get_jump_requirements": get_jump_requirements,
-    "pass_control": pass_control
+    "pass_control": pass_control,
 }
 
 FRONTEND_TOOLS_DICT = {
     "update_ui_state": update_ui_state,
     "wait_and_click_sphere": wait_and_click_sphere,
-    "pass_control": pass_control
+    "pass_control": pass_control,
 }
 
 TOOLS_DICT = {

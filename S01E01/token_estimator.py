@@ -25,7 +25,9 @@ def main() -> None:
     people_filtered_path = base_path / "data" / "people_filtered.csv"
 
     if not people_filtered_path.exists():
-        raise FileNotFoundError(f"Nie znaleziono pliku {people_filtered_path}. Uruchom najpierw main.py, aby go wygenerować.")
+        raise FileNotFoundError(
+            f"Nie znaleziono pliku {people_filtered_path}. Uruchom najpierw main.py, aby go wygenerować."
+        )
 
     df = pd.read_csv(people_filtered_path, sep=";")
 

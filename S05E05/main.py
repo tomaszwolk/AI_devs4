@@ -6,7 +6,9 @@ from urllib.parse import urlparse
 from config import settings
 from agent import SpecializedAgent
 from tools import (
-    download_data, call_verify_api, BACKEND_TOOLS_DICT,
+    download_data,
+    call_verify_api,
+    BACKEND_TOOLS_DICT,
     FRONTEND_TOOLS_DICT,
 )
 
@@ -44,6 +46,11 @@ def ensure_help_file() -> None:
 
 
 def main():
+    model_name = settings.main_model
+    if model_name is None or not model_name.strip():
+        logger.error("Brak ustawienia MODEL_ID w .env. Przerywam uruchomienie.")
+        sys.exit(1)
+
     if not os.path.exists("data/timetravel.md"):
         logger.info("Downloading timetravel data...")
         download_data()
@@ -61,14 +68,14 @@ def main():
         --- DOKUMENTACJA URZĄDZENIA ---\n{documentation_content}"
 
     backend_agent = SpecializedAgent(
-        model=settings.main_model,
+        model=model_name,
         name="backend",
         system_prompt=FULL_BACKEND_PROMPT,
         tools_schema=settings.backend_tools_schema,
         tools_dict=BACKEND_TOOLS_DICT,
     )
     frontend_agent = SpecializedAgent(
-        model=settings.main_model,
+        model=model_name,
         name="frontend",
         system_prompt=settings.frontend_system_prompt,
         tools_schema=settings.frontend_tools_schema,
@@ -78,7 +85,8 @@ def main():
     # Orkiestrator zarządza kto zaczyna
     current_turn = "backend"
 
-    current_message = ("""
+    current_message = (
+        """
         ZACZYNAMY MISJĘ. Masz 3 skoki do wykonania. Skup się najpierw na SKOKU NR 1.
 
         SKOK 1: Skocz po baterie.
@@ -91,7 +99,8 @@ def main():
         - Data docelowa: 12 listopada 2024 roku. Tunel = PTA i PTB mają być włączone na raz.
 
         Jeśli nie jesteś w trybie 'standby', przekaż zadanie do frontendu, żeby go włączył, a potem niech wraca do ciebie. Wykonuj kolejne kroki metodycznie. Powodzenia!
-    """).strip()
+    """
+    ).strip()
 
     # reset api
     call_verify_api(answer_payload={"action": "reset"})
@@ -114,9 +123,8 @@ def main():
 
         elif status == "HANDOFF":
             current_turn = next_turn
-            current_message = (
-                f"[{active_agent.name.upper()}] przekazuje kontrolę:\n\
-                {output_msg}")
+            current_message = f"[{active_agent.name.upper()}] przekazuje kontrolę:\n\
+                {output_msg}"
 
         elif status == "ERROR":
             logger.error("Błąd w trakcie przetwarzania.")

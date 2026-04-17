@@ -11,7 +11,7 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 HUB_URL = os.getenv("HUB_URL")
 MAIL_URL = f"{HUB_URL}/api/zmail"
-VERIFY_URL = HUB_URL + "/verify"
+VERIFY_URL = f"{HUB_URL}/verify" if HUB_URL else None
 TASK = "mailbox"
 
 MAIN_MODEL = os.getenv("VISION_MODEL_ID")
@@ -67,10 +67,10 @@ TOOLS_SCHEMA = [
                 "properties": {
                     "date": {"type": "string"},
                     "password": {"type": "string"},
-                    "confirmation_code": {"type": "string"}
+                    "confirmation_code": {"type": "string"},
                 },
                 "required": ["date", "password", "confirmation_code"],
             },
         },
-    }
+    },
 ]

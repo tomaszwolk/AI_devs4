@@ -1,9 +1,10 @@
-from dotenv import load_dotenv
-import os
-from helper import get_image, rotate_field, reset_board, save_messages_to_file
-from openai import OpenAI
-from config import SYSTEM_PROMPT, TOOLS, USER_PROMPT
 import json
+import os
+
+from config import SYSTEM_PROMPT, TOOLS, USER_PROMPT
+from dotenv import load_dotenv
+from helper import get_image, reset_board, rotate_field, save_messages_to_file
+from openai import OpenAI
 
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
@@ -11,6 +12,8 @@ HUB_URL = os.getenv("BASE_URL")
 ELECTRICITY_URL = f"{HUB_URL}/data/{HUB_API_KEY}/electricity.png"
 SOLVED_ELECTRICITY_URL = f"{HUB_URL}/i/solved_electricity.png"
 MODEL_ID = os.getenv("VISION_MODEL_ID")
+if not MODEL_ID:
+    raise ValueError("VISION_MODEL_ID is not set")
 
 
 def main():
@@ -23,36 +26,27 @@ def main():
     image_data_solved = get_image(SOLVED_ELECTRICITY_URL)
 
     messages = [
-        {
-            "role": "system",
-            "content": SYSTEM_PROMPT
-        },
+        {"role": "system", "content": SYSTEM_PROMPT},
         {
             "role": "user",
             "content": [
                 {
                     "type": "text",
-                    "text": USER_PROMPT.format(ELECTRICITY_URL=ELECTRICITY_URL)
+                    "text": USER_PROMPT.format(ELECTRICITY_URL=ELECTRICITY_URL),
                 },
-                {
-                    "type": "image_url",
-                    "image_url": {"url": image_data_current}
-                },
-                {
-                    "type": "image_url",
-                    "image_url": {"url": image_data_solved}
-                }
-            ]
-        }
+                {"type": "image_url", "image_url": {"url": image_data_current}},
+                {"type": "image_url", "image_url": {"url": image_data_solved}},
+            ],
+        },
     ]
 
     print(f"Starting main loop. Model: {MODEL_ID}")
     for i in range(15):
         print(f"Iteration: {i}")
         response = client.chat.completions.create(
-            model=MODEL_ID,
+            model=MODEL_ID,  # type: ignore
             messages=messages,
-            tools=TOOLS,
+            tools=TOOLS,  # type: ignore
             temperature=0,
         )
 
@@ -60,9 +54,9 @@ def main():
             msg = response.choices[0].message
             messages.append(msg)
 
-            for tool_call in msg.tool_calls:
-                args = json.loads(tool_call.function.arguments)
-                tool_name = tool_call.function.name
+            for tool_call in msg.tool_calls:  # type: ignore
+                args = json.loads(tool_call.function.arguments)  # type: ignore
+                tool_name = tool_call.function.name  # type: ignore
                 print(f"\nTool call: {tool_name}")
                 print(f"Args: {args}")
                 if tool_name == "rotate_field":
@@ -74,7 +68,9 @@ def main():
                 else:
                     raise ValueError(f"Unknown function: {tool_name}")
 
-                tool_content = res if isinstance(res, str) else json.dumps(res, ensure_ascii=False)
+                tool_content = (
+                    res if isinstance(res, str) else json.dumps(res, ensure_ascii=False)
+                )
                 messages.append(
                     {
                         "role": "tool",

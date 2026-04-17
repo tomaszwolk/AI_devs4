@@ -25,11 +25,14 @@ TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "packageid": {"type": "string", "description": "Unikalny identyfikator paczki. np. PKG12345678"},
+                    "packageid": {
+                        "type": "string",
+                        "description": "Unikalny identyfikator paczki. np. PKG12345678",
+                    },
                 },
-                "required": ["packageid"]
-            }
-        }
+                "required": ["packageid"],
+            },
+        },
     },
     {
         "type": "function",
@@ -39,12 +42,21 @@ TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "packageid": {"type": "string", "description": "Unikalny identyfikator paczki. np. PKG12345678"},
-                    "destination": {"type": "string", "description": "Kod miejsca docelowego (np. PWR6132PL)"},
-                    "code": {"type": "string", "description": "Kod zabezpieczający podany przez operatora."},
+                    "packageid": {
+                        "type": "string",
+                        "description": "Unikalny identyfikator paczki. np. PKG12345678",
+                    },
+                    "destination": {
+                        "type": "string",
+                        "description": "Kod miejsca docelowego (np. PWR6132PL)",
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Kod zabezpieczający podany przez operatora.",
+                    },
                 },
-                "required": ["packageid", "destination", "code"]
-            }
-        }
-    }
+                "required": ["packageid", "destination", "code"],
+            },
+        },
+    },
 ]

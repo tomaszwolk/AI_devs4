@@ -3,8 +3,7 @@ import time
 from typing import Any
 
 import requests
-
-from config import (VERIFY_URL, API_KEY, TASK, ALLOWED_COMMANDS)
+from config import ALLOWED_COMMANDS, API_KEY, TASK, VERIFY_URL
 
 logger = logging.getLogger(__name__)
 
@@ -24,11 +23,10 @@ def send_command(command: str) -> dict[str, Any]:
     payload = {
         "apikey": API_KEY,
         "task": TASK,
-        "answer":
-        {
-            "command": command
-        },
+        "answer": {"command": command},
     }
+    if not VERIFY_URL:
+        raise ValueError("VERIFY_URL is not set")
     try:
         response = requests.post(VERIFY_URL, json=payload, timeout=15)
     except requests.exceptions.RequestException as e:

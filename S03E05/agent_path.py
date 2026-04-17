@@ -64,6 +64,7 @@ def move_cost(tile, vehicle):
         fuel_cost += v["tree_fuel"]
     return fuel_cost, food_cost
 
+
 # State: (fuel_used, food_used, row, col, vehicle, path)
 # We use Dijkstra minimizing food used (since food is the tighter constraint)
 # Actually let's minimize both - use food as primary cost
@@ -71,7 +72,7 @@ def move_cost(tile, vehicle):
 # State: (food_used, fuel_used, row, col, vehicle)
 # We'll use Dijkstra with priority = food_used (then fuel_used)
 
-INF = float('inf')
+INF = float("inf")
 
 # Priority queue: (food_used, fuel_used, row, col, vehicle, path)
 # visited: (row, col, vehicle) -> (min_food, min_fuel)
@@ -94,7 +95,11 @@ while pq:
 
     # Check goal
     if (row, col) == goal:
-        if result_path is None or food_used < result_food or (food_used == result_food and fuel_used < result_fuel):
+        if (
+            result_path is None
+            or food_used < result_food
+            or (food_used == result_food and fuel_used < result_fuel)
+        ):
             result_path = path
             result_food = food_used
             result_fuel = fuel_used
@@ -120,17 +125,31 @@ while pq:
                 new_food = food_used + fo
                 if new_fuel <= MAX_FUEL and new_food <= MAX_FOOD:
                     new_state_key = (nr, nc, vehicle)
-                    if new_state_key not in visited or (new_food < visited[new_state_key][0] or
-                       (new_food == visited[new_state_key][0] and new_fuel < visited[new_state_key][1])):
-                        heapq.heappush(pq, (new_food, new_fuel, nr, nc, vehicle, path + [dir_name]))
+                    if new_state_key not in visited or (
+                        new_food < visited[new_state_key][0]
+                        or (
+                            new_food == visited[new_state_key][0]
+                            and new_fuel < visited[new_state_key][1]
+                        )
+                    ):
+                        heapq.heappush(
+                            pq, (new_food, new_fuel, nr, nc, vehicle, path + [dir_name])
+                        )
 
     # Option 2: Dismount (only if current vehicle is not walk)
     if vehicle != "walk":
         new_vehicle = "walk"
         dismount_key = (row, col, new_vehicle)
-        if dismount_key not in visited or (food_used < visited[dismount_key][0] or
-           (food_used == visited[dismount_key][0] and fuel_used < visited[dismount_key][1])):
-            heapq.heappush(pq, (food_used, fuel_used, row, col, new_vehicle, path + ["dismount"]))
+        if dismount_key not in visited or (
+            food_used < visited[dismount_key][0]
+            or (
+                food_used == visited[dismount_key][0]
+                and fuel_used < visited[dismount_key][1]
+            )
+        ):
+            heapq.heappush(
+                pq, (food_used, fuel_used, row, col, new_vehicle, path + ["dismount"])
+            )
 
 if result_path:
     print(f"Path found! Food used: {result_food}, Fuel used: {result_fuel}")

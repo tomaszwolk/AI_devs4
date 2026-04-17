@@ -1,28 +1,30 @@
 import os
-from pathlib import Path
-from dotenv import load_dotenv
 from dataclasses import dataclass
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 
 @dataclass(frozen=True)
 class Settings:
-    api_key: str
-    openrouter_url: str
-    hub_url: str
-    openrouter_api_key: str
-    verify_url: str
+    api_key: str | None
+    openrouter_url: str | None
+    hub_url: str | None
+    openrouter_api_key: str | None
+    verify_url: str | None
     task: str
     logs_dir_path: Path
-    main_model: str
+    main_model: str | None
     main_system_prompt: str
-    e2b_api_key: str
+    e2b_api_key: str | None
     bonus_system_prompt: str
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = ("""
+MAIN_SYSTEM_PROMPT = (
+    """
     Jesteś elitarnym dowódcą misji ratunkowej w zrujnowanym mieście Domatowo.
     Twoim celem jest odnalezienie rannego partyzanta i ewakuowanie go helikopterem.
 
@@ -60,9 +62,11 @@ MAIN_SYSTEM_PROMPT = ("""
     KROK 10. Jeśli człowieka nie było w KLASTRZE 1, stwórz KOLEJNY transporter (zrespi się na B6), pojedź do KLASTRA 2 (np. na pole C9), wysadź zwiadowców, zbadaj bloki w KLASTRZE 2. Powtarzaj aż znajdziesz cel.
 
     Działaj metodycznie. Sprawdzaj odpowiedzi API. Wykonuj akcje po kolei i na bieżąco analizuj `getObjects` i `getLogs`.
-""").strip()
+"""
+).strip()
 
-BONUS_SYSTEM_PROMPT = ("""
+BONUS_SYSTEM_PROMPT = (
+    """
     Jesteś elitarnym dowódcą misji specjalnej w zrujnowanym mieście Domatowo.
     Tym razem realizujemy ukryty cel poboczny: "Take Me to Church".
     Twoim zadaniem jest dotarcie do kościoła, dokładne przeszukanie go, odczytanie logów i BEZWZGLĘDNE ZATRZYMANIE SIĘ, aby poczekać na moje rozkazy.
@@ -83,20 +87,23 @@ BONUS_SYSTEM_PROMPT = ("""
     9. BARDZO WAŻNE: Gdy tylko odczytasz logi z kościoła i poznasz ukryte tam informacje, PRZERWIJ wywoływanie narzędzi. Wypisz w treści swojej odpowiedzi, co dokładnie znalazłeś w kościele, a następnie wyraźnie poproś mnie o dalsze wytyczne.
 
     NIE podejmuj żadnych kolejnych działań poszukiwawczych ani ewakuacyjnych, dopóki nie wpiszę Ci w konsoli, co masz dalej zrobić. Czekaj na mój sygnał.
-""").strip()
+"""
+).strip()
 
 settings = Settings(
     api_key=os.getenv("HUB_API_KEY"),
     openrouter_url=os.getenv("OPENROUTER_URL"),
     hub_url=os.getenv("HUB_URL"),
     openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
-    verify_url=os.getenv("HUB_URL") + "/verify",
+    verify_url=(
+        f"{hub_url}/verify" if (hub_url := os.getenv("HUB_URL")) is not None else None
+    ),
     task="domatowo",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),
     main_system_prompt=MAIN_SYSTEM_PROMPT,
     bonus_system_prompt=BONUS_SYSTEM_PROMPT,
-    e2b_api_key=os.getenv("E2B_API_KEY")
+    e2b_api_key=os.getenv("E2B_API_KEY"),
 )
 
 
@@ -134,5 +141,5 @@ TOOLS_SCHEMA = [
                 "required": ["code"],
             },
         },
-    }
+    },
 ]

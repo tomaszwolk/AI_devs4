@@ -1,13 +1,17 @@
-import os
-from dotenv import load_dotenv
-from helper import create_send_payload, reset_prompt, get_data
-from openai import OpenAI
-from config import SYSTEM_PROMPT, TOOLS
 import json
+import os
+
+from config import SYSTEM_PROMPT, TOOLS
+from dotenv import load_dotenv
+from helper import create_send_payload, get_data, reset_prompt
+from openai import OpenAI
 
 
 def main():
     load_dotenv()
+    model_id = os.getenv("STRONG_MODEL_ID")
+    if not model_id:
+        raise ValueError("STRONG_MODEL_ID is not set")
 
     # Stwórz folder data/ jeśli nie istnieje
     if not os.path.exists("data"):
@@ -25,34 +29,28 @@ def main():
         Pobierz dane z hubu i wyślij prompt do hubu w celu klasyfikacji.
         """
     messages = [
-        {
-            "role": "system",
-            "content": SYSTEM_PROMPT
-        },
-        {
-            "role": "user",
-            "content": user_prompt
-        }
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": user_prompt},
     ]
 
     for i in range(25):
         print(f"Iteration: {i}")
         response = client.chat.completions.create(
-            model=os.getenv("STRONG_MODEL_ID"),
-            messages=messages,
-            tools=TOOLS,
+            model=model_id,
+            messages=messages,  # type: ignore
+            tools=TOOLS,  # type: ignore
             temperature=0,
         )
 
         if response.choices[0].message.tool_calls:
             msg = response.choices[0].message
-            messages.append(msg)
+            messages.append(msg)  # type: ignore
 
-            for tool_call in msg.tool_calls:
+            for tool_call in msg.tool_calls:  # type: ignore
                 print(f"Tool call: {tool_call}\n")
-                args = json.loads(tool_call.function.arguments)
+                args = json.loads(tool_call.function.arguments)  # type: ignore
                 print(f"Args: {args}\n")
-                tool_name = tool_call.function.name
+                tool_name = tool_call.function.name  # type: ignore
                 if tool_name == "create_send_payload":
                     res = create_send_payload(**args)
                 elif tool_name == "reset_prompt":
@@ -70,7 +68,7 @@ def main():
                     {
                         "role": "tool",
                         "tool_call_id": tool_call.id,
-                        "content": content,
+                        "content": content,  # type: ignore
                     }
                 )
         else:

@@ -1,12 +1,14 @@
-import requests
-import logging
-import json
-import mimetypes
 import base64
-from datetime import datetime
+import json
+import logging
+import mimetypes
 import sys
+from datetime import datetime
+
+import requests
 from config import settings
 from e2b_code_interpreter import Sandbox
+from openai import NoneType
 
 logger = logging.getLogger(__name__)
 
@@ -28,17 +30,25 @@ def call_verify_api(**kwargs) -> str:
     payload = {
         "apikey": settings.api_key,
         "task": settings.task,
-        "answer": answer_payload
+        "answer": answer_payload,
     }
+    if not settings.verify_url:
+        raise ValueError("VERIFY_URL is not set")
     try:
         response = requests.post(settings.verify_url, json=payload, timeout=30)
         response.raise_for_status()  # Wyrzuci błąd jeśli status nie jest 200
     except requests.exceptions.Timeout:
         logger.error("Timeout wysyłania do API")
-        return json.dumps({"error": "Timeout wysyłania do API. Spróbuj ponownie akcję listen."}, ensure_ascii=False, indent=4)
+        return json.dumps(
+            {"error": "Timeout wysyłania do API. Spróbuj ponownie akcję listen."},
+            ensure_ascii=False,
+            indent=4,
+        )
     except Exception as e:
         logger.error(f"Error: {e}")
-        return json.dumps({"error": f"Błąd komunikacji z API: {str(e)}"}, ensure_ascii=False, indent=4)
+        return json.dumps(
+            {"error": f"Błąd komunikacji z API: {str(e)}"}, ensure_ascii=False, indent=4
+        )
 
     try:
         data = response.json()
@@ -48,20 +58,20 @@ def call_verify_api(**kwargs) -> str:
 
     if "attachment" in data:
         meta_type = data.get("meta", "application/octet-stream")
-        filesize = data.get('filesize', None)
-        data["attachment"] = decode_base64(
-            data["attachment"],
-            meta_type,
-            filesize
-        )
+        filesize = data.get("filesize", None)
+        data["attachment"] = decode_base64(data["attachment"], meta_type, filesize)
 
     return json.dumps(data, ensure_ascii=False, indent=4)
 
 
-def decode_base64(base64_data: str, meta_type: str, filesize: int) -> str:
+def decode_base64(base64_data: str, meta_type: str, filesize: int) -> str | None:
     clean_b64 = base64_data
     if clean_b64.startswith("BASE64:"):
-        clean_b64 = clean_b64.split(":", 1)[-1] if ":" in clean_b64 else clean_b64.replace("BASE64:", "")
+        clean_b64 = (
+            clean_b64.split(":", 1)[-1]
+            if ":" in clean_b64
+            else clean_b64.replace("BASE64:", "")
+        )
 
     # Próba dekodowania
     try:
@@ -88,30 +98,38 @@ def decode_base64(base64_data: str, meta_type: str, filesize: int) -> str:
 
         while True:
             print("\nCo chcesz zrobić z tym plikiem?")
-            print("[1] Wstrzyknij zdekodowaną zawartość bezpośrednio Agentowi (Tylko dla JSON/XML/TXT)")
-            print("[2] Zobaczę plik samemu i napiszę Agentowi ręcznie co tam jest (Audio/Obraz)")
-            print("[3] Zignoruj (Podaj Agentowi jedynie ścieżkę do pliku, np. by sprawdził go Pythonem)")
+            print(
+                "[1] Wstrzyknij zdekodowaną zawartość bezpośrednio Agentowi (Tylko dla JSON/XML/TXT)"
+            )
+            print(
+                "[2] Zobaczę plik samemu i napiszę Agentowi ręcznie co tam jest (Audio/Obraz)"
+            )
+            print(
+                "[3] Zignoruj (Podaj Agentowi jedynie ścieżkę do pliku, np. by sprawdził go Pythonem)"
+            )
             print("[4] Przerwij działanie całego programu")
 
             user_decision = input("Wybierz opcję (1/2/3/4): ").strip()
 
-            if user_decision == '1':
+            if user_decision == "1":
                 try:
-                    with open(filepath, "r", encoding='utf-8') as f:
+                    with open(filepath, "r", encoding="utf-8") as f:
                         content = f.read()
                         return f"[DEKODOWANY PLIK {meta_type}]:\n{content}"
                 except UnicodeDecodeError:
                     logger.error("Błąd odczytu pliku: Nieprawidłowy kodowanie UTF-8")
 
-            elif user_decision == '2':
+            elif user_decision == "2":
                 user_desc = input("Wpisz podsumowanie/transkrypcję/opis dla Agenta: ")
                 return f"[OPERATOR PRZEANALIZOWAŁ PLIK I RAPORTUJE]: {user_desc}"
 
-            elif user_decision == '3':
+            elif user_decision == "3":
                 return f"[UKRYTO BASE64. Plik znajduje się pod ścieżką: 'logs/{filename}'. Możesz do niego uzyskać dostęp używając Pythona.]"
 
-            elif user_decision == '4':
-                logger.info("Przerywam działanie skryptu. Zaktualizuj kod/toole na podstawie tego, co zobaczyłeś w pliku.")
+            elif user_decision == "4":
+                logger.info(
+                    "Przerywam działanie skryptu. Zaktualizuj kod/toole na podstawie tego, co zobaczyłeś w pliku."
+                )
                 sys.exit(0)
             else:
                 logger.error("Nieprawidłowy wybór. Spróbuj ponownie.")
@@ -120,7 +138,7 @@ def decode_base64(base64_data: str, meta_type: str, filesize: int) -> str:
         logger.error(f"Błąd dekodowania Base64: {e}")
 
 
-def execute_python_code(code: str) -> str:
+def execute_python_code(code: str) -> str | list[str]:
     """Zwraca: Stdout z konsoli Python w bezpiecznym sandboxie."""
     logger.debug("E2B: run_code (len=%d)", len(code))
     # Sandbox() bez .create() nie tworzy połączenia — wymagane jest Sandbox.create()

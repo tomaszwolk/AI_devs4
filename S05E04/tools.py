@@ -1,9 +1,10 @@
+import hashlib
 import json
 import logging
 import re
-import requests
-import hashlib
 import time
+
+import requests
 from config import settings
 
 logger = logging.getLogger(__name__)
@@ -44,7 +45,7 @@ def _fix_hub_malformed_json(s: str) -> str:
     s = re.sub(r'":\s*"([^"]*?)`(\s*\n)', r'": "\1"\2', s)
     s = re.sub(r"\":\s*\"([^\"]*?)'(\s*\n)", r'": "\1"\2', s)
     # } newline "następnyKlucz" — brak przecinka między polami obiektu
-    s = re.sub(r'\}\s*\n(\s*")', r'},\n\1', s)
+    s = re.sub(r'\}\s*\n(\s*")', r"},\n\1", s)
     s = re.sub(r"(true|false|\d+)\s*\r?\n(\s*\")", r"\1,\n\2", s)
     return s
 
@@ -92,6 +93,8 @@ def call_verify_api(**kwargs) -> str:
     last_failure: dict = {"error": "nieznany"}
     for attempt in range(ATTEMPTS):
         response = None
+        if not settings.verify_url:
+            raise ValueError("VERIFY_URL is not set")
         try:
             response = requests.post(settings.verify_url, json=payload, timeout=30)
             if response.status_code != 200:
@@ -102,9 +105,7 @@ def call_verify_api(**kwargs) -> str:
                 if err_data is not None and err_data.get("code") == -950:
                     error_code = err_data.get("code")
                     error_msg = err_data.get("message", "Nieznany błąd")
-                    logger.warning(
-                        "Koniec gry (code %s): %s", error_code, error_msg
-                    )
+                    logger.warning("Koniec gry (code %s): %s", error_code, error_msg)
                     return f"Otrzymano kod błędu {error_code}: {error_msg}"
                 last_failure = {
                     "error": f"HTTP {response.status_code}",
@@ -120,14 +121,10 @@ def call_verify_api(**kwargs) -> str:
             if data.get("code", 0) < 0:
                 error_code = data.get("code")
                 error_msg = data.get("message", "Nieznany błąd")
-                logger.warning(
-                    "Otrzymano kod błędu %s: %s", error_code, error_msg
-                )
+                logger.warning("Otrzymano kod błędu %s: %s", error_code, error_msg)
                 return f"Otrzymano kod błędu {error_code}: {error_msg}"
 
-            return json.dumps(
-                data, ensure_ascii=False, indent=4, default=_json_default
-            )
+            return json.dumps(data, ensure_ascii=False, indent=4, default=_json_default)
         except requests.exceptions.Timeout:
             last_failure = {"error": "Timeout", "detail": "timeout 30s"}
             logger.error("verify timeout próba %s/%s.", attempt + 1, ATTEMPTS)
@@ -158,7 +155,7 @@ def get_radio_hint() -> str:
         "apikey": settings.api_key,
     }
 
-    url = settings.hub_url + "/api/getmessage"
+    url = f"{settings.hub_url}/api/getmessage"
     last_failure: dict = {"error": "nieznany"}
     for attempt in range(ATTEMPTS):
         response = None
@@ -178,14 +175,10 @@ def get_radio_hint() -> str:
                 time.sleep(1)
                 continue
             data = response.json()
-            return json.dumps(
-                data, ensure_ascii=False, indent=4, default=_json_default
-            )
+            return json.dumps(data, ensure_ascii=False, indent=4, default=_json_default)
         except requests.exceptions.Timeout:
             last_failure = {"error": "Timeout", "detail": "timeout 30s"}
-            logger.error(
-                "getmessage timeout próba %s/%s.", attempt + 1, ATTEMPTS
-            )
+            logger.error("getmessage timeout próba %s/%s.", attempt + 1, ATTEMPTS)
             time.sleep(1)
         except Exception as e:
             last_failure = {"error": str(e)}
@@ -210,7 +203,7 @@ def get_radio_hint() -> str:
 
 def scan_frequency() -> str:
     key = settings.api_key
-    url = settings.hub_url + "/api/frequencyScanner"
+    url = f"{settings.hub_url}/api/frequencyScanner"
     last_failure: dict = {"error": "nieznany"}
     for attempt in range(ATTEMPTS):
         response = None
@@ -263,7 +256,7 @@ def scan_frequency() -> str:
 
 
 def neutralize_trap(frequency: int, detectionCode: str) -> str:
-    disarmHash = hashlib.sha1((detectionCode + "disarm").encode('utf-8')).hexdigest()
+    disarmHash = hashlib.sha1((detectionCode + "disarm").encode("utf-8")).hexdigest()
 
     payload = {
         "apikey": settings.api_key,
@@ -271,7 +264,7 @@ def neutralize_trap(frequency: int, detectionCode: str) -> str:
         "disarmHash": disarmHash,
     }
 
-    url = settings.hub_url + "/api/frequencyScanner"
+    url = f"{settings.hub_url}/api/frequencyScanner"
     last_failure: dict = {"error": "nieznany"}
     for attempt in range(ATTEMPTS):
         response = None
@@ -291,14 +284,10 @@ def neutralize_trap(frequency: int, detectionCode: str) -> str:
                 time.sleep(1)
                 continue
             data = _parse_hub_json_body(response.text)
-            return json.dumps(
-                data, ensure_ascii=False, indent=4, default=_json_default
-            )
+            return json.dumps(data, ensure_ascii=False, indent=4, default=_json_default)
         except requests.exceptions.Timeout:
             last_failure = {"error": "Timeout", "detail": "timeout 30s"}
-            logger.error(
-                "neutralize timeout próba %s/%s.", attempt + 1, ATTEMPTS
-            )
+            logger.error("neutralize timeout próba %s/%s.", attempt + 1, ATTEMPTS)
             time.sleep(1)
         except Exception as e:
             last_failure = {"error": str(e)}

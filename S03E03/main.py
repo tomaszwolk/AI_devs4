@@ -28,10 +28,10 @@ def main():
         sys.exit(1)
 
     board_json = json.dumps(response, ensure_ascii=False)
-    user_prompt = (
-        f"""Zacznij zadanie. Postępuj zgodnie z instrukcjami systemowymi.
+    user_prompt = f"""Zacznij zadanie. Postępuj zgodnie z instrukcjami systemowymi.
         Początkowy stan planszy: {board_json}"""
-    )
+    if not MAIN_MODEL:
+        raise ValueError("MAIN_MODEL is not set")
     agent = MainAgent(model=MAIN_MODEL, system_prompt=MAIN_SYSTEM_PROMPT)
     try:
         agent.run(user_prompt, interactive=not args.no_interactive)

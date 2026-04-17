@@ -6,25 +6,26 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Settings:
-    api_key: str
-    openrouter_url: str
-    hub_url: str
-    openrouter_api_key: str
-    verify_url: str
+    api_key: str | None
+    openrouter_url: str | None
+    hub_url: str | None
+    openrouter_api_key: str | None
+    verify_url: str | None
     task: str
     logs_dir_path: Path
-    main_model: str
+    main_model: str | None
     frontend_system_prompt: str
     backend_system_prompt: str
     frontend_tools_schema: list
     backend_tools_schema: list
-    e2b_api_key: str
+    e2b_api_key: str | None
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-BACKEND_SYSTEM_PROMPT = ("""
+BACKEND_SYSTEM_PROMPT = (
+    """
     Jesteś Nawigatorem Backendowym Maszyny Czasu. Pracujesz z Operatorem Frontendu.
     Twoim jedynym zadaniem jest konfigurowanie daty i parametrów bezpieczeństwa przez API maszyny (/verify).
 
@@ -38,9 +39,11 @@ BACKEND_SYSTEM_PROMPT = ("""
        - Jak ustawić kierunek: Tunel = oba True, Przyszłość = tylko PTB, Przeszłość = tylko PTA.
        - Dokładną wartość PWR (z narzędzia get_jump_requirements).
        - Oczekiwany internalMode (z narzędzia get_jump_requirements).
-""").strip()
+"""
+).strip()
 
-FRONTEND_SYSTEM_PROMPT = ("""
+FRONTEND_SYSTEM_PROMPT = (
+    """
     Jesteś Operatorem Frontendowym Maszyny Czasu. Pracujesz w zespole z Nawigatorem Backendu.
     Twoim zadaniem jest operowanie suwakami i przyciskami panelu maszyny oraz wykonywanie fizycznych skoków w czasie.
 
@@ -51,7 +54,8 @@ FRONTEND_SYSTEM_PROMPT = ("""
        - Użyj 'update_ui_state' z odpowiednim payloadem, np. {"PTA": true, "PTB": false, "PWR": 91}
        - Następnie użyj narzędzia 'wait_and_click_sphere' podając 'expected_internal_mode'. Narzędzie to samodzielnie poczeka na idealny moment by aktywować sferę!
        - Jeżeli narzędzie zwróci informacje o skoku lub flagę, przekaż ją dalej do Nawigatora ('backend') przez 'pass_control' pytając o dalsze kroki misji.
-""").strip()
+"""
+).strip()
 
 SHARED_TOOLS = [
     {
@@ -62,12 +66,19 @@ SHARED_TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "target_agent": {"type": "string", "enum": ["frontend", "backend"], "description": "Do kogo przekazujesz zadanie"},
-                    "message": {"type": "string", "description": "Szczegółowa instrukcja dla drugiego agenta"}
+                    "target_agent": {
+                        "type": "string",
+                        "enum": ["frontend", "backend"],
+                        "description": "Do kogo przekazujesz zadanie",
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Szczegółowa instrukcja dla drugiego agenta",
+                    },
                 },
-                "required": ["target_agent", "message"]
-            }
-        }
+                "required": ["target_agent", "message"],
+            },
+        },
     }
 ]
 
@@ -77,25 +88,41 @@ BACKEND_TOOLS_SCHEMA = [
         "function": {
             "name": "call_verify_api",
             "description": "Komunikacja API (backend). Oczekuje obiektu answer_payload: np. {'action': 'getConfig'} lub {'action': 'configure', 'param': 'year', 'value': 2238}.",
-            "parameters": {"type": "object", "properties": {"answer_payload": {"type": "object"}}, "required": ["answer_payload"]}
-        }
+            "parameters": {
+                "type": "object",
+                "properties": {"answer_payload": {"type": "object"}},
+                "required": ["answer_payload"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "calculate_sync_ratio",
             "description": "Oblicza wskaźnik syncRatio wg wzoru.",
-            "parameters": {"type": "object", "properties": {"day": {"type": "integer"}, "month": {"type": "integer"}, "year": {"type": "integer"}}, "required":["day", "month", "year"]}
-        }
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "day": {"type": "integer"},
+                    "month": {"type": "integer"},
+                    "year": {"type": "integer"},
+                },
+                "required": ["day", "month", "year"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "get_jump_requirements",
             "description": "Zwraca wymagany poziom PWR oraz internalMode dla danego roku.",
-            "parameters": {"type": "object", "properties": {"year": {"type": "integer"}}, "required": ["year"]}
-        }
-    }
+            "parameters": {
+                "type": "object",
+                "properties": {"year": {"type": "integer"}},
+                "required": ["year"],
+            },
+        },
+    },
 ] + SHARED_TOOLS
 
 FRONTEND_TOOLS_SCHEMA = [
@@ -104,17 +131,30 @@ FRONTEND_TOOLS_SCHEMA = [
         "function": {
             "name": "update_ui_state",
             "description": "Zmienia wartości na UI maszyny czasu. Payload przyjmuje klucze: 'mode', 'PTA', 'PTB', 'PWR'. Przykład: {'PTA': true, 'PTB': false, 'PWR': 50}",
-            "parameters": {"type": "object", "properties": {"payload": {"type": "object"}}, "required": ["payload"]}
-        }
+            "parameters": {
+                "type": "object",
+                "properties": {"payload": {"type": "object"}},
+                "required": ["payload"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "wait_and_click_sphere",
             "description": "Wchodzi w tryb active, nasłuchuje UI maszyny, gdy internalMode się zrówna i fluxDensity osiągnie 100%, fizycznie aktywuje sferę skoku (jump).",
-            "parameters": {"type": "object", "properties": {"expected_internal_mode": {"type": "integer", "description": "1, 2, 3 lub 4"}}, "required":["expected_internal_mode"]}
-        }
-    }
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "expected_internal_mode": {
+                        "type": "integer",
+                        "description": "1, 2, 3 lub 4",
+                    }
+                },
+                "required": ["expected_internal_mode"],
+            },
+        },
+    },
 ] + SHARED_TOOLS
 
 settings = Settings(
@@ -122,7 +162,9 @@ settings = Settings(
     openrouter_url=os.getenv("OPENROUTER_URL"),
     hub_url=os.getenv("HUB_URL"),
     openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
-    verify_url=os.getenv("HUB_URL") + "/verify",
+    verify_url=(
+        f"{hub_url}/verify" if (hub_url := os.getenv("HUB_URL")) is not None else None
+    ),
     task="timetravel",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),

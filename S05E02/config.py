@@ -6,22 +6,23 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Settings:
-    api_key: str
-    openrouter_url: str
-    hub_url: str
-    openrouter_api_key: str
-    verify_url: str
+    api_key: str | None
+    openrouter_url: str | None
+    hub_url: str | None
+    openrouter_api_key: str | None
+    verify_url: str | None
     task: str
     logs_dir_path: Path
-    main_model: str
+    main_model: str | None
     system_prompt: str
-    e2b_api_key: str
+    e2b_api_key: str | None
 
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(ROOT_ENV_PATH)
 
-MAIN_SYSTEM_PROMPT = ("""
+MAIN_SYSTEM_PROMPT = (
+    """
     Jesteś agentem o imieniu Tymon Gajewski. Twoim celem jest przeprowadzenie rozmowy radiowej w zadaniu 'phonecall'.
 
     Masz do dyspozycji narzędzie `call_verify_api`.
@@ -70,18 +71,23 @@ MAIN_SYSTEM_PROMPT = ("""
 
     # Reakcja na błędy:
     Jeśli otrzymasz `SYSTEM_ALERT` z informacją o spaleniu rozmowy (jakikolwiek kod błędu < 0), musisz zacząć od nowa, wracając do KROKU 1.
-""").strip()
+"""
+).strip()
 
-BONUS_SYSTEM_PROMPT = ("""
+BONUS_SYSTEM_PROMPT = (
+    """
 
-""").strip()
+"""
+).strip()
 
 settings = Settings(
     api_key=os.getenv("HUB_API_KEY"),
     openrouter_url=os.getenv("OPENROUTER_URL"),
     hub_url=os.getenv("HUB_URL"),
     openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
-    verify_url=os.getenv("HUB_URL") + "/verify",
+    verify_url=(
+        f"{hub_url}/verify" if (hub_url := os.getenv("HUB_URL")) is not None else None
+    ),
     task="phonecall",
     logs_dir_path=Path(__file__).parent / "logs",
     main_model=os.getenv("MODEL_ID"),

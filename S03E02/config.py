@@ -10,7 +10,7 @@ OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 HUB_URL = os.getenv("HUB_URL")
-VERIFY_URL = HUB_URL + "/verify"
+VERIFY_URL = f"{HUB_URL}/verify" if HUB_URL else None
 SHELL_URL = f"{HUB_URL}/api/shell"
 TASK = "firmware"
 LOGS_DIR_PATH = Path(__file__).parent / "logs"
@@ -60,10 +60,12 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "run_shell_command",
-            "description": ("""
+            "description": (
+                """
             Wykonuje pojedynczą komendę powłoki w zdalnym systemie
             Linux maszyny wirtualnej. Użyj 'help' na początku, aby
-            poznać dostępne komendy, ponieważ system jest niestandardowy.""").strip(),
+            poznać dostępne komendy, ponieważ system jest niestandardowy."""
+            ).strip(),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -81,16 +83,20 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "send_verify_answer",
-            "description": ("""Narzędzie służące do wysłania końcowej odpowiedzi.
-            Użyj go TYLKO wtedy, gdy zdobędziesz ostateczny kod potwierdzający (w formacie ECCS-...).""").strip(),
+            "description": (
+                """Narzędzie służące do wysłania końcowej odpowiedzi.
+            Użyj go TYLKO wtedy, gdy zdobędziesz ostateczny kod potwierdzający (w formacie ECCS-...)."""
+            ).strip(),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "confirmation_code": {
                         "type": "string",
-                        "description": ("""
+                        "description": (
+                            """
                         Ostateczny kod potwierdzający (w formacie
-                        ECCS-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx).""").strip(),
+                        ECCS-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)."""
+                        ).strip(),
                     },
                 },
             },

@@ -1,6 +1,7 @@
-import requests
-import logging
 import json
+import logging
+
+import requests
 from config import settings
 from e2b_code_interpreter import Sandbox
 
@@ -23,15 +24,17 @@ def call_verify_api(**kwargs) -> str:
     payload = {
         "apikey": settings.api_key,
         "task": settings.task,
-        "answer": answer_payload
+        "answer": answer_payload,
     }
+    if not settings.verify_url:
+        raise ValueError("VERIFY_URL is not set")
     response = requests.post(settings.verify_url, json=payload)
     data = response.json()
 
     return json.dumps(data)
 
 
-def execute_python_code(code: str) -> str:
+def execute_python_code(code: str) -> str | list[str]:
     """Zwraca: Stdout z konsoli Python w bezpiecznym sandboxie."""
     logger.debug("E2B: run_code (len=%d)", len(code))
     # Sandbox() bez .create() nie tworzy połączenia — wymagane jest Sandbox.create()

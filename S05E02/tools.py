@@ -1,12 +1,13 @@
 import base64
 import json
 import logging
-import requests
 import os
 from datetime import datetime
-from openai import OpenAI
+
+import requests
 from config import settings
 from elevenlabs.client import ElevenLabs
+from openai import OpenAI
 
 logger = logging.getLogger(__name__)
 
@@ -81,15 +82,13 @@ def call_verify_api(**kwargs) -> str:
         "task": settings.task,
         "answer": answer_payload,
     }
-
+    if not settings.verify_url:
+        raise ValueError("VERIFY_URL is not set")
     try:
         response = requests.post(settings.verify_url, json=payload, timeout=30)
         data = response.json()
     except requests.exceptions.Timeout:
-        return json.dumps(
-            {"error": "Timeout. Spróbuj ponownie."},
-            ensure_ascii=False
-            )
+        return json.dumps({"error": "Timeout. Spróbuj ponownie."}, ensure_ascii=False)
     except Exception as e:
         return json.dumps(
             {"error": f"Błąd API lub parsowania: {e}"}, ensure_ascii=False
@@ -112,9 +111,7 @@ def call_verify_api(**kwargs) -> str:
 
     for key in ["message", "reply", "audio"]:
         if key in data and isinstance(data[key], str) and len(data[key]) > 200:
-            logger.info(
-                "[Whisper] Odebrano długi ciąg znaków, sprawdzam czy to audio."
-            )
+            logger.info("[Whisper] Odebrano długi ciąg znaków, sprawdzam czy to audio.")
             try:
                 audio_bytes = base64.b64decode(data[key] + "===")
 
@@ -139,9 +136,7 @@ def call_verify_api(**kwargs) -> str:
                 data[key] = f"(Transkrypcja nagrania od operatora): \
                     {transcript.text}"
             except Exception as e:
-                logger.debug(
-                    f"Nie udało się odkodować Base64: {e}"
-                )
+                logger.debug(f"Nie udało się odkodować Base64: {e}")
 
     return json.dumps(data, ensure_ascii=False, indent=4)
 

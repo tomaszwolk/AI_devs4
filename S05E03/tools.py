@@ -1,5 +1,6 @@
 import json
 import logging
+
 import requests
 from config import settings
 
@@ -26,14 +27,13 @@ def call_verify_api(**kwargs) -> str:
         "answer": answer_payload,
     }
 
+    if not settings.verify_url:
+        raise ValueError("VERIFY_URL is not set")
     try:
         response = requests.post(settings.verify_url, json=payload, timeout=30)
         data = response.json()
     except requests.exceptions.Timeout:
-        return json.dumps(
-            {"error": "Timeout. Spróbuj ponownie."},
-            ensure_ascii=False
-        )
+        return json.dumps({"error": "Timeout. Spróbuj ponownie."}, ensure_ascii=False)
     except Exception as e:
         return json.dumps(
             {"error": f"Błąd API lub parsowania: {e}"}, ensure_ascii=False

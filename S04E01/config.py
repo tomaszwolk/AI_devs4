@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 ROOT_ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
@@ -10,14 +11,15 @@ OPENROUTER_URL = os.getenv("OPENROUTER_URL")
 HUB_URL = os.getenv("HUB_URL")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-VERIFY_URL = HUB_URL + "/verify"
+VERIFY_URL = f"{HUB_URL}/verify" if HUB_URL else None
 OKO_URL = os.getenv("OKO_URL")
 TASK = "okoeditor"
 LOGS_DIR_PATH = Path(__file__).parent / "logs"
 
 MAIN_MODEL = os.getenv("MODEL_ID")
 
-MAIN_SYSTEM_PROMPT = ("""
+MAIN_SYSTEM_PROMPT = (
+    """
     Jesteś zaawansowanym asystentem AI ds. cyberbezpieczeństwa i operacji w systemie OKO.
     Twoim celem jest wykonanie precyzyjnych aktualizacji bazy danych za pomocą dostępnego narzędzia (API).
     Naszym nadrzędnym celem jest uratowanie miasta Skolwin przed atakiem, poprzez zmianę klasyfikacji zagrożeń,
@@ -34,7 +36,8 @@ MAIN_SYSTEM_PROMPT = ("""
     - RECO (rekonesans): 01 (broń), 02 (prowiant), 03 (pojazd), 04 (inne).
     - PROB (badanie próbki): 01 (radiowa), 02 (internetowa), 03 (fizyczny nośnik).
     - MOVE (wykryto ruch): 01 (człowiek), 02 (pojazd), 03 (pojazd + człowiek), 04 (zwierzęta).
-""").strip()
+"""
+).strip()
 
 TOOLS_SCHEMA = [
     {
@@ -48,33 +51,30 @@ TOOLS_SCHEMA = [
                     "action": {
                         "type": "string",
                         "enum": ["update", "done"],
-                        "description": "Akcja do wykonania. 'update' aby zaktualizować wpis, 'done' aby sprawdzić flagę."
+                        "description": "Akcja do wykonania. 'update' aby zaktualizować wpis, 'done' aby sprawdzić flagę.",
                     },
                     "page": {
                         "type": "string",
                         "enum": ["incydenty", "notatki", "zadania"],
-                        "description": "Tabela, w której dokonujemy zmiany (tylko dla akcji 'update')."
+                        "description": "Tabela, w której dokonujemy zmiany (tylko dla akcji 'update').",
                     },
                     "record_id": {
                         "type": "string",
-                        "description": "32-znakowy identyfikator hex wpisu (tylko dla akcji 'update')."
+                        "description": "32-znakowy identyfikator hex wpisu (tylko dla akcji 'update').",
                     },
-                    "content": {
-                        "type": "string",
-                        "description": "Nowa treść wpisu."
-                    },
+                    "content": {"type": "string", "description": "Nowa treść wpisu."},
                     "title": {
                         "type": "string",
-                        "description": "Nowy tytuł wpisu (jeśli wymagany)."
+                        "description": "Nowy tytuł wpisu (jeśli wymagany).",
                     },
                     "is_done": {
                         "type": "string",
                         "enum": ["YES", "NO"],
-                        "description": "Oznaczenie zadania jako wykonane (używaj tylko dla page='zadania')."
-                    }
+                        "description": "Oznaczenie zadania jako wykonane (używaj tylko dla page='zadania').",
+                    },
                 },
-                "required": ["action"]
-            }
-        }
+                "required": ["action"],
+            },
+        },
     }
 ]

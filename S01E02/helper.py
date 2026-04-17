@@ -1,9 +1,10 @@
-import requests
 import json
+import os
 from pathlib import Path
+
+import requests
 from dotenv import load_dotenv
 from haversine import haversine
-import os
 
 load_dotenv()
 API_KEY = os.getenv("HUB_API_KEY")
@@ -11,15 +12,14 @@ HUB_URL = os.getenv("HUB_URL")
 
 
 def get_closest_power_plant(
-    person_locations: list[dict],
-    power_plants_list: list[dict]
-) -> tuple[dict, float]:
+    person_locations: list[dict], power_plants_list: list[dict]
+) -> dict[str, dict | float | None]:
     """
     To narzędzie przyjmuje listę lokalizacji osoby i listę elektrowni,
     zwraca tę elektrownię, która jest najbliżej.
     """
     closest_power_plant = None
-    closest_distance = float('inf')
+    closest_distance = float("inf")
 
     for location in power_plants_list:
         for person_location in person_locations:
@@ -36,6 +36,8 @@ def get_closest_power_plant(
 
 
 def get_person_locations(name: str, surname: str):
+    if not HUB_URL:
+        raise ValueError("HUB_URL is not set")
     url = HUB_URL + "/api/location"
     resp = requests.post(
         url,
@@ -49,6 +51,8 @@ def get_person_locations(name: str, surname: str):
 
 
 def get_access_level(name: str, surname: str, birthYear: int):
+    if not HUB_URL:
+        raise ValueError("HUB_URL is not set")
     url = HUB_URL + "/api/accesslevel"
     resp = requests.post(
         url,
@@ -69,6 +73,8 @@ def get_save_data_from_hub(hub_api_key: str, filename: str) -> dict:
     out_path = Path(__file__).parent / filename
 
     if not out_path.exists():
+        if not HUB_URL:
+            raise ValueError("HUB_URL is not set")
         url = HUB_URL + f"/data/{hub_api_key}/{filename}"
         response = requests.get(url)
         data = response.json()
@@ -96,7 +102,7 @@ def create_report(
     name: str,
     surname: str,
     access_level: int,
-    power_plant: str
+    power_plant: str,
 ) -> dict:
     """
     Create a report.
@@ -108,16 +114,18 @@ def create_report(
             "name": name,
             "surname": surname,
             "accessLevel": access_level,
-            "powerPlant": power_plant
-        }
+            "powerPlant": power_plant,
+        },
     }
     return report
 
 
-def send_report(report: dict) -> None:
+def send_report(report: dict) -> tuple[int | None, str | None]:
     """
     Send a report to the hub.
     """
+    if not HUB_URL:
+        raise ValueError("HUB_URL is not set")
     url = HUB_URL + "/verify"
     response = requests.post(url, json=report)
     return response.status_code, response.text

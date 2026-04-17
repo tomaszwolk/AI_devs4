@@ -5,7 +5,9 @@ import sys
 from config import settings
 from agent import SpecializedAgent
 from tools import (
-    download_data, call_verify_api, BACKEND_TOOLS_DICT,
+    download_data,
+    call_verify_api,
+    BACKEND_TOOLS_DICT,
     FRONTEND_TOOLS_DICT,
 )
 
@@ -13,6 +15,11 @@ logger = logging.getLogger(__name__)
 
 
 def main():
+    model_name = settings.main_model
+    if model_name is None or not model_name.strip():
+        logger.error("Brak ustawienia MODEL_ID w .env. Przerywam uruchomienie.")
+        sys.exit(1)
+
     if not os.path.exists("data/timetravel.md"):
         logger.info("Downloading timetravel data...")
         download_data()
@@ -34,14 +41,14 @@ def main():
         --- DOKUMENTACJA URZĄDZENIA ---\n{documentation_content}"
 
     backend_agent = SpecializedAgent(
-        model=settings.main_model,
+        model=model_name,
         name="backend",
         system_prompt=FULL_BACKEND_PROMPT,
         tools_schema=settings.backend_tools_schema,
         tools_dict=BACKEND_TOOLS_DICT,
     )
     frontend_agent = SpecializedAgent(
-        model=settings.main_model,
+        model=model_name,
         name="frontend",
         system_prompt=settings.frontend_system_prompt,
         tools_schema=settings.frontend_tools_schema,
@@ -52,7 +59,8 @@ def main():
     current_turn = "backend"
 
     # bonus mission prompt
-    current_message = ("""
+    current_message = (
+        """
         ZACZYNAMY MISJĘ BONUSOWĄ (Back to the Future). Twoim zadaniem jest wykonanie 4 skoków w czasie w ścisłej kolejności.
         Dla każdego skoku wykonuj twardą procedurę: standby -> konfiguracja API (oblicz syncRatio, pobierz PWR i tryb) -> ui state -> timeTravel.
         Zawsze po udanym skoku wchodź w tryb 'standby' dla kolejnego.
@@ -65,7 +73,8 @@ def main():
 
         Po każdym udanym skoku, wiesz w jakim jesteś roku. Na tej podstawie sam zdecyduj, czy następny skok jest w przyszłość (PTB=True) czy w przeszłość (PTA=True).
         Wszystkie podróże to zwykłe skoki, NIE używaj trybu tunelu. Powodzenia!
-    """).strip()
+    """
+    ).strip()
 
     call_verify_api(answer_payload={"action": "reset"})
 
@@ -87,9 +96,8 @@ def main():
 
         elif status == "HANDOFF":
             current_turn = next_turn
-            current_message = (
-                f"[{active_agent.name.upper()}] przekazuje kontrolę:\n\
-                {output_msg}")
+            current_message = f"[{active_agent.name.upper()}] przekazuje kontrolę:\n\
+                {output_msg}"
 
         elif status == "ERROR":
             logger.error("Błąd w trakcie przetwarzania.")

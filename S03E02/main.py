@@ -18,6 +18,8 @@ def main():
         "Zacznij zadanie. Najpierw uruchom komendę `help` w powłoce, "
         "potem postępuj zgodnie z instrukcjami systemowymi."
     )
+    if not MAIN_MODEL:
+        raise ValueError("MAIN_MODEL is not set")
     agent = MainAgent(model=MAIN_MODEL, system_prompt=MAIN_SYSTEM_PROMPT)
     try:
         agent.run(user_prompt)

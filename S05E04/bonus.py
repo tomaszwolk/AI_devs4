@@ -1,7 +1,8 @@
-import sys
 import json
-from tools import call_verify_api, get_radio_hint, scan_frequency, neutralize_trap
+import sys
 from pprint import pprint
+
+from tools import call_verify_api, get_radio_hint, neutralize_trap, scan_frequency
 
 
 def _print_response(response: str) -> None:
@@ -20,9 +21,7 @@ def main():
     detectionCode = sys.argv[3] if len(sys.argv) > 3 else None
 
     if query in ["start", "go", "left", "right"]:
-        cmd_answer = {
-            "command": query
-        }
+        cmd_answer = {"command": query}
         response = call_verify_api(answer_payload=cmd_answer)
         _print_response(response)
         sys.exit(0)
@@ -38,7 +37,7 @@ def main():
         sys.exit(0)
 
     if query == "neutralize":
-        response = neutralize_trap(int(frequency), detectionCode)
+        response = neutralize_trap(int(frequency), detectionCode)  # type: ignore
         _print_response(response)
         sys.exit(0)
 

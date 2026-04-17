@@ -1,14 +1,15 @@
-from dotenv import load_dotenv
-import os
-import requests
 import base64
 import json
+import os
 from datetime import datetime
+
+import requests
+from dotenv import load_dotenv
 
 load_dotenv()
 HUB_API_KEY = os.getenv("HUB_API_KEY")
 HUB_URL = os.getenv("HUB_URL")
-VERIFY_URL = HUB_URL + "/verify"
+VERIFY_URL = f"{HUB_URL}/verify"
 TASK = "electricity"
 
 
@@ -23,7 +24,7 @@ def create_payload(
         "task": TASK,
         "answer": {
             "rotate": rotate,
-        }
+        },
     }
     return payload
 
@@ -41,7 +42,7 @@ def get_image(url: str) -> str:
     Get image from hub.
     """
     response = requests.get(url)
-    if url.lower().endswith(('.png', '.jpg', '.jpeg')):
+    if url.lower().endswith((".png", ".jpg", ".jpeg")):
         mime = "image/png" if url.lower().endswith(".png") else "image/jpeg"
         b64 = base64.b64encode(response.content).decode("utf-8")
         return f"data:{mime};base64,{b64}"
@@ -49,7 +50,7 @@ def get_image(url: str) -> str:
     return base64.b64encode(response.content).decode("utf-8")
 
 
-def rotate_field(rotate: str) -> str:
+def rotate_field(rotate: str) -> tuple[int, dict]:
     """
     Rotate field.
     """
@@ -58,7 +59,7 @@ def rotate_field(rotate: str) -> str:
     return status_code, response
 
 
-def reset_board() -> str:
+def reset_board() -> tuple[int, dict]:
     """
     Reset board.
     """
@@ -89,7 +90,7 @@ def save_messages_to_file(messages):
 
     for msg in messages:
         # Konwersja obiektu modelu na słownik, jeśli to konieczne
-        if hasattr(msg, 'model_dump'):  # Obsługa obiektów OpenAI/Pydantic
+        if hasattr(msg, "model_dump"):  # Obsługa obiektów OpenAI/Pydantic
             serializable_messages.append(msg.model_dump())
         elif isinstance(msg, dict):
             serializable_messages.append(msg)

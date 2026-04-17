@@ -16,13 +16,13 @@ is to gain experience with OpenAI and other AI tools, not to show off python ski
 uv sync
 ```
 
-1. Create .env file using .env.example
+2. Create .env file using .env.example
 
 # Usage:
 
 Go to folder with lesson and run `main.py`. For example:
 
-`cd S05E05`
+`cd S05E05`  
 `uv run main.py`
 
 ## Links
